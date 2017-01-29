@@ -17,6 +17,8 @@ namespace Matisco.Wpf.ViewModels
         private string _title;
         private ImageSource _icon;
         private IRegionManager _regionManager;
+        private SizeToContent _sizeToContent = SizeToContent.Manual;
+        private ResizeMode _resizeMode = ResizeMode.CanResize;
 
         public string Title
         {
@@ -52,6 +54,26 @@ namespace Matisco.Wpf.ViewModels
             }
         }
 
+        public SizeToContent SizeToContent
+        {
+            get { return _sizeToContent; }
+            set
+            {
+                _sizeToContent = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ResizeMode ResizeMode
+        {
+            get { return _resizeMode; }
+            set
+            {
+                _resizeMode = value; 
+                OnPropertyChanged();
+            }
+        }
+
         private void ViewChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
@@ -70,11 +92,36 @@ namespace Matisco.Wpf.ViewModels
                     {
                         Title = dataContext.GetTitle();
                     }
+
+                    var windowPropertyController = (e.NewItems[0] as FrameworkElement)?.DataContext as IControlWindowProperties;
+
+                    if (windowPropertyController != null)
+                    {
+                        SetWindowProperties(windowPropertyController.GetWindowPropertyOverrides());
+                    }
                 }
             }
             else
             {
                 Title = _shellInformationService.GetDefaultTitle();
+            }
+        }
+
+        private void SetWindowProperties(WindowPropertyOverrides windowProps)
+        {
+            if (windowProps.SizeToContent.HasValue)
+            {
+                SizeToContent = windowProps.SizeToContent.Value;
+            }
+
+            if (windowProps.ResizeMode.HasValue)
+            {
+                ResizeMode = windowProps.ResizeMode.Value;
+            }
+
+            if (windowProps.Title != null)
+            {
+                Title = windowProps.Title;
             }
         }
 

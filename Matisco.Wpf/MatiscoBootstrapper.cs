@@ -33,7 +33,8 @@ namespace Matisco.Wpf
             var regionManager = Container.Resolve<IRegionManager>();
             _regionRegistrationAction(regionManager);
 
-            regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(Views.UnsavedChangesView));
+            regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UnsavedChangesView));
+            regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(ExceptionView));
 
             var windowManager = Container.Resolve<IWindowService>();
 
@@ -47,6 +48,7 @@ namespace Matisco.Wpf
             builder.RegisterType<WindowService>().As<IWindowService>().SingleInstance();
             builder.RegisterType<ApplicationShutdownService>().As<IApplicationShutdownService>().SingleInstance();
             builder.RegisterType<ShellInformationService>().As<IShellInformationService>().SingleInstance();
+            builder.RegisterType<ExceptionHandler>().As<IExceptionHandler>().SingleInstance();
 
             _typeRegistrationAction(builder);
         }

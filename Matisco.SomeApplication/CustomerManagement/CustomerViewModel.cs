@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using Matisco.Wpf;
 using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Services;
@@ -12,6 +13,7 @@ namespace Matisco.SomeApplication.CustomerManagement
     {
         private readonly ICustomerService _customerService;
         private readonly IWindowService _windowService;
+        private readonly IExceptionHandler _exceptionHandler;
         private Customer _original;
         private Customer _current = new Customer();
 
@@ -39,10 +41,15 @@ namespace Matisco.SomeApplication.CustomerManagement
         
         public ICommand OpenDialogCommand => new DelegateCommand(OpenDialog);
 
-        public CustomerViewModel(ICustomerService customerService, IWindowService windowService)
+        public ICommand ThrowExceptionCommand => new DelegateCommand(ThrowException);
+
+        public ICommand ThrowSmallExceptionCommand => new DelegateCommand(ThrowSmallException);
+        
+        public CustomerViewModel(ICustomerService customerService, IWindowService windowService, IExceptionHandler exceptionHandler)
         {
             _customerService = customerService;
             _windowService = windowService;
+            _exceptionHandler = exceptionHandler;
         }
 
         public bool HasUnsavedChanges()
@@ -69,6 +76,18 @@ namespace Matisco.SomeApplication.CustomerManagement
         {
         }
 
+        private void ThrowException()
+        {
+            var exception = new ArgumentException("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel dignissim nunc. Donec iaculis enim tellus, at pretium mauris ultrices eu. Sed eros est, euismod et viverra eget, pellentesque nec diam. Vestibulum elementum tellus in lacus pellentesque, quis ullamcorper metus eleifend. Nullam id vestibulum elit. Nunc lacinia eleifend accumsan. Phasellus in neque purus. Sed hendrerit sit amet lacus eget luctus. Sed eget placerat augue. Duis aliquet purus purus, vitae vestibulum ligula euismod nec.");
+            _exceptionHandler.Handle(this, exception, "Some error ocurred");
+        }
+
+        private void ThrowSmallException()
+        {
+            var exception = new ArgumentException("Missing projectId;");
+
+            _exceptionHandler.Handle(this, exception);
+        }
 
         private void Save()
         {

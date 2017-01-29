@@ -1,16 +1,29 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Input;
+using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 
 namespace Matisco.Wpf.ViewModels
 {
-    public class UnsavedChangesViewModel : BindableBase
+    public class UnsavedChangesViewModel : BindableBase, IControlWindowProperties
     {
         private readonly IApplicationShutdownService _applicationShutdownService;
         private readonly IWindowService _windowService;
         private ObservableCollection<string> _windowTitles;
+        private string _message = "There are unsaved changes.";
+
+        public string Message
+        {
+            get { return _message; }
+            set
+            {
+                _message = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<string> WindowTitles
         {
@@ -42,6 +55,16 @@ namespace Matisco.Wpf.ViewModels
         private void ShutDown()
         {
             _applicationShutdownService.ExitApplication(true);
+        }
+
+        public WindowPropertyOverrides GetWindowPropertyOverrides()
+        {
+            return new WindowPropertyOverrides()
+            {
+                Title = "Unsaved changes",
+                SizeToContent = SizeToContent.WidthAndHeight,
+                ResizeMode = ResizeMode.NoResize
+            };
         }
     }
 }

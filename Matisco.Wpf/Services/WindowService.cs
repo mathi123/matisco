@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using Autofac;
@@ -96,7 +97,7 @@ namespace Matisco.Wpf.Services
             if (parentWindow == null) return;
 
             var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction);
-
+            
             NavigateInWindow(window, parameters);
             
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -159,7 +160,7 @@ namespace Matisco.Wpf.Services
             var regionManager = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shellWindow, regionManager);
             RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
-
+           
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
 
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -169,7 +170,7 @@ namespace Matisco.Wpf.Services
 
             window.Show();
         }
-
+        
         public void CloseWindow(WindowKey key)
         {
             Window window;

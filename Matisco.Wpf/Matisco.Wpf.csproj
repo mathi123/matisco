@@ -74,19 +74,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\AllWindowsClosedEvent.cs" />
+    <Compile Include="Interfaces\IControlWindowProperties.cs" />
     <Compile Include="Interfaces\IHasTitle.cs" />
+    <Compile Include="Interfaces\WindowPropertyOverrides.cs" />
     <Compile Include="Services\ApplicationShutdownService.cs" />
     <Compile Include="Exceptions\ViewModelNotFoundException.cs" />
+    <Compile Include="Services\ExceptionHandler.cs" />
     <Compile Include="Services\IApplicationShutdownService.cs" />
     <Compile Include="Interfaces\IEditor.cs" />
     <Compile Include="Interfaces\IHasResults.cs" />
+    <Compile Include="Services\IExceptionHandler.cs" />
     <Compile Include="Services\IShellInformationService.cs" />
     <Compile Include="Prism\INeedsRegionManager.cs" />
     <Compile Include="Prism\RegionManagerAware.cs" />
     <Compile Include="Prism\RegionManagerAwareBehaviour.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ShellInformationService.cs" />
+    <Compile Include="ViewModels\ExceptionViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
+    <Compile Include="Views\ExceptionView.xaml.cs">
+      <DependentUpon>ExceptionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UnsavedChangesView.xaml.cs">
       <DependentUpon>UnsavedChangesView.xaml</DependentUpon>
     </Compile>
@@ -94,6 +102,10 @@
     <Compile Include="Models\WindowClosedAction.cs" />
     <Compile Include="Models\WindowKey.cs" />
     <Compile Include="Services\WindowService.cs" />
+    <Page Include="Views\ExceptionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -138,15 +150,21 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Resources\DialogError22x22.ico" />
-    <Resource Include="Resources\DialogError64x64.png" />
-    <Resource Include="Resources\DialogErrorRed48x48.png" />
-    <Resource Include="Resources\DialogInfo48x48.png" />
-    <Resource Include="Resources\DialogWarning48x48.png" />
+    <Resource Include="Resources\ApplicationExit.png" />
+    <Resource Include="Resources\DialogApply.png" />
+    <Resource Include="Resources\DialogClose.png" />
+    <Resource Include="Resources\DialogError.png" />
+    <Resource Include="Resources\DialogInfo.png" />
+    <Resource Include="Resources\DialogWarning.png" />
+    <Resource Include="Resources\ProcessStop.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Resources\PrismLogo128x128.ico" />
     <Resource Include="Resources\PrismLogo128x128.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\GoNext.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
