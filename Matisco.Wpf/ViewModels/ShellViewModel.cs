@@ -123,6 +123,11 @@ namespace Matisco.Wpf.ViewModels
             {
                 Title = windowProps.Title;
             }
+
+            if (windowProps.IconPath != null)
+            {
+                Icon = new ImageSourceConverter().ConvertFrom(windowProps.IconPath) as ImageSource;
+            }
         }
 
         public ShellViewModel(IShellInformationService shellInformationService)

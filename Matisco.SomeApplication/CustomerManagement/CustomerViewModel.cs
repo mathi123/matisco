@@ -9,7 +9,7 @@ using Prism.Regions;
 
 namespace Matisco.SomeApplication.CustomerManagement
 {
-    public class CustomerViewModel : BindableBase, IEditor, INavigationAware
+    public class CustomerViewModel : BindableBase, IEditor, INavigationAware, IHasTitle
     {
         private readonly ICustomerService _customerService;
         private readonly IWindowService _windowService;
@@ -111,6 +111,11 @@ namespace Matisco.SomeApplication.CustomerManagement
                     _windowService.CloseContainingWindow(this);
                 }
             }
+        }
+
+        public string GetTitle()
+        {
+            return "Edit customer";
         }
     }
 }

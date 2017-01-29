@@ -166,6 +166,12 @@
   <ItemGroup>
     <Resource Include="Resources\GoNext.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\DialogError.ico" />
+    <Resource Include="Resources\DialogInfo.ico" />
+    <Resource Include="Resources\DialogWarning.ico" />
+    <Resource Include="Resources\ProcessStop.ico" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

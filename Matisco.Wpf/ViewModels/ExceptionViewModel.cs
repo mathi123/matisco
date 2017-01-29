@@ -82,7 +82,8 @@ namespace Matisco.Wpf.ViewModels
             {
                 Title = "Error",
                 SizeToContent = SizeToContent.WidthAndHeight,
-                ResizeMode = ResizeMode.NoResize
+                ResizeMode = ResizeMode.NoResize,
+                IconPath = "pack://application:,,,/Matisco.Wpf;component/Resources/ProcessStop.ico"
             };
         }
     }
