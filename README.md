@@ -1,2 +1,2 @@
-# matisco
-open source multi-shell wpf framework
+# Matisco
+Open source WPF framework, controls and libraries

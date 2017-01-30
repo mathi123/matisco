@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Matisco.Wpf</id>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <title>Matisco Wpf Application Window Manager</title>
     <authors>Mathias Colpaert</authors>
     <owners>Mathias Colpaert</owners>

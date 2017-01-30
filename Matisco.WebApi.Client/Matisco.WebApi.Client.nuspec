@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Matisco.WebApi.Client</id>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <title>Matisco web api consumer library</title>
     <authors>Mathias Colpaert</authors>
     <owners>Mathias Colpaert</owners>
