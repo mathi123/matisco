@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99BF369F-A53C-4897-A775-7095C3F85B54}"
 	ProjectSection(SolutionItems) = preProject
 		increment-minor-version.ps1 = increment-minor-version.ps1
+		publish.ps1 = publish.ps1
 	EndProjectSection
 EndProject
 Global
