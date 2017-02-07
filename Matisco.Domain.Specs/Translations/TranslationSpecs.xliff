@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<xliff version="1.0">
+  <file source-language="en" target-language="nl" datatype="plaintext" original="Matisco.Domain.Specs.TranslationSpecs">
+    <header/>
+    <body>
+      <trans-unit id="SomeText" xml:space="preserve">
+        <source>Segment</source>
+        <target>Een beetje text</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

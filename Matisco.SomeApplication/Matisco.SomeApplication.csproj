@@ -88,6 +88,7 @@
       <DependentUpon>ConfirmView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConfirmViewModel.cs" />
+    <Compile Include="CustomerManagement\CustomerValidationProvider.cs" />
     <Compile Include="CustomerManagement\Customer.cs" />
     <Compile Include="CustomerManagement\CustomerOverview.xaml.cs">
       <DependentUpon>CustomerOverview.xaml</DependentUpon>
@@ -138,6 +139,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matisco.Domain\Matisco.Domain.csproj">
+      <Project>{2b8c7e70-4bb7-4959-8e06-78c021379da2}</Project>
+      <Name>Matisco.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
       <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
       <Name>Matisco.Wpf.Controls</Name>

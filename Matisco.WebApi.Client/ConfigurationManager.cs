@@ -4,6 +4,9 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Matisco.WebApi.Client
 {
+    /// <summary>
+    /// Default configuration manager implementation.
+    /// </summary>
     public class ConfigurationManager : IConfigurationManager
     {
         private readonly string _url;
