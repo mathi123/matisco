@@ -4,18 +4,20 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0A6FA236-0FE2-40AB-92F7-21C650BD3FDE}</ProjectGuid>
-    <OutputType>library</OutputType>
+    <ProjectGuid>{5885EBCC-C4E1-461F-B618-3143754B86E3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Matisco.Wpf</RootNamespace>
-    <AssemblyName>Matisco.Wpf</AssemblyName>
+    <RootNamespace>Example.BusinessApp</RootNamespace>
+    <AssemblyName>Example.BusinessApp</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,6 +27,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -73,59 +76,17 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BootstrapperBase.cs" />
-    <Compile Include="Events\AllWindowsClosedEvent.cs" />
-    <Compile Include="Interfaces\IControlWindowProperties.cs" />
-    <Compile Include="Interfaces\IHasTitle.cs" />
-    <Compile Include="Interfaces\WindowPropertyOverrides.cs" />
-    <Compile Include="MatiscoAutofacModule.cs" />
-    <Compile Include="MatiscoPrismModule.cs" />
-    <Compile Include="Services\ApplicationShutdownService.cs" />
-    <Compile Include="Exceptions\ViewModelNotFoundException.cs" />
-    <Compile Include="Services\ExceptionHandler.cs" />
-    <Compile Include="Services\IApplicationShutdownService.cs" />
-    <Compile Include="Interfaces\IEditor.cs" />
-    <Compile Include="Interfaces\IHasResults.cs" />
-    <Compile Include="Services\IExceptionHandler.cs" />
-    <Compile Include="Services\IShellInformationService.cs" />
-    <Compile Include="Prism\INeedsRegionManager.cs" />
-    <Compile Include="Prism\RegionManagerAware.cs" />
-    <Compile Include="Prism\RegionManagerAwareBehaviour.cs" />
-    <Compile Include="RegionNames.cs" />
-    <Compile Include="Services\ShellInformationService.cs" />
-    <Compile Include="ViewModels\ExceptionViewModel.cs" />
-    <Compile Include="ViewModels\ShellViewModel.cs" />
-    <Compile Include="Views\ExceptionView.xaml.cs">
-      <DependentUpon>ExceptionView.xaml</DependentUpon>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\UnsavedChangesView.xaml.cs">
-      <DependentUpon>UnsavedChangesView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ViewModels\UnsavedChangesViewModel.cs" />
-    <Compile Include="Models\WindowClosedAction.cs" />
-    <Compile Include="Models\WindowKey.cs" />
-    <Compile Include="Services\WindowService.cs" />
-    <Page Include="Views\ExceptionView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ShellView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="MatiscoBootstrapper.cs" />
-    <Compile Include="Converters\FalseToVisibleConverter.cs" />
-    <Compile Include="Converters\TrueToVisibleConverter.cs" />
-    <Page Include="Views\UnsavedChangesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
+    <Compile Include="Bootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Views\ShellView.xaml.cs">
-      <DependentUpon>ShellView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Services\IWindowService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -143,9 +104,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Matisco.Wpf.nuspec">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -154,26 +112,33 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\ApplicationExit.png" />
-    <Resource Include="Resources\DialogApply.png" />
-    <Resource Include="Resources\DialogClose.png" />
-    <Resource Include="Resources\DialogError.png" />
-    <Resource Include="Resources\DialogInfo.png" />
-    <Resource Include="Resources\DialogWarning.png" />
-    <Resource Include="Resources\ProcessStop.png" />
+    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\PrismLogo128x128.ico" />
-    <Resource Include="Resources\PrismLogo128x128.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\GoNext.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\DialogError.ico" />
-    <Resource Include="Resources\DialogInfo.ico" />
-    <Resource Include="Resources\DialogWarning.ico" />
-    <Resource Include="Resources\ProcessStop.ico" />
+    <ProjectReference Include="..\Example.BusinessApp.Infrastructure\Example.BusinessApp.Infrastructure.csproj">
+      <Project>{1bcee73c-a1a7-4067-989f-f55421e5df72}</Project>
+      <Name>Example.BusinessApp.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Example.BusinessApp.Sales\Example.BusinessApp.Sales.csproj">
+      <Project>{3bdc73d1-b95a-4578-9a91-a11fb0bcc31e}</Project>
+      <Name>Example.BusinessApp.Sales</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matisco.Domain\Matisco.Domain.csproj">
+      <Project>{2b8c7e70-4bb7-4959-8e06-78c021379da2}</Project>
+      <Name>Matisco.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matisco.WebApi.Client\Matisco.WebApi.Client.csproj">
+      <Project>{C925C2ED-1D32-4844-AE19-A2BC23930DA1}</Project>
+      <Name>Matisco.WebApi.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
+      <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
+      <Name>Matisco.Wpf.Controls</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matisco.Wpf\Matisco.Wpf.csproj">
+      <Project>{0a6fa236-0fe2-40ab-92f7-21c650bd3fde}</Project>
+      <Name>Matisco.Wpf</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

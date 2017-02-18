@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using Example.BusinessApp.Infrastructure;
+using Example.BusinessApp.Sales;
+using Matisco.Domain;
+using Matisco.WebApi.Client;
+using Matisco.Wpf;
+
+namespace Example.BusinessApp
+{
+    public class Bootstrapper : BootstrapperBase
+    {
+        public override IEnumerable<Type> GetPrismModuleTypes()
+        {
+            yield return typeof(MatiscoPrismModule);
+            yield return typeof(InfrastructurePrismModule);
+            yield return typeof(SalesPrismModule);
+        }
+
+        public override IEnumerable<Type> GetAutofacModuleTypes()
+        {
+            yield return typeof(DomainAutofacModule);
+            yield return typeof(WebApiClientAutofacModule);
+            yield return typeof(MatiscoAutofacModule);
+            yield return typeof(InfrastructureAutofacModule);
+        }
+    }
+}

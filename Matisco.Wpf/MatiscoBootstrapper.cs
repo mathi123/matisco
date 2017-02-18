@@ -1,10 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using Autofac;
 using Matisco.Wpf.Exceptions;
 using Matisco.Wpf.Prism;
-using Matisco.Wpf.Services;
-using Matisco.Wpf.Views;
 using Prism.Autofac;
+using Prism.Modularity;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -12,45 +12,41 @@ namespace Matisco.Wpf
 {
     public class MatiscoBootstrapper : AutofacBootstrapper
     {
-        private readonly Type _shellType;
-        private readonly Action<ContainerBuilder> _typeRegistrationAction;
-        private readonly Action<IRegionManager> _regionRegistrationAction;
+        private readonly BootstrapperBase _bootstrapper;
 
-        public MatiscoBootstrapper(Action<ContainerBuilder> typeRegistrationAction, Action<IRegionManager> regionRegistrationAction, Type shellType = null)
+        public MatiscoBootstrapper(BootstrapperBase bootstrapper)
         {
-            _shellType = shellType ?? typeof(ShellView);
-            _typeRegistrationAction = typeRegistrationAction;
-            _regionRegistrationAction = regionRegistrationAction;
+            _bootstrapper = bootstrapper;
         }
 
-        public new IWindowService Run()
+        protected override IContainer CreateContainer(ContainerBuilder builder)
         {
-            base.Run();
+            foreach (var moduleType in _bootstrapper.GetAutofacModuleTypes())
+            {
+                var module = Activator.CreateInstance(moduleType) as Autofac.Core.IModule;
 
-            var shellTypeProvider = Container.Resolve<IShellInformationService>();
-            shellTypeProvider.SetShellType(_shellType);
+                if (module != null)
+                {
+                    builder.RegisterModule(module);
+                }
+                else
+                {
+                    Trace.TraceWarning($"{moduleType.FullName} is not an Autofac module");
+                }
+            }
 
-            var regionManager = Container.Resolve<IRegionManager>();
-            _regionRegistrationAction(regionManager);
-
-            regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UnsavedChangesView));
-            regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(ExceptionView));
-
-            var windowManager = Container.Resolve<IWindowService>();
-
-            return windowManager;
+            return base.CreateContainer(builder);
         }
-         
-        protected override void ConfigureContainerBuilder(ContainerBuilder builder)
+
+        protected override void ConfigureModuleCatalog()
         {
-            base.ConfigureContainerBuilder(builder);
+            base.ConfigureModuleCatalog();
 
-            builder.RegisterType<WindowService>().As<IWindowService>().SingleInstance();
-            builder.RegisterType<ApplicationShutdownService>().As<IApplicationShutdownService>().SingleInstance();
-            builder.RegisterType<ShellInformationService>().As<IShellInformationService>().SingleInstance();
-            builder.RegisterType<ExceptionHandler>().As<IExceptionHandler>().SingleInstance();
-
-            _typeRegistrationAction(builder);
+            foreach (var module in _bootstrapper.GetPrismModuleTypes())
+            {
+                var catalog = (ModuleCatalog)ModuleCatalog;
+                catalog.AddModule(module);
+            }   
         }
 
         protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
@@ -68,7 +64,7 @@ namespace Matisco.Wpf
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(GetViewModel);
         }
 
-        private Type GetViewModel(Type viewType)
+        protected Type GetViewModel(Type viewType)
         {
             var name = viewType.FullName;
 

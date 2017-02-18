@@ -2,11 +2,11 @@
 
 namespace Matisco.Domain
 {
-    public class LocalizedBase : ILocalized
+    public abstract class LocalizedBase : ILocalized
     {
         private readonly Lazy<ITranslationService> _translationService;
 
-        public LocalizedBase(Lazy<ITranslationService> translationService)
+        protected LocalizedBase(Lazy<ITranslationService> translationService)
         {
             _translationService = translationService;
         }
