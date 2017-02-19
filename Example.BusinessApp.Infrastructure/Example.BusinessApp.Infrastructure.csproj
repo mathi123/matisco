@@ -89,6 +89,7 @@
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="ViewModels\ConfirmViewModel.cs" />
     <Compile Include="ViewModels\StartUpViewModel.cs" />
+    <Compile Include="ViewNames.cs" />
     <Compile Include="Views\ConfirmView.xaml.cs">
       <DependentUpon>ConfirmView.xaml</DependentUpon>
     </Compile>

@@ -32,6 +32,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Infrastructure", "Example.BusinessApp.Infrastructure\Example.BusinessApp.Infrastructure.csproj", "{1BCEE73C-A1A7-4067-989F-F55421E5DF72}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{9656AE0A-0FC0-4C47-AA09-81FAAA0FF9C0}"
+	ProjectSection(SolutionItems) = preProject
+		Changelog.md = Changelog.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -10,6 +10,8 @@ namespace Matisco.Wpf.ViewModels
 {
     public class UnsavedChangesViewModel : BindableBase, IControlWindowProperties
     {
+        public event WindowPropertiesChangedDelegate WindowPropertiesChanged;
+
         private readonly IApplicationShutdownService _applicationShutdownService;
         private readonly IWindowService _windowService;
         private ObservableCollection<string> _windowTitles;

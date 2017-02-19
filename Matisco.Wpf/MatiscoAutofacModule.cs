@@ -11,6 +11,7 @@ namespace Matisco.Wpf
             builder.RegisterType<ApplicationShutdownService>().As<IApplicationShutdownService>().SingleInstance();
             builder.RegisterType<ShellInformationService>().As<IShellInformationService>().SingleInstance();
             builder.RegisterType<ExceptionHandler>().As<IExceptionHandler>().SingleInstance();
+            builder.RegisterType<ModalsService>().As<IModalsService>().SingleInstance();
         }
     }
 }

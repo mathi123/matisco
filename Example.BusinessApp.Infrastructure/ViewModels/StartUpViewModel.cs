@@ -31,7 +31,7 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
 
         private void OpenCustomers()
         {
-            _windowService.Open("CustomerOverview");
+            _windowService.Open(ViewNames.CustomerOverview);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

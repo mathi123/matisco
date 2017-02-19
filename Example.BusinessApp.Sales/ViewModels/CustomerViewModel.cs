@@ -16,6 +16,7 @@ namespace Example.BusinessApp.Sales.ViewModels
         private readonly ICustomerService _customerService;
         private readonly IWindowService _windowService;
         private readonly IExceptionHandler _exceptionHandler;
+        private readonly IModalsService _modalsService;
         private Customer _original;
         private Customer _current = new Customer();
 
@@ -47,11 +48,12 @@ namespace Example.BusinessApp.Sales.ViewModels
 
         public ICommand ThrowSmallExceptionCommand => new DelegateCommand(ThrowSmallException);
         
-        public CustomerViewModel(ICustomerService customerService, IWindowService windowService, IExceptionHandler exceptionHandler)
+        public CustomerViewModel(ICustomerService customerService, IWindowService windowService, IExceptionHandler exceptionHandler, IModalsService modalsService)
         {
             _customerService = customerService;
             _windowService = windowService;
             _exceptionHandler = exceptionHandler;
+            _modalsService = modalsService;
         }
 
         public bool HasUnsavedChanges()
@@ -93,8 +95,11 @@ namespace Example.BusinessApp.Sales.ViewModels
 
         private void Save()
         {
-            _customerService.Save(_current);
-            _original = _current.Clone();
+            _modalsService.YesNoConfirm(this, (val) =>
+            {
+                _customerService.Save(_current);
+                _original = _current.Clone();
+            }, "Confirm", "Zeker dat u wilt opslaan?");
         }
 
         private void OpenDialog()

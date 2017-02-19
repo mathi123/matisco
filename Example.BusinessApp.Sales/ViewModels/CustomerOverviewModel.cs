@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using Example.BusinessApp.Infrastructure;
 using Example.BusinessApp.Infrastructure.Models;
 using Example.BusinessApp.Sales.Services;
 using Example.BusinessApp.Sales.Views;
@@ -68,8 +69,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             if (SelectedCustomer != null)
             {
                 var parameters = new NavigationParameters {{"id", SelectedCustomer.Id}};
-                _windowService.OpenDialog(this, nameof(CustomerView), parameters, ReloadData);
-                //RegionManager.RequestNavigate(RegionNames.MainRegion, nameof(CustomerView), NavigationCallback, parameters);
+                _windowService.OpenDialog(this, ViewNames.CustomerView, parameters, ReloadData);
             }
         }
 

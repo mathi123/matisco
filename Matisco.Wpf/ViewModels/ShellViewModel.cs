@@ -97,6 +97,9 @@ namespace Matisco.Wpf.ViewModels
 
                     if (windowPropertyController != null)
                     {
+                        windowPropertyController.WindowPropertiesChanged +=
+                            (win) => SetWindowProperties(win.GetWindowPropertyOverrides());
+
                         SetWindowProperties(windowPropertyController.GetWindowPropertyOverrides());
                     }
                 }

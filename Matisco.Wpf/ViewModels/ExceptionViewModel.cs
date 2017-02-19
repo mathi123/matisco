@@ -12,6 +12,7 @@ namespace Matisco.Wpf.ViewModels
     public class ExceptionViewModel : BindableBase, INavigationAware, IControlWindowProperties
     {
         public const string NavigationParameterException = "Exception";
+        public event WindowPropertiesChangedDelegate WindowPropertiesChanged;
 
         private readonly IApplicationShutdownService _applicationShutdownService;
         private readonly IWindowService _windowService;

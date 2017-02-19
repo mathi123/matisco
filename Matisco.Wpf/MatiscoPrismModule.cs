@@ -20,6 +20,7 @@ namespace Matisco.Wpf
         {
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UnsavedChangesView));
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(ExceptionView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(ModalView));
 
             _shellInformationService.SetShellType(typeof(ShellView));
         }

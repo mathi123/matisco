@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="Matisco.Wpf.Views.ModalView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:models="clr-namespace:Matisco.Wpf.Models"
+             xmlns:converters="clr-namespace:Matisco.Wpf.Converters"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             Width="450">
+    <UserControl.Resources>
+        <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
+    </UserControl.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="48"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Image Grid.Row="0" Grid.Column="0" Width="40" Height="40"
+               HorizontalAlignment="Left" VerticalAlignment="Top"
+               Source="{Binding ImagePath}" Stretch="Uniform"/>
+        <ScrollViewer Grid.Row="0" Grid.Column="1" Margin="5" MaxHeight="150" VerticalScrollBarVisibility="Auto">
+            <TextBlock Text="{Binding Message}" VerticalAlignment="Center" FontSize="16" TextWrapping="Wrap"/>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" 
+                    Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Width="100" Height="25" Margin="5 0" Visibility="{Binding HasYesButton, Converter={StaticResource TrueToVisibleConverter}}"
+                    Command="{Binding CloseCommand}" CommandParameter="{x:Static models:ModalButtonEnum.Yes}">Yes</Button>
+
+            <Button Width="100" Height="25" Margin="5 0" Visibility="{Binding HasNoButton, Converter={StaticResource TrueToVisibleConverter}}"
+                    Command="{Binding CloseCommand}" CommandParameter="{x:Static models:ModalButtonEnum.No}">No</Button>
+
+            <Button Width="100" Height="25" Margin="5 0" Visibility="{Binding HasOkButton, Converter={StaticResource TrueToVisibleConverter}}"
+                    Command="{Binding CloseCommand}" CommandParameter="{x:Static models:ModalButtonEnum.Ok}">Ok</Button>
+
+            <Button Width="100" Height="25" Margin="5 0" Visibility="{Binding HasCancelButton, Converter={StaticResource TrueToVisibleConverter}}"
+                    Command="{Binding CloseCommand}" CommandParameter="{x:Static models:ModalButtonEnum.Cancel}">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</UserControl>
