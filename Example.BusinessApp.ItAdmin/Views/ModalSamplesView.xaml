@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Example.BusinessApp.ItAdmin.Views.ModalSamplesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mvvm="http://prismlibrary.com/">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        
+        <Button Grid.Row="0" Content="Info" Width="100" Height="25" Command="{Binding OpenInfoModalCommand}" />
+        <Button Grid.Row="1" Content="Warning" Width="100" Height="25" Command="{Binding OpenWarningModalCommand}" />
+        <Button Grid.Row="2" Content="Error" Width="100" Height="25" Command="{Binding OpenErrorModalCommand}" />
+        <Button Grid.Row="3" Content="Empty" Width="100" Height="25" Command="{Binding OpenEmptyModalCommand}" />
+        <Button Grid.Row="4" Content="Question" Width="100" Height="25" Command="{Binding OpenQuestionModalCommand}" />
+        <Button Grid.Row="5" Content="Small Exception" Width="100" Height="25" Command="{Binding ThrowSmallExceptionCommand}" />
+        <Button Grid.Row="6" Content="Large Exception" Width="100" Height="25" Command="{Binding ThrowExceptionCommand}" />
+
+    </Grid>
+</UserControl>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Example.BusinessApp.Infrastructure;
+using Example.BusinessApp.ItAdmin;
 using Example.BusinessApp.Sales;
 using Matisco.Domain;
 using Matisco.WebApi.Client;
@@ -15,6 +16,7 @@ namespace Example.BusinessApp
             yield return typeof(MatiscoPrismModule);
             yield return typeof(InfrastructurePrismModule);
             yield return typeof(SalesPrismModule);
+            yield return typeof(ItAdminPrismModule);
         }
 
         public override IEnumerable<Type> GetAutofacModuleTypes()

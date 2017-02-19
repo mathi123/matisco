@@ -141,11 +141,11 @@ namespace Matisco.Wpf.ViewModels
                 ImagePath = GetIconPath(modalIcon, "png");
             }
 
-            var modalButtons = (ModalButtonEnum) navigationContext.Parameters[nameof(ModalButtonEnum)];
-            HasYesButton = modalButtons.HasFlag(ModalButtonEnum.Yes);
-            HasNoButton = modalButtons.HasFlag(ModalButtonEnum.No);
-            HasOkButton = modalButtons.HasFlag(ModalButtonEnum.Ok);
-            HasCancelButton = modalButtons.HasFlag(ModalButtonEnum.Cancel);
+            var modalButtons = (ModalButtonEnum[]) navigationContext.Parameters[nameof(ModalButtonEnum)];
+            HasYesButton = modalButtons.Contains(ModalButtonEnum.Yes);
+            HasNoButton = modalButtons.Contains(ModalButtonEnum.No);
+            HasOkButton = modalButtons.Contains(ModalButtonEnum.Ok);
+            HasCancelButton = modalButtons.Contains(ModalButtonEnum.Cancel);
 
             WindowPropertiesChanged?.Invoke(this);
         }

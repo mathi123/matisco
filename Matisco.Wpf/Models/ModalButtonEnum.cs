@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace Matisco.Wpf.Models
+﻿namespace Matisco.Wpf.Models
 {
-    [Flags]
     public enum ModalButtonEnum
     {
         Yes,

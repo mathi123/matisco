@@ -37,6 +37,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		Changelog.md = Changelog.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin", "Example.BusinessApp.ItAdmin\Example.BusinessApp.ItAdmin.csproj", "{129F586C-DF0F-4C1E-AC17-728985FC83CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,6 +81,10 @@ Global
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,5 +95,6 @@ Global
 		{5885EBCC-C4E1-461F-B618-3143754B86E3} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{3BDC73D1-B95A-4578-9A91-A11FB0BCC31E} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{129F586C-DF0F-4C1E-AC17-728985FC83CA} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 	EndGlobalSection
 EndGlobal

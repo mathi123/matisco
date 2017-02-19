@@ -9,8 +9,8 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
         <Button Content="Open customers in new window" Width="100" Height="25" Command="{Binding OpenCustomersCommand}"/>
-        
-        <Button Content="New shell" Width="100" Height="25" Command="{Binding OpenShellCommand}"/>
+
+        <Button Content="Test modals" Width="100" Height="25" Command="{Binding OpenModalSamplesCommand}"/>
 
         <Button Content="Exit application" Width="100" Height="25" Command="{Binding ExitApplicationCommand}" />
     </StackPanel>

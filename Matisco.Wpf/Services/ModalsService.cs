@@ -15,8 +15,7 @@ namespace Matisco.Wpf.Services
             _windowService = windowService;
         }
 
-        public void OpenModal(object parent, Action<object[]> onWindowClosedAction, string title, string message, ModalButtonEnum buttons,
-            ModalIconEnum icons)
+        public void OpenModal(object parent, Action<object[]> onWindowClosedAction, string title, string message, ModalIconEnum icons, params ModalButtonEnum[] buttons)
         {
             var navigationParameters = new NavigationParameters
             {
@@ -31,15 +30,14 @@ namespace Matisco.Wpf.Services
 
         public void InfoMessage(object parent, string title, string message)
         {
-            OpenModal(parent, null, title, message, ModalButtonEnum.Ok, ModalIconEnum.Information);
+            OpenModal(parent, null, title, message, ModalIconEnum.Information, ModalButtonEnum.Ok);
         }
 
         public void YesNoConfirm(object parent, Action<ModalButtonEnum> resultAction, string title, string message)
         {
-            var action = new Action<object[]>((args) => resultAction((ModalButtonEnum) args[0]));
-            var buttons = ModalButtonEnum.Yes | ModalButtonEnum.No;
+            var action = resultAction == null ? null : new Action<object[]>((args) => resultAction((ModalButtonEnum) args[0]));
 
-            OpenModal(parent, action, title, message, buttons, ModalIconEnum.Question);
+            OpenModal(parent, action, title, message, ModalIconEnum.Question, ModalButtonEnum.Yes, ModalButtonEnum.No);
         }
     }
 }

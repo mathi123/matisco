@@ -4,20 +4,18 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5885EBCC-C4E1-461F-B618-3143754B86E3}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{129F586C-DF0F-4C1E-AC17-728985FC83CA}</ProjectGuid>
+    <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Example.BusinessApp</RootNamespace>
-    <AssemblyName>Example.BusinessApp</AssemblyName>
+    <RootNamespace>Example.BusinessApp.ItAdmin</RootNamespace>
+    <AssemblyName>Example.BusinessApp.ItAdmin</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -27,7 +25,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -46,10 +43,6 @@
     </Reference>
     <Reference Include="Prism, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Core.6.2.0\lib\net45\Prism.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Prism.Autofac.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
-      <HintPath>..\packages\Prism.Autofac.6.2.0\lib\net45\Prism.Autofac.Wpf.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Prism.Wpf, Version=6.2.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
@@ -76,17 +69,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="App.xaml.cs">
-      <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Bootstrapper.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="ItAdminPrismModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -100,6 +83,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\ModalSamplesViewModel.cs" />
+    <Compile Include="Views\ModalSamplesView.xaml.cs">
+      <DependentUpon>ModalSamplesView.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -112,37 +99,16 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Example.BusinessApp.Infrastructure\Example.BusinessApp.Infrastructure.csproj">
-      <Project>{1bcee73c-a1a7-4067-989f-f55421e5df72}</Project>
-      <Name>Example.BusinessApp.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Example.BusinessApp.ItAdmin\Example.BusinessApp.ItAdmin.csproj">
-      <Project>{129F586C-DF0F-4C1E-AC17-728985FC83CA}</Project>
-      <Name>Example.BusinessApp.ItAdmin</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Example.BusinessApp.Sales\Example.BusinessApp.Sales.csproj">
-      <Project>{3bdc73d1-b95a-4578-9a91-a11fb0bcc31e}</Project>
-      <Name>Example.BusinessApp.Sales</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Matisco.Domain\Matisco.Domain.csproj">
-      <Project>{2b8c7e70-4bb7-4959-8e06-78c021379da2}</Project>
-      <Name>Matisco.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Matisco.WebApi.Client\Matisco.WebApi.Client.csproj">
-      <Project>{C925C2ED-1D32-4844-AE19-A2BC23930DA1}</Project>
-      <Name>Matisco.WebApi.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
-      <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
-      <Name>Matisco.Wpf.Controls</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf\Matisco.Wpf.csproj">
       <Project>{0a6fa236-0fe2-40ab-92f7-21c650bd3fde}</Project>
       <Name>Matisco.Wpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\ModalSamplesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

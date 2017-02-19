@@ -44,10 +44,6 @@ namespace Example.BusinessApp.Sales.ViewModels
         
         public ICommand OpenDialogCommand => new DelegateCommand(OpenDialog);
 
-        public ICommand ThrowExceptionCommand => new DelegateCommand(ThrowException);
-
-        public ICommand ThrowSmallExceptionCommand => new DelegateCommand(ThrowSmallException);
-        
         public CustomerViewModel(ICustomerService customerService, IWindowService windowService, IExceptionHandler exceptionHandler, IModalsService modalsService)
         {
             _customerService = customerService;
@@ -79,20 +75,7 @@ namespace Example.BusinessApp.Sales.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
-
-        private void ThrowException()
-        {
-            var exception = new ArgumentException("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel orem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vel dignissim nunc. Donec iaculis enim tellus, at pretium mauris ultrices eu. Sed eros est, euismod et viverra eget, pellentesque nec diam. Vestibulum elementum tellus in lacus pellentesque, quis ullamcorper metus eleifend. Nullam id vestibulum elit. Nunc lacinia eleifend accumsan. Phasellus in neque purus. Sed hendrerit sit amet lacus eget luctus. Sed eget placerat augue. Duis aliquet purus purus, vitae vestibulum ligula euismod nec.");
-            _exceptionHandler.Handle(this, exception, "Some error ocurred");
-        }
-
-        private void ThrowSmallException()
-        {
-            var exception = new ArgumentException("Missing projectId;");
-
-            _exceptionHandler.Handle(this, exception);
-        }
-
+        
         private void Save()
         {
             _modalsService.YesNoConfirm(this, (val) =>

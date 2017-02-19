@@ -17,6 +17,8 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
         public ICommand ExitApplicationCommand => new DelegateCommand(ExitApplication);
 
         public ICommand OpenCustomersCommand => new DelegateCommand(OpenCustomers);
+
+        public ICommand OpenModalSamplesCommand => new DelegateCommand(OpenModalSamples);
         
         public StartUpViewModel(IWindowService windowService, IApplicationShutdownService applicationShutdownService)
         {
@@ -32,6 +34,11 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
         private void OpenCustomers()
         {
             _windowService.Open(ViewNames.CustomerOverview);
+        }
+
+        private void OpenModalSamples()
+        {
+            _windowService.Open(ViewNames.ModalSamplesView);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
