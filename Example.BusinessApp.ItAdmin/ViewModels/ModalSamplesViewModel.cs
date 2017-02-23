@@ -39,7 +39,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
         private void OpenEmptyModal()
         {
-            _modalService.OpenModal(this, null, "Empty", "This is an empty modal.", ModalIconEnum.None, ModalButtonEnum.Ok | ModalButtonEnum.Cancel);
+            _modalService.OpenModal(this, null, "Empty", "This is an empty modal.", ModalIconEnum.None, ModalButtonEnum.Ok, ModalButtonEnum.Cancel);
         }
 
         private void OpenQuestionModal()

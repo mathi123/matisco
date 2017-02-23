@@ -42,8 +42,7 @@ namespace Matisco.Wpf.Services
                 return;
             }
 
-            var windows = _windowService.GetAllOpenWindows();
-            foreach (var key in windows.Keys.ToArray())
+            foreach (var key in _windowService.GetWindowKeys())
             {
                 _windowService.CloseWindow(key);
             }
@@ -52,14 +51,9 @@ namespace Matisco.Wpf.Services
         private bool ApplicationHasUnsavedChanges()
         {
             var hasUnsavedChanges = false;
-            var windows = _windowService.GetAllOpenWindows();
 
-            foreach (var key in windows.Keys)
+            foreach (var window in _windowService.GetWindows())
             {
-                Window window;
-                var hasWindow = windows.TryGetValue(key, out window);
-                if (!hasWindow) continue;
-
                 bool windowHasUnsavedChanges = false;
 
                 var windowAsEditor = window as IEditor;

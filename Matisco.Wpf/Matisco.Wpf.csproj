@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BootstrapperBase.cs" />
+    <Compile Include="Converters\NullToCollapsedConverter.cs" />
     <Compile Include="Events\AllWindowsClosedEvent.cs" />
     <Compile Include="Interfaces\IControlWindowProperties.cs" />
     <Compile Include="Interfaces\IHasTitle.cs" />
@@ -83,6 +84,8 @@
     <Compile Include="MatiscoPrismModule.cs" />
     <Compile Include="Models\ModalButtonEnum.cs" />
     <Compile Include="Models\ModalIconEnum.cs" />
+    <Compile Include="Models\WindowCollectionManager.cs" />
+    <Compile Include="Models\WindowInformation.cs" />
     <Compile Include="Services\ApplicationShutdownService.cs" />
     <Compile Include="Exceptions\ViewModelNotFoundException.cs" />
     <Compile Include="Services\ExceptionHandler.cs" />
@@ -111,7 +114,6 @@
       <DependentUpon>UnsavedChangesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\UnsavedChangesViewModel.cs" />
-    <Compile Include="Models\WindowClosedAction.cs" />
     <Compile Include="Models\WindowKey.cs" />
     <Compile Include="Services\WindowService.cs" />
     <Page Include="Views\ExceptionView.xaml">

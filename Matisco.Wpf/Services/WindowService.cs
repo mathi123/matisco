@@ -2,8 +2,11 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Autofac;
 using Matisco.Wpf.Events;
 using Matisco.Wpf.Interfaces;
@@ -20,9 +23,7 @@ namespace Matisco.Wpf.Services
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellInformationService _shellInformationService;
         private readonly IRegionManager _regionManager;
-        private readonly ConcurrentDictionary<WindowKey, Window> _openWindows = new ConcurrentDictionary<WindowKey, Window>();
-        private readonly List<WindowClosedAction> _windowClosedActions = new List<WindowClosedAction>();
-        private readonly ConcurrentDictionary<WindowKey, WindowKey> _openDialogs = new ConcurrentDictionary<WindowKey, WindowKey>();
+        private readonly WindowCollectionManager _windowCollection = new WindowCollectionManager();
 
         public WindowService(IContainer container, IEventAggregator eventAggregator, IShellInformationService shellInformationService,
             IRegionManager regionManager)
@@ -41,18 +42,12 @@ namespace Matisco.Wpf.Services
         public void OpenOrFocusWindow<T>(object key, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null) where T : Window
         {
             var windowKey = new WindowKey(typeof(T), key);
+            var windowToFocus = _windowCollection.Get(windowKey);
 
-            if (_openWindows.ContainsKey(windowKey))
+            if (!ReferenceEquals(windowToFocus, null))
             {
-                Window windowToFocus;
-                var windowWasFound = _openWindows.TryGetValue(windowKey, out windowToFocus);
-
-                if (windowWasFound)
-                {
-                    // Todo: call on UI thread?
-                    windowToFocus.Activate();
-                    return;
-                }
+                windowToFocus.Window.Activate();
+                return;
             }
 
             var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction);
@@ -70,19 +65,19 @@ namespace Matisco.Wpf.Services
 
         public void TryFocusWindowByWindowKey(WindowKey key)
         {
-            Window windowToFocus;
-            var windowWasFound = _openWindows.TryGetValue(key, out windowToFocus);
+            var windowToFocus = _windowCollection.Get(key);
 
-            if (windowWasFound)
+            if (!ReferenceEquals(windowToFocus, null))
             {
-                // Todo: call on UI thread
-                if (!windowToFocus.IsVisible)
+                var window = windowToFocus.Window;
+
+                if (!window.IsVisible)
                 {
-                    windowToFocus.Show();
+                    window.Show();
                 }
                 else
                 {
-                    windowToFocus.Activate();
+                    window.Activate();
                 }
             }
         }
@@ -91,19 +86,26 @@ namespace Matisco.Wpf.Services
         {
             var windowKey = new WindowKey(typeof(T), Guid.NewGuid());
             var parentWindowKey = FindWindowKeyContainingViewOrViewModel(parent);
-            Window parentWindow;
-            _openWindows.TryGetValue(parentWindowKey, out parentWindow);
+            var parentWindow = _windowCollection.Get(parentWindowKey);
 
-            if (parentWindow == null) return;
+            if (ReferenceEquals(parentWindow, null)) return;
 
             var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction);
             
             NavigateInWindow(window, parameters);
             
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.Owner = parentWindow;
+            window.Owner = parentWindow.Window;
 
-            _openDialogs.TryAdd(parentWindowKey, windowKey);
+            var information = new WindowInformation()
+            {
+                Key = windowKey,
+                ParentKey = parentWindowKey,
+                Window = window,
+                AfterWindowClosedAction = onWindowClosedAction
+            };
+
+            _windowCollection.Add(information);
 
             window.Show();
         }
@@ -118,17 +120,11 @@ namespace Matisco.Wpf.Services
             var shellType = _shellInformationService.GetShellType();
             var windowKey = new WindowKey(viewType, key);
 
-            if (_openWindows.ContainsKey(windowKey))
+            var existingWindow = _windowCollection.Get(windowKey);
+            if (!ReferenceEquals(existingWindow, null))
             {
-                Window windowToFocus;
-                var windowWasFound = _openWindows.TryGetValue(windowKey, out windowToFocus);
-
-                if (windowWasFound)
-                {
-                    // Todo: call on UI thread?
-                    windowToFocus.Activate();
-                    return;
-                }
+                existingWindow.Window.Activate();
+                return;
             }
 
             var window = CreateWindow(shellType, windowKey, onWindowClosedAction);
@@ -146,39 +142,46 @@ namespace Matisco.Wpf.Services
         public void OpenDialog(object parent, string viewType, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null)
         {
             var parentWindowKey = FindWindowKeyContainingViewOrViewModel(parent);
-            Window parentWindow;
-            _openWindows.TryGetValue(parentWindowKey, out parentWindow);
+            var parentWindowInfo = _windowCollection.Get(parentWindowKey);
 
-            if (parentWindow == null) return;
+            if (ReferenceEquals(parentWindowInfo,null)) return;
 
             var shellType = _shellInformationService.GetShellType();
             var windowKey = new WindowKey(viewType, Guid.NewGuid());
             var window = CreateWindow(shellType, windowKey, onWindowClosedAction);
 
+            // Set region manager
             var shellWindow = window as DependencyObject;
-
             var regionManager = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shellWindow, regionManager);
             RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
-           
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
-
-            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
-            window.Owner = parentWindow;
             
-            _openDialogs.TryAdd(parentWindowKey, windowKey);
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            window.Owner = parentWindowInfo.Window;
+
+            var windowInformation = new WindowInformation()
+            {
+                Key = windowKey,
+                ParentKey = parentWindowKey,
+                Window = window,
+                AfterWindowClosedAction = onWindowClosedAction
+            };
+
+            _windowCollection.Add(windowInformation);
+
+            parentWindowInfo.Window.IsEnabled = false;
 
             window.Show();
         }
-        
+
         public void CloseWindow(WindowKey key)
         {
-            Window window;
-            var windowExists = _openWindows.TryGetValue(key, out window);
+            var windowInformation = _windowCollection.Get(key);
 
-            if (windowExists)
+            if (!ReferenceEquals(windowInformation, null))
             {
-                window.Close();
+                windowInformation.Window.Close();
             }
         }
 
@@ -192,9 +195,25 @@ namespace Matisco.Wpf.Services
             }
         }
 
-        public ConcurrentDictionary<WindowKey, Window> GetAllOpenWindows()
+        public IEnumerable<Window> GetWindows()
         {
-            return _openWindows;
+            foreach (var windowInformation in _windowCollection.GetWindowInformations())
+            {
+                yield return windowInformation.Window;
+            }
+        }
+
+        public IEnumerable<WindowKey> GetWindowKeys()
+        {
+            foreach (var windowInformation in _windowCollection.GetWindowInformations())
+            {
+                yield return windowInformation.Key;
+            }
+        }
+
+        public IEnumerable<WindowInformation> GetWindowInformations()
+        {
+            return _windowCollection.GetWindowInformations();
         }
 
         private void NavigateInWindow(Window window, NavigationParameters parameters)
@@ -213,16 +232,17 @@ namespace Matisco.Wpf.Services
         {
             var window = _container.Resolve(type) as Window;
 
-            _openWindows.TryAdd(windowKey, window);
+            var windowInformation = new WindowInformation()
+            {
+                Key = windowKey,
+                AfterWindowClosedAction = onWindowClosedAction,
+                Window = window
+            };
 
+            _windowCollection.Add(windowInformation);
+            
             window.Closed += WindowClosedCallback;
             window.Activated += WindowActivateCallback;
-
-            if (onWindowClosedAction != null)
-            {
-                var windowClosedAction = new WindowClosedAction(windowKey, onWindowClosedAction);
-                _windowClosedActions.Add(windowClosedAction);
-            }
 
             return window;
         }
@@ -230,69 +250,33 @@ namespace Matisco.Wpf.Services
         private void WindowActivateCallback(object sender, EventArgs e)
         {
             var window = sender as Window;
+            if (ReferenceEquals(window, null))
+                return;
 
-            if (window != null)
-            {
-                var exists = _openWindows.Any(pair => Equals(pair.Value, window));
+            var windowInformation = _windowCollection.SearchByWindow(window);
+            if (ReferenceEquals(windowInformation, null))
+                return;
 
-                if (exists)
-                {
-                    var activatedWindow = _openWindows.SingleOrDefault(pair => Equals(pair.Value, window));
+            if(ReferenceEquals(windowInformation.DialogChildKey, null))
+                return;
 
-                    WindowKey dialogKey;
-
-                    var success = _openDialogs.TryGetValue(activatedWindow.Key, out dialogKey);
-
-                    if (success && dialogKey != null)
-                    {
-                        Window dialogWindow;
-                        _openWindows.TryGetValue(dialogKey, out dialogWindow);
-
-                        dialogWindow?.Activate();
-                    }
-                }
-            }
+            var dialog = _windowCollection.Get(windowInformation.DialogChildKey);
+            dialog?.Window.Activate();
         }
 
         private void WindowClosedCallback(object sender, EventArgs eventArgs)
         {
-            var window = sender as Window;
+            var window = _windowCollection.SearchByWindow(sender as Window);
 
-            if (window != null)
+            if (window.AfterWindowClosedAction != null)
             {
-                var exists = _openWindows.Any(pair => Equals(pair.Value, window));
-
-                if (exists)
-                {
-                    var keyValuePair = _openWindows.SingleOrDefault(pair => Equals(pair.Value, window));
-                    Window removedWindow;
-
-                    var removed = _openWindows.TryRemove(keyValuePair.Key, out removedWindow);
-
-                    var results = ExtractResultsFromViewModel(window);
-                    foreach (var action in _windowClosedActions.Where(w => w.WindowKey.Equals(keyValuePair.Key)).ToArray())
-                    {
-                        // Todo: care with threading here
-                        action.AfterWindowClosedAction(results);
-                        _windowClosedActions.Remove(action);
-                    }
-
-                    foreach (var dialog in _openDialogs.ToArray())
-                    {
-                        if (ReferenceEquals(dialog.Value, window))
-                        {
-                            WindowKey key;
-                            _openDialogs.TryRemove(dialog.Key, out key);
-                            break;
-                        }
-                    }
-
-                    if (removed)
-                    {
-                        CheckIfNoWindows();
-                    }
-                }
+                var results = ExtractResultsFromViewModel(window.Window);
+                window.AfterWindowClosedAction(results);
             }
+
+            _windowCollection.Remove(window);
+
+            CheckIfNoWindows();
         }
 
         private object[] ExtractResultsFromViewModel(Window window)
@@ -323,7 +307,7 @@ namespace Matisco.Wpf.Services
 
         private void CheckIfNoWindows()
         {
-            if (_openWindows.Count == 0)
+            if (_windowCollection.IsEmpty())
             {
                 _eventAggregator.GetEvent<AllWindowsClosedEvent>().Publish();
             }
@@ -333,9 +317,9 @@ namespace Matisco.Wpf.Services
         {
             if (ReferenceEquals(viewOrViewmodel, null)) return null;
 
-            foreach (var keyValue in _openWindows)
+            foreach (var keyValue in _windowCollection.GetWindowInformations())
             {
-                var window = keyValue.Value;
+                var window = keyValue.Window;
 
                 if (ReferenceEquals(viewOrViewmodel, window)) return keyValue.Key;
                 if (ReferenceEquals(viewOrViewmodel, window.DataContext)) return keyValue.Key;

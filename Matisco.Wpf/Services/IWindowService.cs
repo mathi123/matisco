@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Windows;
 using Matisco.Wpf.Models;
 using Prism.Regions;
@@ -91,6 +93,8 @@ namespace Matisco.Wpf.Services
         /// Get all the open windows.
         /// </summary>
         /// <returns></returns>
-        ConcurrentDictionary<WindowKey, Window> GetAllOpenWindows();
+        IEnumerable<Window> GetWindows();
+
+        IEnumerable<WindowKey> GetWindowKeys();
     }
 }
