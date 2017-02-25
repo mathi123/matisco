@@ -4,13 +4,22 @@ using System.Windows;
 
 namespace Matisco.Wpf.Models
 {
-    public class WindowCollectionManager
+    public class ConcurrentWindowCollection
     {
         private readonly ConcurrentDictionary<WindowKey, WindowInformation> _windows = new ConcurrentDictionary<WindowKey, WindowInformation>();
 
         public void Add(WindowInformation information)
         {
+            if (ReferenceEquals(information, null))
+                return;
+
             _windows.TryAdd(information.Key, information);
+            
+            if (information.ParentKey != null)
+            {
+                var parent = Get(information.ParentKey);
+                parent.DialogChildKey = information.Key;
+            }
         }
 
         public WindowInformation Get(WindowKey key)

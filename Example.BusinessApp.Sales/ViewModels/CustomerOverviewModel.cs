@@ -73,7 +73,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             }
         }
 
-        private void ReloadData(object[] obj)
+        private void ReloadData(IResultDataCollection obj)
         {
             ReloadList();
         }

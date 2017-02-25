@@ -1,11 +1,12 @@
 ﻿using System;
+using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
 
 namespace Matisco.Wpf.Services
 {
     public interface IModalsService
     {
-        void OpenModal(object parent, Action<object[]> onWindowClosedAction, string title, string message, ModalIconEnum icons, params ModalButtonEnum[] buttons);
+        void OpenModal(object parent, Action<IResultDataCollection> onWindowClosedAction, string title, string message, ModalIconEnum icons, params ModalButtonEnum[] buttons);
 
         void InfoMessage(object parent, string title, string message);
 

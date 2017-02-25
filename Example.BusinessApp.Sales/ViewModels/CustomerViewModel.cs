@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Input;
 using Example.BusinessApp.Infrastructure.Models;
 using Example.BusinessApp.Infrastructure.ViewModels;
@@ -15,7 +16,6 @@ namespace Example.BusinessApp.Sales.ViewModels
     {
         private readonly ICustomerService _customerService;
         private readonly IWindowService _windowService;
-        private readonly IExceptionHandler _exceptionHandler;
         private readonly IModalsService _modalsService;
         private Customer _original;
         private Customer _current = new Customer();
@@ -48,7 +48,6 @@ namespace Example.BusinessApp.Sales.ViewModels
         {
             _customerService = customerService;
             _windowService = windowService;
-            _exceptionHandler = exceptionHandler;
             _modalsService = modalsService;
         }
 
@@ -90,9 +89,10 @@ namespace Example.BusinessApp.Sales.ViewModels
             _windowService.OpenDialog(this, nameof(Infrastructure.Views.ConfirmView), null, ConfirmBoxClosed);
         }
 
-        private void ConfirmBoxClosed(object[] obj)
+        private void ConfirmBoxClosed(IResultDataCollection allResults)
         {
-            if (obj != null && obj.Length == 1 && obj[0] is ConfirmResult)
+            var obj = allResults.GetResults().First().Results;
+            if (obj.Length == 1 && obj[0] is ConfirmResult)
             {
                 var result = (ConfirmResult)obj[0];
 

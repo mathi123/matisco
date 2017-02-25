@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Windows;
+using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
 using Prism.Regions;
 
@@ -16,7 +17,7 @@ namespace Matisco.Wpf.Services
         /// <typeparam name="T">Type of the view, this type should derive from Window.</typeparam>
         /// <param name="parameters">Prism navigation parameters.</param>
         /// <param name="onWindowClosedAction">Callback action when window closes</param>
-        void OpenNewWindow<T>(NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null) where T : Window;
+        void OpenNewWindow<T>(NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null) where T : Window;
 
         /// <summary>
         /// Create a new window instance, or focus it if it already exists.
@@ -25,7 +26,7 @@ namespace Matisco.Wpf.Services
         /// <param name="parameters">Prism navigation parameters.</param>
         /// <param name="key">Key to determine if the window already exists.</param>
         /// <param name="onWindowClosedAction">Callback action when window closes</param>
-        void OpenOrFocusWindow<T>(object key, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null) where T : Window;
+        void OpenOrFocusWindow<T>(object key, NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null) where T : Window;
 
         /// <summary>
         /// Focus an existing window.
@@ -47,7 +48,7 @@ namespace Matisco.Wpf.Services
         /// <param name="parent">The parent view instance. The window will be opened on top of this one.</param>
         /// <param name="parameters">Prism navigation parameters.</param>
         /// <param name="onWindowClosedAction">Action to execute after the window or view closes.</param>
-        void OpenNewWindowAsDialog<T>(object parent, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null) where T : Window;
+        void OpenNewWindowAsDialog<T>(object parent, NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null) where T : Window;
 
         /// <summary>
         /// Creates a new shell window, with a view inside.
@@ -56,7 +57,7 @@ namespace Matisco.Wpf.Services
         /// <param name="viewType">Type of the view to load in shell.</param>
         /// <param name="parameters">Prism navigation parameters.</param>
         /// <param name="onWindowClosedAction">Action to execute after the window or view closes.</param>
-        void Open(string viewType, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null);
+        void Open(string viewType, NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null);
 
         /// <summary>
         /// Creates a new shell window, or focusses it when one already exists.
@@ -66,7 +67,7 @@ namespace Matisco.Wpf.Services
         /// <param name="viewType">Type of the view to load in the shell.</param>
         /// <param name="key">Key to determine if the window already exists.</param>
         /// <param name="onWindowClosedAction">Callback action when window closes</param>
-        void Open(string viewType, object key, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null);
+        void Open(string viewType, object key, NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null);
 
         /// <summary>
         /// Opens a view in a fixed dialog.
@@ -75,7 +76,7 @@ namespace Matisco.Wpf.Services
         /// <param name="viewType">Type of the view.</param>
         /// <param name="parameters">Prism navigation parameters.</param>
         /// <param name="onWindowClosedAction">Action to execute after the window or view closes.</param>
-        void OpenDialog(object parent, string viewType, NavigationParameters parameters = null, Action<object[]> onWindowClosedAction = null);
+        void OpenDialog(object parent, string viewType, NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null);
 
         /// <summary>
         /// Close a window

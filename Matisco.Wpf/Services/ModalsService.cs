@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
 using Matisco.Wpf.ViewModels;
 using Matisco.Wpf.Views;
@@ -15,7 +17,7 @@ namespace Matisco.Wpf.Services
             _windowService = windowService;
         }
 
-        public void OpenModal(object parent, Action<object[]> onWindowClosedAction, string title, string message, ModalIconEnum icons, params ModalButtonEnum[] buttons)
+        public void OpenModal(object parent, Action<IResultDataCollection> onWindowClosedAction, string title, string message, ModalIconEnum icons, params ModalButtonEnum[] buttons)
         {
             var navigationParameters = new NavigationParameters
             {
@@ -35,7 +37,7 @@ namespace Matisco.Wpf.Services
 
         public void YesNoConfirm(object parent, Action<ModalButtonEnum> resultAction, string title, string message)
         {
-            var action = resultAction == null ? null : new Action<object[]>((args) => resultAction((ModalButtonEnum) args[0]));
+            var action = resultAction == null ? null : new Action<IResultDataCollection>((args) => resultAction((ModalButtonEnum) args.GetResults().First().Results[0]));
 
             OpenModal(parent, action, title, message, ModalIconEnum.Question, ModalButtonEnum.Yes, ModalButtonEnum.No);
         }
