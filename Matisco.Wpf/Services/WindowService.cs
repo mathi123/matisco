@@ -51,7 +51,7 @@ namespace Matisco.Wpf.Services
                 return;
             }
 
-            var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction, null);
+            var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction, null, null);
 
             NavigateInWindow(window, parameters);
             
@@ -91,7 +91,7 @@ namespace Matisco.Wpf.Services
 
             if (ReferenceEquals(parentWindow, null)) return;
 
-            var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction);
+            var window = CreateWindow(typeof(T), windowKey, onWindowClosedAction, null, null);
             
             NavigateInWindow(window, parameters);
             
@@ -118,12 +118,12 @@ namespace Matisco.Wpf.Services
                 return;
             }
 
-            var window = CreateWindow(shellType, windowKey, onWindowClosedAction);
+            var regionManager = _regionManager.CreateRegionManager();
+            var window = CreateWindow(shellType, windowKey, onWindowClosedAction, null, regionManager);
             var shellWindow = window as DependencyObject;
 
-            var regionManager = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shellWindow, regionManager);
-            RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
+            //RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
 
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
 
@@ -138,14 +138,14 @@ namespace Matisco.Wpf.Services
             if (ReferenceEquals(parentWindowInfo,null)) return;
 
             var shellType = _shellInformationService.GetShellType();
+            var regionManager = _regionManager.CreateRegionManager();
             var windowKey = new WindowKey(viewType, Guid.NewGuid());
-            var window = CreateWindow(shellType, windowKey, onWindowClosedAction, parentWindowKey);
+            var window = CreateWindow(shellType, windowKey, onWindowClosedAction, parentWindowKey, regionManager);
 
             // Set region manager
             var shellWindow = window as DependencyObject;
-            var regionManager = _regionManager.CreateRegionManager();
             RegionManager.SetRegionManager(shellWindow, regionManager);
-            RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
+            //RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
             
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
@@ -210,9 +210,19 @@ namespace Matisco.Wpf.Services
             dataContext?.OnNavigatedTo(context);
         }
 
-        private Window CreateWindow(Type type, WindowKey windowKey, Action<IResultDataCollection> onWindowClosedAction, WindowKey parentWindowKey = null)
+        private Window CreateWindow(Type type, WindowKey windowKey, Action<IResultDataCollection> onWindowClosedAction, WindowKey parentWindowKey, IRegionManager regionManager)
         {
-            var window = _container.Resolve(type) as Window;
+
+            Window window;
+            if (regionManager != null)
+            {
+                window = _container.Resolve(type, new TypedParameter(typeof(IRegionManager), regionManager)) as Window;
+                Push(regionManager);
+            }
+            else
+            {
+                window = _container.Resolve(type) as Window;
+            }
 
             if (ReferenceEquals(window, null))
                 return null;
@@ -227,6 +237,18 @@ namespace Matisco.Wpf.Services
             window.LocationChanged += WindowLocationChangedCallback;
 
             return window;
+        }
+
+        private IRegionManager _pendingRegionManager;
+
+        private void Push(IRegionManager regionManager)
+        {
+            _pendingRegionManager = regionManager;
+        }
+
+        public IRegionManager GetCurrentRegionManager()
+        {
+            return _pendingRegionManager;
         }
 
         private void WindowLocationChangedCallback(object sender, EventArgs e)

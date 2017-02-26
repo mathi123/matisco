@@ -1,5 +1,4 @@
 ﻿using System.Windows.Input;
-using Matisco.Wpf.Prism;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -7,12 +6,12 @@ using Prism.Regions;
 
 namespace Example.BusinessApp.Infrastructure.ViewModels
 {
-    public class StartUpViewModel : BindableBase, INavigationAware, INeedsRegionManager
+    public class StartUpViewModel : BindableBase, INavigationAware//, INeedsRegionManager
     {
         private readonly IWindowService _windowService;
         private readonly IApplicationShutdownService _applicationShutdownService;
 
-        public IRegionManager RegionManager { get; set; }
+        //public IRegionManager RegionManager { get; set; }
 
         public ICommand ExitApplicationCommand => new DelegateCommand(ExitApplication);
 
@@ -33,7 +32,7 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
 
         private void OpenCustomers()
         {
-            _windowService.Open(ViewNames.CustomerOverview);
+            _windowService.Open("UserOverview");
         }
 
         private void OpenModalSamples()

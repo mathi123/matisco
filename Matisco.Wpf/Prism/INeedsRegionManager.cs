@@ -2,8 +2,8 @@
 
 namespace Matisco.Wpf.Prism
 {
-    public interface INeedsRegionManager
-    {
-        IRegionManager RegionManager { get; set; }
-    }
+    //public interface INeedsRegionManager
+    //{
+    //    IRegionManager RegionManager { get; set; }
+    //}
 }

@@ -11,13 +11,12 @@ using Prism.Regions;
 
 namespace Matisco.Wpf.ViewModels
 {
-    public class ShellViewModel : BindableBase, INeedsRegionManager
+    public class ShellViewModel : BindableBase
     {
         private readonly IShellInformationService _shellInformationService;
         private string _title;
         private ImageSource _icon;
-        private IRegionManager _regionManager;
-        private SizeToContent _sizeToContent = SizeToContent.Manual;
+        private SizeToContent _sizeToContent = SizeToContent.WidthAndHeight;
         private ResizeMode _resizeMode = ResizeMode.CanResize;
 
         public string Title
@@ -40,19 +39,19 @@ namespace Matisco.Wpf.ViewModels
             }
         }
 
-        public IRegionManager RegionManager
-        {
-            get { return _regionManager; }
-            set
-            {
-                _regionManager = value;
+        //public IRegionManager RegionManager
+        //{
+        //    get { return _regionManager; }
+        //    set
+        //    {
+        //        _regionManager = value;
 
-                foreach (var region in _regionManager.Regions)
-                {
-                    region.ActiveViews.CollectionChanged += ViewChanged;
-                }
-            }
-        }
+        //        foreach (var region in _regionManager.Regions)
+        //        {
+        //            region.ActiveViews.CollectionChanged += ViewChanged;
+        //        }
+        //    }
+        //}
 
         public SizeToContent SizeToContent
         {
@@ -133,7 +132,7 @@ namespace Matisco.Wpf.ViewModels
             }
         }
 
-        public ShellViewModel(IShellInformationService shellInformationService)
+        public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager)
         {
             _shellInformationService = shellInformationService;
 
@@ -141,6 +140,11 @@ namespace Matisco.Wpf.ViewModels
             var iconPath = shellInformationService.GetDefaultIconPath();
             
             Icon = new ImageSourceConverter().ConvertFrom(iconPath) as ImageSource;
+
+            foreach (var region in regionManager.Regions)
+            {
+                region.ActiveViews.CollectionChanged += ViewChanged;
+            }
         }
     }
 }

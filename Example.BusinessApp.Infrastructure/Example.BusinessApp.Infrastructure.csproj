@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="InfrastructurePrismModule.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -87,6 +88,8 @@
     <Compile Include="InfrastructureAutofacModule.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
+    <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ConfirmViewModel.cs" />
     <Compile Include="ViewModels\StartUpViewModel.cs" />
     <Compile Include="ViewNames.cs" />

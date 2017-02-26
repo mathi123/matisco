@@ -84,8 +84,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ModalSamplesViewModel.cs" />
+    <Compile Include="ViewModels\UserOverviewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\ModalSamplesView.xaml.cs">
       <DependentUpon>ModalSamplesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserOverview.xaml.cs">
+      <DependentUpon>UserOverview.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -99,6 +107,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Example.BusinessApp.Infrastructure\Example.BusinessApp.Infrastructure.csproj">
+      <Project>{1bcee73c-a1a7-4067-989f-f55421e5df72}</Project>
+      <Name>Example.BusinessApp.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
+      <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
+      <Name>Matisco.Wpf.Controls</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf\Matisco.Wpf.csproj">
       <Project>{0a6fa236-0fe2-40ab-92f7-21c650bd3fde}</Project>
       <Name>Matisco.Wpf</Name>
@@ -106,6 +122,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ModalSamplesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserOverview.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

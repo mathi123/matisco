@@ -8,6 +8,7 @@ namespace Example.BusinessApp.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             builder.RegisterType<CustomerService>().As<ICustomerService>().SingleInstance();
         }
     }

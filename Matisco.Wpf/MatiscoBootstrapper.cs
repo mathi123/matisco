@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using Autofac;
 using Matisco.Wpf.Exceptions;
 using Matisco.Wpf.Prism;
+using Matisco.Wpf.Services;
 using Prism.Autofac;
 using Prism.Modularity;
 using Prism.Mvvm;
@@ -49,20 +51,35 @@ namespace Matisco.Wpf
             }   
         }
 
-        protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
-        {
-            var behaviours = base.ConfigureDefaultRegionBehaviors();
+        //protected override IRegionBehaviorFactory ConfigureDefaultRegionBehaviors()
+        //{
+        //    var behaviours = base.ConfigureDefaultRegionBehaviors();
+        //    behaviours.Where(beh => beh.)
+        //    //behaviours.AddIfMissing(RegionManagerAwareBehaviour.BehaviourKey, typeof(RegionManagerAwareBehaviour));
 
-            behaviours.AddIfMissing(RegionManagerAwareBehaviour.BehaviourKey, typeof(RegionManagerAwareBehaviour));
-
-            return behaviours;
-        }
+        //    return behaviours;
+        //}
 
         protected override void ConfigureViewModelLocator()
         {
-            ViewModelLocationProvider.SetDefaultViewModelFactory(type => Container.Resolve(type));
+            ViewModelLocationProvider.SetDefaultViewModelFactory(ResolveViewModel);
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(GetViewModel);
         }
+
+        private object ResolveViewModel(object arg1, Type arg2)
+        {
+            var windowService = Container.Resolve<IWindowService>();
+
+            var regionManager = windowService?.GetCurrentRegionManager();
+
+            if (regionManager == null)
+            {
+                return Container.Resolve(arg2);
+            }
+
+            return Container.Resolve(arg2, new TypedParameter(typeof(IRegionManager), regionManager));
+        }
+
 
         protected Type GetViewModel(Type viewType)
         {

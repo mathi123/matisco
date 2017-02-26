@@ -96,6 +96,8 @@ namespace Matisco.Wpf.Services
         /// <returns></returns>
         IEnumerable<Window> GetWindows();
 
+        IRegionManager GetCurrentRegionManager();
+
         IEnumerable<WindowKey> GetWindowKeys();
     }
 }
