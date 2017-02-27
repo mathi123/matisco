@@ -17,6 +17,7 @@ namespace Matisco.Wpf
         }
 
         public abstract IEnumerable<Type> GetPrismModuleTypes();
+
         public abstract IEnumerable<Type> GetAutofacModuleTypes();
     }
 }

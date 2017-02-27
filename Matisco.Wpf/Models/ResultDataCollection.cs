@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Matisco.Wpf.Models;
+using Matisco.Wpf.Interfaces;
 
-namespace Matisco.Wpf.Interfaces
+namespace Matisco.Wpf.Models
 {
     public class ResultDataCollection : IResultDataCollection
     {

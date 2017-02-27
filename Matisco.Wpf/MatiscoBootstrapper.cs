@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using Autofac;
 using Matisco.Wpf.Exceptions;
-using Matisco.Wpf.Prism;
 using Matisco.Wpf.Services;
 using Prism.Autofac;
 using Prism.Modularity;

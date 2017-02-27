@@ -17,5 +17,7 @@ namespace Matisco.Wpf.Models
         public bool? CloseOnDeactivate { get; set; }
 
         public bool? ShowInTaskbar { get; set; }
+
+        public WindowState? WindowState { get; set; }
     }
 }

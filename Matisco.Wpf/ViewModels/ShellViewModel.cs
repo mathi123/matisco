@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
+﻿using System.Collections.Specialized;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
-using Matisco.Wpf.Prism;
 using Matisco.Wpf.Services;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -21,7 +16,9 @@ namespace Matisco.Wpf.ViewModels
             SizeToContent = SizeToContent.WidthAndHeight,
             ResizeMode = ResizeMode.CanResize,
             ShowInTaskbar = true,
-            WindowStyle = WindowStyle.SingleBorderWindow
+            WindowStyle = WindowStyle.SingleBorderWindow,
+            WindowState = WindowState.Normal,
+            CloseOnDeactivate = false
         };
 
         private string _title;
@@ -30,6 +27,7 @@ namespace Matisco.Wpf.ViewModels
         private ResizeMode _resizeMode;
         private bool _showInTaskbar;
         private WindowStyle _windowStyle;
+        private WindowState _windowState;
 
         public string Title
         {
@@ -90,7 +88,17 @@ namespace Matisco.Wpf.ViewModels
                 OnPropertyChanged();
             }
         }
-        
+
+        public WindowState WindowState
+        {
+            get { return _windowState; }
+            set
+            {
+                _windowState = value; 
+                OnPropertyChanged();
+            }
+        }
+
         public bool CloseOnDeactivate { get; set; }
 
         public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager)
@@ -155,39 +163,6 @@ namespace Matisco.Wpf.ViewModels
                     }
                 }
             }
-
-            //if (e.Action == NotifyCollectionChangedAction.Add)
-            //{
-            //    var view = e.NewItems[0] as IHasTitle;
-
-            //    if (view != null)
-            //    {
-            //        Title = view.GetTitle();
-            //    }
-            //    else
-            //    {
-            //        var dataContext = (e.NewItems[0] as FrameworkElement)?.DataContext as IHasTitle;
-
-            //        if (dataContext != null)
-            //        {
-            //            Title = dataContext.GetTitle();
-            //        }
-
-            //        var windowPropertyController = (e.NewItems[0] as FrameworkElement)?.DataContext as IControlWindowProperties;
-
-            //        if (windowPropertyController != null)
-            //        {
-            //            windowPropertyController.WindowPropertiesChanged +=
-            //                (win) => SetWindowProperties(win.GetWindowPropertyOverrides());
-
-            //            SetWindowProperties(windowPropertyController.GetWindowPropertyOverrides());
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    Title = _shellInformationService.GetDefaultTitle();
-            //}
         }
 
         private void WindowPropertyControllerOnWindowPropertiesChanged(IControlWindowProperties sender)
@@ -230,6 +205,16 @@ namespace Matisco.Wpf.ViewModels
             if (windowProps.CloseOnDeactivate.HasValue)
             {
                 CloseOnDeactivate = windowProps.CloseOnDeactivate.Value;
+            }
+
+            if (windowProps.WindowState.HasValue)
+            {
+                WindowState = windowProps.WindowState.Value;
+
+                if (WindowState == WindowState.Maximized)
+                {
+                    SizeToContent = SizeToContent.Manual;
+                }
             }
         }
     }

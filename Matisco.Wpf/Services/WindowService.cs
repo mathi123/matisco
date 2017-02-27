@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Threading;
 using Autofac;
 using Matisco.Wpf.Events;
 using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
-using Matisco.Wpf.Prism;
+using Matisco.Wpf.ViewModels;
 using Prism.Events;
 using Prism.Regions;
 
@@ -120,10 +116,6 @@ namespace Matisco.Wpf.Services
 
             var regionManager = _regionManager.CreateRegionManager();
             var window = CreateWindow(shellType, windowKey, onWindowClosedAction, null, regionManager);
-            var shellWindow = window as DependencyObject;
-
-            RegionManager.SetRegionManager(shellWindow, regionManager);
-            //RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
 
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
 
@@ -142,15 +134,10 @@ namespace Matisco.Wpf.Services
             var windowKey = new WindowKey(viewType, Guid.NewGuid());
             var window = CreateWindow(shellType, windowKey, onWindowClosedAction, parentWindowKey, regionManager);
 
-            // Set region manager
-            var shellWindow = window as DependencyObject;
-            RegionManager.SetRegionManager(shellWindow, regionManager);
-            //RegionManagerAware.SetRegionManagerAware(shellWindow, regionManager);
             regionManager.RequestNavigate(RegionNames.MainRegion, viewType, parameters);
             
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.Owner = parentWindowInfo.Window;
-            //window.ShowInTaskbar = false;
 
             BlockWindow(parentWindowKey);
 
@@ -217,9 +204,10 @@ namespace Matisco.Wpf.Services
             if (regionManager != null)
             {
                 Debug.WriteLine($"view regionmanager: {regionManager.GetHashCode()}");
-                Push(regionManager);
+                SetCurrentRegionManager(regionManager);
 
                 window = _container.Resolve(type, new TypedParameter(typeof(IRegionManager), regionManager)) as Window;
+                RegionManager.SetRegionManager(window, regionManager);
             }
             else
             {
@@ -243,15 +231,15 @@ namespace Matisco.Wpf.Services
         }
 
         private IRegionManager _pendingRegionManager;
-
-        private void Push(IRegionManager regionManager)
-        {
-            _pendingRegionManager = regionManager;
-        }
-
+        
         public IRegionManager GetCurrentRegionManager()
         {
             return _pendingRegionManager;
+        }
+
+        private void SetCurrentRegionManager(IRegionManager regionManager)
+        {
+            _pendingRegionManager = regionManager;
         }
 
         private void WindowLocationChangedCallback(object sender, EventArgs e)
@@ -314,9 +302,17 @@ namespace Matisco.Wpf.Services
                 return;
 
             var dialog = _concurrentWindowCollection.Get(windowInformation.DialogChildKey);
-            dialog?.Window.Activate();
-        }
 
+            if (dialog != null)
+            {
+                var shellViewModel = window.DataContext as ShellViewModel;
+
+                if (shellViewModel == null || !shellViewModel.CloseOnDeactivate)
+                {
+                    dialog.Window.Activate();
+                }
+            }
+        }
 
         private void WindowDeactivatedCallback(object sender, EventArgs e)
         {
@@ -328,7 +324,9 @@ namespace Matisco.Wpf.Services
             if (ReferenceEquals(windowInformation, null))
                 return;
 
-            if (windowInformation.CloseOnDeactivation)
+            var shellViewModel = window.DataContext as ShellViewModel;
+
+            if (shellViewModel != null && shellViewModel.CloseOnDeactivate)
             {
                 CloseWindow(windowInformation.Key);
             }

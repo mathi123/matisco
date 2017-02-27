@@ -7,7 +7,7 @@
         mc:Ignorable="d" prism:ViewModelLocator.AutoWireViewModel="True"
         ResizeMode="{Binding ResizeMode}" SizeToContent="{Binding SizeToContent}"
         Icon="{Binding Icon}" Title="{Binding Title}" ShowInTaskbar="{Binding ShowInTaskbar}"
-        WindowStyle="{Binding WindowStyle}">
+        WindowStyle="{Binding WindowStyle}" WindowState="{Binding WindowState}">
     <Grid>
         <ContentControl prism:RegionManager.RegionName="MainRegion" />
     </Grid>

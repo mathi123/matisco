@@ -99,9 +99,6 @@
     <Compile Include="Services\IExceptionHandler.cs" />
     <Compile Include="Services\IModalsService.cs" />
     <Compile Include="Services\IShellInformationService.cs" />
-    <Compile Include="Prism\INeedsRegionManager.cs" />
-    <Compile Include="Prism\RegionManagerAware.cs" />
-    <Compile Include="Prism\RegionManagerAwareBehaviour.cs" />
     <Compile Include="RegionNames.cs" />
     <Compile Include="Services\ModalsService.cs" />
     <Compile Include="Services\ShellInformationService.cs" />

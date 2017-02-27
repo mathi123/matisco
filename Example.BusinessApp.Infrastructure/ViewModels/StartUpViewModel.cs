@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
+using Matisco.Wpf.Interfaces;
+using Matisco.Wpf.Models;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -6,12 +9,10 @@ using Prism.Regions;
 
 namespace Example.BusinessApp.Infrastructure.ViewModels
 {
-    public class StartUpViewModel : BindableBase, INavigationAware//, INeedsRegionManager
+    public class StartUpViewModel : BindableBase, INavigationAware, IControlWindowProperties
     {
         private readonly IWindowService _windowService;
         private readonly IApplicationShutdownService _applicationShutdownService;
-
-        //public IRegionManager RegionManager { get; set; }
 
         public ICommand ExitApplicationCommand => new DelegateCommand(ExitApplication);
 
@@ -54,5 +55,19 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
         {
         }
 
+        public event WindowPropertiesChangedDelegate WindowPropertiesChanged;
+
+        public WindowPropertyOverrides GetWindowPropertyOverrides()
+        {
+            return new WindowPropertyOverrides()
+            {
+                WindowState =WindowState.Maximized 
+            };
+        }
+
+        protected virtual void OnWindowPropertiesChanged()
+        {
+            WindowPropertiesChanged?.Invoke(this);
+        }
     }
 }
