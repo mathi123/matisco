@@ -150,7 +150,7 @@ namespace Matisco.Wpf.Services
             
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
             window.Owner = parentWindowInfo.Window;
-            window.ShowInTaskbar = false;
+            //window.ShowInTaskbar = false;
 
             BlockWindow(parentWindowKey);
 
@@ -216,8 +216,10 @@ namespace Matisco.Wpf.Services
             Window window;
             if (regionManager != null)
             {
-                window = _container.Resolve(type, new TypedParameter(typeof(IRegionManager), regionManager)) as Window;
+                Debug.WriteLine($"view regionmanager: {regionManager.GetHashCode()}");
                 Push(regionManager);
+
+                window = _container.Resolve(type, new TypedParameter(typeof(IRegionManager), regionManager)) as Window;
             }
             else
             {
@@ -233,6 +235,7 @@ namespace Matisco.Wpf.Services
             
             window.Closed += WindowClosedCallback;
             window.Activated += WindowActivateCallback;
+            window.Deactivated += WindowDeactivatedCallback;
             window.SizeChanged += WindowSizeChangedCallback;
             window.LocationChanged += WindowLocationChangedCallback;
 
@@ -312,6 +315,23 @@ namespace Matisco.Wpf.Services
 
             var dialog = _concurrentWindowCollection.Get(windowInformation.DialogChildKey);
             dialog?.Window.Activate();
+        }
+
+
+        private void WindowDeactivatedCallback(object sender, EventArgs e)
+        {
+            var window = sender as Window;
+            if (ReferenceEquals(window, null))
+                return;
+
+            var windowInformation = _concurrentWindowCollection.SearchByWindow(window);
+            if (ReferenceEquals(windowInformation, null))
+                return;
+
+            if (windowInformation.CloseOnDeactivation)
+            {
+                CloseWindow(windowInformation.Key);
+            }
         }
 
         private void WindowClosedCallback(object sender, EventArgs eventArgs)

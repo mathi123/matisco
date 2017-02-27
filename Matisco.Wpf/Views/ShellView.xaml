@@ -6,7 +6,8 @@
         xmlns:prism="http://prismlibrary.com/" 
         mc:Ignorable="d" prism:ViewModelLocator.AutoWireViewModel="True"
         ResizeMode="{Binding ResizeMode}" SizeToContent="{Binding SizeToContent}"
-        Icon="{Binding Icon}" Title="{Binding Title}">
+        Icon="{Binding Icon}" Title="{Binding Title}" ShowInTaskbar="{Binding ShowInTaskbar}"
+        WindowStyle="{Binding WindowStyle}">
     <Grid>
         <ContentControl prism:RegionManager.RegionName="MainRegion" />
     </Grid>

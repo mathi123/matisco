@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Matisco.Wpf.Interfaces
+namespace Matisco.Wpf.Models
 {
     public class WindowPropertyOverrides
     {
@@ -11,5 +11,11 @@ namespace Matisco.Wpf.Interfaces
         public ResizeMode? ResizeMode { get; set; }
 
         public string IconPath { get; set; }
+
+        public WindowStyle? WindowStyle { get; set; }
+
+        public bool? CloseOnDeactivate { get; set; }
+
+        public bool? ShowInTaskbar { get; set; }
     }
 }

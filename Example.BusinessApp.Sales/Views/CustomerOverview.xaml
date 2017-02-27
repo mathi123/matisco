@@ -14,7 +14,7 @@
                   commands:DataGridCommands.DoubleClickCommand="{Binding OpenCommand}"
                   AutoGenerateColumns="False" CanUserAddRows="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
                 <DataGridTextColumn Binding="{Binding Email}" Header="Email"/>
             </DataGrid.Columns>
         </DataGrid>        

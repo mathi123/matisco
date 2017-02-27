@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Matisco.Wpf.Interfaces;
+using Matisco.Wpf.Models;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;

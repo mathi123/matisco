@@ -3,9 +3,7 @@ using System.Windows.Input;
 using Example.BusinessApp.Infrastructure;
 using Example.BusinessApp.Infrastructure.Models;
 using Example.BusinessApp.Sales.Services;
-using Example.BusinessApp.Sales.Views;
 using Matisco.Wpf.Interfaces;
-//using Matisco.Wpf.Prism;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -13,7 +11,7 @@ using Prism.Regions;
 
 namespace Example.BusinessApp.Sales.ViewModels
 {
-    public class CustomerOverviewModel : BindableBase, INavigationAware, /*INeedsRegionManager, */IHasTitle
+    public class CustomerOverviewModel : BindableBase, INavigationAware, IHasTitle
     {
         private readonly ICustomerService _customerService;
         private readonly IWindowService _windowService;
@@ -41,8 +39,6 @@ namespace Example.BusinessApp.Sales.ViewModels
         }
 
         public ICommand OpenCommand => new DelegateCommand(OpenCustomer);
-
-//        public IRegionManager RegionManager { get; set; }
 
         public CustomerOverviewModel(ICustomerService customerService, IWindowService windowService)
         {

@@ -77,6 +77,8 @@ namespace Matisco.Wpf
                 return Container.Resolve(arg2);
             }
 
+            Debug.WriteLine($"injecting in viewmodel: {regionManager.GetHashCode()}");
+
             return Container.Resolve(arg2, new TypedParameter(typeof(IRegionManager), regionManager));
         }
 

@@ -16,6 +16,8 @@ namespace Matisco.Wpf.Models
 
         public WindowKey DialogChildKey { get; set; }
 
+        public bool CloseOnDeactivation { get; set; }
+
         public WindowInformation(WindowKey key, WindowKey parentKey, Window window,
             Action<IResultDataCollection> afterWindowClosedAction)
         {

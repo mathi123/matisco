@@ -1,8 +1,11 @@
-﻿namespace Matisco.Wpf.Interfaces
+﻿using Matisco.Wpf.Models;
+
+namespace Matisco.Wpf.Interfaces
 {
     public interface IControlWindowProperties
     {
         event WindowPropertiesChangedDelegate WindowPropertiesChanged;
+
         WindowPropertyOverrides GetWindowPropertyOverrides();
     }
 

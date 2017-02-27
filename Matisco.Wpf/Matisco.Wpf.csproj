@@ -83,7 +83,7 @@
     <Compile Include="Interfaces\IResultDataCollection.cs" />
     <Compile Include="Models\ResultData.cs" />
     <Compile Include="Models\ResultDataCollection.cs" />
-    <Compile Include="Interfaces\WindowPropertyOverrides.cs" />
+    <Compile Include="Models\WindowPropertyOverrides.cs" />
     <Compile Include="MatiscoAutofacModule.cs" />
     <Compile Include="MatiscoPrismModule.cs" />
     <Compile Include="Models\ModalButtonEnum.cs" />

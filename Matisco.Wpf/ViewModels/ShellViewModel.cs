@@ -1,9 +1,12 @@
-﻿using System.Collections.Specialized;
+﻿using System;
+using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using Matisco.Wpf.Interfaces;
+using Matisco.Wpf.Models;
 using Matisco.Wpf.Prism;
 using Matisco.Wpf.Services;
 using Prism.Mvvm;
@@ -13,11 +16,20 @@ namespace Matisco.Wpf.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
-        private readonly IShellInformationService _shellInformationService;
+        private readonly WindowPropertyOverrides _originalWindowState = new WindowPropertyOverrides()
+        {
+            SizeToContent = SizeToContent.WidthAndHeight,
+            ResizeMode = ResizeMode.CanResize,
+            ShowInTaskbar = true,
+            WindowStyle = WindowStyle.SingleBorderWindow
+        };
+
         private string _title;
         private ImageSource _icon;
-        private SizeToContent _sizeToContent = SizeToContent.WidthAndHeight;
-        private ResizeMode _resizeMode = ResizeMode.CanResize;
+        private SizeToContent _sizeToContent;
+        private ResizeMode _resizeMode;
+        private bool _showInTaskbar;
+        private WindowStyle _windowStyle;
 
         public string Title
         {
@@ -38,21 +50,7 @@ namespace Matisco.Wpf.ViewModels
                 OnPropertyChanged();
             }
         }
-
-        //public IRegionManager RegionManager
-        //{
-        //    get { return _regionManager; }
-        //    set
-        //    {
-        //        _regionManager = value;
-
-        //        foreach (var region in _regionManager.Regions)
-        //        {
-        //            region.ActiveViews.CollectionChanged += ViewChanged;
-        //        }
-        //    }
-        //}
-
+        
         public SizeToContent SizeToContent
         {
             get { return _sizeToContent; }
@@ -73,40 +71,128 @@ namespace Matisco.Wpf.ViewModels
             }
         }
 
+        public bool ShowInTaskbar
+        {
+            get { return _showInTaskbar; }
+            set
+            {
+                _showInTaskbar = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public WindowStyle WindowStyle
+        {
+            get { return _windowStyle; }
+            set
+            {
+                _windowStyle = value; 
+                OnPropertyChanged();
+            }
+        }
+        
+        public bool CloseOnDeactivate { get; set; }
+
+        public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager)
+        {
+            _originalWindowState.Title = shellInformationService.GetDefaultTitle();
+            _originalWindowState.IconPath = shellInformationService.GetDefaultIconPath();
+
+            SetWindowProperties(_originalWindowState);
+
+            regionManager.Regions.CollectionChanged += RegionCollectionChanged;
+        }
+
+        private void RegionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null)
+            {
+                foreach (var region in e.NewItems)
+                {
+                    var iRegion = region as IRegion;
+                    if (iRegion != null) iRegion.ActiveViews.CollectionChanged += ViewChanged;
+                }
+            }
+
+            if (e.OldItems != null)
+            {
+                foreach (var region in e.OldItems)
+                {
+                    var iRegion = region as IRegion;
+                    if (iRegion != null) iRegion.ActiveViews.CollectionChanged -= ViewChanged;
+                }
+            }
+        }
+
         private void ViewChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
+            if (e.NewItems != null)
             {
-                var view = e.NewItems[0] as IHasTitle;
-
-                if (view != null)
+                foreach (var view in e.NewItems)
                 {
-                    Title = view.GetTitle();
-                }
-                else
-                {
-                    var dataContext = (e.NewItems[0] as FrameworkElement)?.DataContext as IHasTitle;
-
-                    if (dataContext != null)
-                    {
-                        Title = dataContext.GetTitle();
-                    }
-
-                    var windowPropertyController = (e.NewItems[0] as FrameworkElement)?.DataContext as IControlWindowProperties;
+                    var windowPropertyController = (view as FrameworkElement)?.DataContext as IControlWindowProperties;
 
                     if (windowPropertyController != null)
                     {
-                        windowPropertyController.WindowPropertiesChanged +=
-                            (win) => SetWindowProperties(win.GetWindowPropertyOverrides());
+                        windowPropertyController.WindowPropertiesChanged += WindowPropertyControllerOnWindowPropertiesChanged;
 
                         SetWindowProperties(windowPropertyController.GetWindowPropertyOverrides());
                     }
                 }
             }
-            else
+
+            if (e.OldItems != null)
             {
-                Title = _shellInformationService.GetDefaultTitle();
+                foreach (var view in e.OldItems)
+                {
+                    var windowPropertyController = (view as FrameworkElement)?.DataContext as IControlWindowProperties;
+
+                    if (windowPropertyController != null)
+                    {
+                        windowPropertyController.WindowPropertiesChanged -= WindowPropertyControllerOnWindowPropertiesChanged;
+
+                        SetWindowProperties(_originalWindowState);
+                    }
+                }
             }
+
+            //if (e.Action == NotifyCollectionChangedAction.Add)
+            //{
+            //    var view = e.NewItems[0] as IHasTitle;
+
+            //    if (view != null)
+            //    {
+            //        Title = view.GetTitle();
+            //    }
+            //    else
+            //    {
+            //        var dataContext = (e.NewItems[0] as FrameworkElement)?.DataContext as IHasTitle;
+
+            //        if (dataContext != null)
+            //        {
+            //            Title = dataContext.GetTitle();
+            //        }
+
+            //        var windowPropertyController = (e.NewItems[0] as FrameworkElement)?.DataContext as IControlWindowProperties;
+
+            //        if (windowPropertyController != null)
+            //        {
+            //            windowPropertyController.WindowPropertiesChanged +=
+            //                (win) => SetWindowProperties(win.GetWindowPropertyOverrides());
+
+            //            SetWindowProperties(windowPropertyController.GetWindowPropertyOverrides());
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    Title = _shellInformationService.GetDefaultTitle();
+            //}
+        }
+
+        private void WindowPropertyControllerOnWindowPropertiesChanged(IControlWindowProperties sender)
+        {
+            SetWindowProperties(sender.GetWindowPropertyOverrides());
         }
 
         private void SetWindowProperties(WindowPropertyOverrides windowProps)
@@ -130,20 +216,20 @@ namespace Matisco.Wpf.ViewModels
             {
                 Icon = new ImageSourceConverter().ConvertFrom(windowProps.IconPath) as ImageSource;
             }
-        }
 
-        public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager)
-        {
-            _shellInformationService = shellInformationService;
-
-            Title = shellInformationService.GetDefaultTitle();
-            var iconPath = shellInformationService.GetDefaultIconPath();
-            
-            Icon = new ImageSourceConverter().ConvertFrom(iconPath) as ImageSource;
-
-            foreach (var region in regionManager.Regions)
+            if (windowProps.ShowInTaskbar.HasValue)
             {
-                region.ActiveViews.CollectionChanged += ViewChanged;
+                ShowInTaskbar = windowProps.ShowInTaskbar.Value;
+            }
+
+            if (windowProps.WindowStyle.HasValue)
+            {
+                WindowStyle = windowProps.WindowStyle.Value;
+            }
+
+            if (windowProps.CloseOnDeactivate.HasValue)
+            {
+                CloseOnDeactivate = windowProps.CloseOnDeactivate.Value;
             }
         }
     }

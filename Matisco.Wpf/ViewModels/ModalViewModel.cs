@@ -166,7 +166,8 @@ namespace Matisco.Wpf.ViewModels
                 Title = Title,
                 IconPath = HasCustomIcon ? IconPath : null,
                 ResizeMode = ResizeMode.NoResize,
-                SizeToContent = SizeToContent.WidthAndHeight
+                SizeToContent = SizeToContent.WidthAndHeight,
+                ShowInTaskbar = false
             };
         }
 
