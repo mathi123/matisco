@@ -4,14 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:mab="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel>
-        <Button Content="Open customers in new window" Width="100" Height="25" Command="{Binding OpenCustomersCommand}"/>
+        <mab:Button Text="Open customers in new window" Command="{Binding OpenCustomersCommand}"/>
 
-        <Button Content="Test modals" Width="100" Height="25" Command="{Binding OpenModalSamplesCommand}"/>
+        <mab:Button Text="Test modals" Command="{Binding OpenModalSamplesCommand}"/>
 
-        <Button Content="Exit application" Width="100" Height="25" Command="{Binding ExitApplicationCommand}" />
+        <mab:Button Text="Exit application" Command="{Binding ExitApplicationCommand}" />
     </StackPanel>
 </UserControl>

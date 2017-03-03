@@ -1,0 +1,29 @@
+﻿namespace Matisco.Wpf.Controls.Buttons
+{
+    public enum ButtonImageEnum
+    {
+        None,
+        Add,
+        ApplicationExit,
+        Binocular,
+        Check,
+        Clear,
+        Copy,
+        Delete,
+        Database,
+        Edit,
+        Next,
+        Print,
+        ProcessStop,
+        Question,
+        Refresh,
+        Search,
+        Trash,
+        Warning,
+        ZoomIn,
+        ZoomOut,
+        Error,
+        Info,
+        NewDocument
+    }
+}

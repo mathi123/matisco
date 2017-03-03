@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:commands="clr-namespace:Matisco.Wpf.Controls.AttachedProperties;assembly=Matisco.Wpf.Controls"
+             xmlns:mab="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <mab:Button Image="{x:Static mab:ButtonImageEnum.Add}" Text="Test"/>
+        <DataGrid Grid.Row="1"
+            AutoGenerateColumns="False" ItemsSource="{Binding Users}" SelectedItem="{Binding SelectedUser}"
                   commands:DataGridCommands.DoubleClickCommand="{Binding OpenCommand}" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>

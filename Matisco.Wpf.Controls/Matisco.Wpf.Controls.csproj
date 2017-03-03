@@ -56,6 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttachedProperties\DataGridCommands.cs" />
+    <Compile Include="Coverters\ButtonImageEnumToVisibilityConverter.cs" />
+    <Compile Include="Coverters\ButtonImageEnumToImageSourceConverter.cs" />
+    <Compile Include="Buttons\Button.cs" />
+    <Compile Include="Buttons\ButtonImageEnum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -84,6 +88,50 @@
       <Project>{0a6fa236-0fe2-40ab-92f7-21c650bd3fde}</Project>
       <Name>Matisco.Wpf</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\16\Descending.png" />
+    <Resource Include="Images\16\First.png" />
+    <Resource Include="Images\16\Last.png" />
+    <Resource Include="Images\16\NavigateBeginning.png" />
+    <Resource Include="Images\16\NavigateEnd.png" />
+    <Resource Include="Images\16\NavigateGoTo.png" />
+    <Resource Include="Images\16\NavigateLeft.png" />
+    <Resource Include="Images\16\NavigateRight.png" />
+    <Resource Include="Images\16\Next.png" />
+    <Resource Include="Images\16\Previous.png" />
+    <Resource Include="Images\48\Add.png" />
+    <Resource Include="Images\48\ApplicationExit.png" />
+    <Resource Include="Images\48\Binocular.png" />
+    <Resource Include="Images\48\Check.png" />
+    <Resource Include="Images\48\Clear.png" />
+    <Resource Include="Images\48\Contacts.png" />
+    <Resource Include="Images\48\Copy.png" />
+    <Resource Include="Images\48\Database.png" />
+    <Resource Include="Images\48\Delete.png" />
+    <Resource Include="Images\48\Edit.png" />
+    <Resource Include="Images\48\EditClear.png" />
+    <Resource Include="Images\48\Error.png" />
+    <Resource Include="Images\48\Filter.png" />
+    <Resource Include="Images\48\Home.png" />
+    <Resource Include="Images\48\Info.png" />
+    <Resource Include="Images\48\Next.png" />
+    <Resource Include="Images\48\Paste.png" />
+    <Resource Include="Images\48\Previous.png" />
+    <Resource Include="Images\48\Print.png" />
+    <Resource Include="Images\48\ProcessStop.png" />
+    <Resource Include="Images\48\Question.png" />
+    <Resource Include="Images\48\QuestionBlue.png" />
+    <Resource Include="Images\48\Refresh.png" />
+    <Resource Include="Images\48\Search.png" />
+    <Resource Include="Images\48\Trash.png" />
+    <Resource Include="Images\48\Warning.png" />
+    <Resource Include="Images\48\WindowClose.png" />
+    <Resource Include="Images\48\ZoomIn.png" />
+    <Resource Include="Images\48\ZoomOut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\48\NewDocument.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

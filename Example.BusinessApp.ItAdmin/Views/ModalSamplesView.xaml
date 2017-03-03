@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mab="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
              xmlns:mvvm="http://prismlibrary.com/">
     <Grid>
         <Grid.RowDefinitions>
@@ -14,14 +15,14 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        
-        <Button Grid.Row="0" Content="Info" Width="100" Height="25" Command="{Binding OpenInfoModalCommand}" />
-        <Button Grid.Row="1" Content="Warning" Width="100" Height="25" Command="{Binding OpenWarningModalCommand}" />
-        <Button Grid.Row="2" Content="Error" Width="100" Height="25" Command="{Binding OpenErrorModalCommand}" />
-        <Button Grid.Row="3" Content="Empty" Width="100" Height="25" Command="{Binding OpenEmptyModalCommand}" />
-        <Button Grid.Row="4" Content="Question" Width="100" Height="25" Command="{Binding OpenQuestionModalCommand}" />
-        <Button Grid.Row="5" Content="Small Exception" Width="100" Height="25" Command="{Binding ThrowSmallExceptionCommand}" />
-        <Button Grid.Row="6" Content="Large Exception" Width="100" Height="25" Command="{Binding ThrowExceptionCommand}" />
+
+        <mab:Button Grid.Row="0" Image="Info" Text="Info" MinWidth="100" Command="{Binding OpenInfoModalCommand}" />
+        <mab:Button Grid.Row="1" Image="Warning" Text="Warning" MinWidth="100" Command="{Binding OpenWarningModalCommand}" />
+        <mab:Button Grid.Row="2" Image="Error" Text="Error" MinWidth="100" Command="{Binding OpenErrorModalCommand}" />
+        <mab:Button Grid.Row="3" Image="NewDocument" Text="Empty" MinWidth="100" Command="{Binding OpenEmptyModalCommand}" />
+        <mab:Button Grid.Row="4" Image="Question" Text="Question" MinWidth="100" Command="{Binding OpenQuestionModalCommand}" />
+        <mab:Button Grid.Row="5" Image="ProcessStop" Text="Small Exception" MinWidth="100" Command="{Binding ThrowSmallExceptionCommand}" />
+        <mab:Button Grid.Row="6" Image="ProcessStop" Text="Large Exception" MinWidth="100" Command="{Binding ThrowExceptionCommand}" />
 
     </Grid>
 </UserControl>
