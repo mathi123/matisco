@@ -10,14 +10,20 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <mae:TextEditor Label="Name" EditValue="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" ShowRequiredIndicator="True"/>
+        <mae:TextEditor Grid.Row="0"  Label="Name" EditValue="{Binding Name, UpdateSourceTrigger=PropertyChanged}" ShowRequiredIndicator="True"/>
 
-        <mae:TextEditor Label="Email" Size="Large" EditValue="{Binding Email, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" 
+        <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large" EditValue="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
                         ShowRequiredIndicator="True"/>
 
-        <mab:Button Grid.Row="2" Image="Check" Text="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>    
+        <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}"/>
+
+        <mae:CheckboxEditor Grid.Row="3" Label="Is cool 2" EditValue="{Binding IsCoolNullable}"/>
+
+        <mab:Button Grid.Row="4" Image="Check" Text="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>    
         
     </Grid>
 </UserControl>

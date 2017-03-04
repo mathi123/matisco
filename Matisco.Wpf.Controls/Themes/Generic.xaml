@@ -15,6 +15,16 @@
     
     <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
     
+    <SolidColorBrush x:Key="FocussedControlColor" Color="DarkGoldenrod"/>
+
+    <Thickness x:Key="FocussedControlBorderThickness">2</Thickness>
+
+    <SolidColorBrush x:Key="HoveredControlBorderColor" Color="#3C7FB1"/>
+
+    <SolidColorBrush x:Key="HoveredControlColor" Color="#BEE6FD"/>
+    
+    <SolidColorBrush x:Key="RequiredFieldIndicatorColor" Color="#3C7FB1"/>
+    
     <Style TargetType="{x:Type local:Button}">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Height" Value="28"/>
@@ -37,12 +47,12 @@
                                 <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
                                 <Style.Triggers>
                                     <Trigger Property="IsFocused" Value="True">
-                                        <Setter Property="BorderThickness" Value="2"/>
-                                        <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
+                                        <Setter Property="BorderThickness" Value="{StaticResource FocussedControlBorderThickness}"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#BEE6FD"/>
-                                        <Setter Property="BorderBrush" Value="#3C7FB1"/>
+                                        <Setter Property="Background" Value="{StaticResource HoveredControlColor}"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
                                     </Trigger>
                                 </Style.Triggers>
                            </Style>
@@ -70,7 +80,6 @@
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="Width" Value="Auto"/>
-        <Setter Property="MinWidth" Value="150"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="White"/>
@@ -102,11 +111,11 @@
                                     <Setter Property="Background" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Background}"/>
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding ElementName=PART_TextBox, Path=IsFocused}" Value="True">
-                                            <Setter Property="BorderThickness" Value="2"/>
-                                            <Setter Property="BorderBrush" Value="DarkGoldenrod"/>
+                                            <Setter Property="BorderThickness" Value="{StaticResource FocussedControlBorderThickness}"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
                                         </DataTrigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="BorderBrush" Value="#3C7FB1"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -120,13 +129,13 @@
                                          VerticalAlignment="Top">
                                     <Polygon.Style>
                                         <Style TargetType="Polygon">
-                                            <Setter Property="Fill" Value="#3C7FB1"/>
+                                            <Setter Property="Fill" Value="{StaticResource RequiredFieldIndicatorColor}"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding ElementName=PART_TextBox, Path=IsFocused}" Value="True">
-                                                    <Setter Property="Fill" Value="DarkGoldenrod"/>
+                                                    <Setter Property="Fill" Value="{StaticResource FocussedControlColor}"/>
                                                 </DataTrigger>
                                                 <DataTrigger Binding="{Binding ElementName=PART_Border, Path=IsMouseOver}" Value="True">
-                                                    <Setter Property="Fill" Value="#3C7FB1"/>
+                                                    <Setter Property="Fill" Value="{StaticResource HoveredControlBorderColor}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -140,6 +149,53 @@
                                          Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource EditorSizeToWidthConverter}}"/>
                             </Grid>
                          </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type editors:CheckboxEditor}">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type editors:CheckboxEditor}">
+                    <Grid Focusable="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock 
+                            Grid.Column="0"
+                            Text="{TemplateBinding Label}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Focusable="False"
+                                           Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Label, Converter={StaticResource NotEmptyToVisibleConverter}}"
+                                           Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LabelSize, Converter={StaticResource EditorSizeToWidthConverter}}"/>
+
+                        <CheckBox x:Name="PART_CheckBox" Grid.Column="1"
+                                         IsChecked="{TemplateBinding EditValue}" 
+                                         Content="{TemplateBinding Text}">
+                            <CheckBox.Style>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsFocused" Value="True">
+                                            <Setter Property="BorderThickness" Value="{StaticResource FocussedControlBorderThickness}"/>
+                                            <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </CheckBox.Style>
+                        </CheckBox>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

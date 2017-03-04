@@ -63,6 +63,7 @@
     <Compile Include="Coverters\EditorSizeToWidthConverter.cs" />
     <Compile Include="Coverters\NotEmptyToVisibleConverter.cs" />
     <Compile Include="Coverters\TrueToVisibleConverter.cs" />
+    <Compile Include="Editors\CheckboxEditor.cs" />
     <Compile Include="Editors\EditorSize.cs" />
     <Compile Include="Editors\TextEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

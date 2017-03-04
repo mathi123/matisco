@@ -24,6 +24,8 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private string _email;
         private string _name;
         private bool _hasErrors;
+        private bool _isCool;
+        private bool? _isCoolNullable;
 
         public string Email
         {
@@ -42,6 +44,26 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _name = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsCool
+        {
+            get { return _isCool; }
+            set
+            {
+                _isCool = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public bool? IsCoolNullable
+        {
+            get { return _isCoolNullable; }
+            set
+            {
+                _isCoolNullable = value; 
                 OnPropertyChanged();
             }
         }
