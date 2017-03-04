@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Autofac;
 using Matisco.Wpf.Events;
 using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
 using Matisco.Wpf.ViewModels;
+using Matisco.Wpf.Views;
+using Microsoft.Practices.ServiceLocation;
 using Prism.Events;
 using Prism.Regions;
+using IContainer = Autofac.IContainer;
 
 namespace Matisco.Wpf.Services
 {
@@ -150,7 +156,10 @@ namespace Matisco.Wpf.Services
 
             if (!ReferenceEquals(windowInformation, null))
             {
-                windowInformation.Window.Close();
+                if (!windowInformation.StartedShutdownProcess)
+                {
+                    windowInformation.Window.Close();
+                }
             }
         }
 
@@ -164,19 +173,11 @@ namespace Matisco.Wpf.Services
             }
         }
 
-        public IEnumerable<Window> GetWindows()
+        public IEnumerable<WindowInformation> GetWindows()
         {
             foreach (var windowInformation in _concurrentWindowCollection.GetWindowInformations())
             {
-                yield return windowInformation.Window;
-            }
-        }
-
-        public IEnumerable<WindowKey> GetWindowKeys()
-        {
-            foreach (var windowInformation in _concurrentWindowCollection.GetWindowInformations())
-            {
-                yield return windowInformation.Key;
+                yield return windowInformation;
             }
         }
 
@@ -219,8 +220,20 @@ namespace Matisco.Wpf.Services
 
             var windowInformation = new WindowInformation(windowKey, parentWindowKey, window, onWindowClosedAction);
 
+            if (ReferenceEquals(parentWindowKey, null))
+            {
+                window.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            }
+            else
+            {
+                var parent = _concurrentWindowCollection.Get(parentWindowKey);
+                window.Owner = parent.Window;
+                window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+            }
+
             _concurrentWindowCollection.Add(windowInformation);
-            
+
+            window.Closing += WindowClosingCallback;
             window.Closed += WindowClosedCallback;
             window.Activated += WindowActivateCallback;
             window.Deactivated += WindowDeactivatedCallback;
@@ -329,6 +342,41 @@ namespace Matisco.Wpf.Services
             if (shellViewModel != null && shellViewModel.CloseOnDeactivate)
             {
                 CloseWindow(windowInformation.Key);
+            }
+        }
+        
+        private void WindowClosingCallback(object sender, CancelEventArgs e)
+        {
+            var window = sender as Window;
+            if (ReferenceEquals(window, null))
+                return;
+
+            var windowInformation = _concurrentWindowCollection.SearchByWindow(window);
+            if (ReferenceEquals(windowInformation, null))
+                return;
+
+            if (windowInformation.IsClosingByForce)
+                return;
+
+            var shellViewModel = window.DataContext as ShellViewModel;
+            if (shellViewModel != null && shellViewModel.ExitApplicationOnClose)
+            {
+                windowInformation.StartedShutdownProcess = true;
+
+                // Exit the application
+                var shutDownService = ServiceLocator.Current.TryResolve<IApplicationShutdownService>();
+                var shutDown = shutDownService.ExitApplication(false);
+
+                if (!shutDown)
+                {
+                    e.Cancel = true;
+                    windowInformation.StartedShutdownProcess = false;
+                }
+            }
+            else if (windowInformation.HasUnsavedChanges())
+            {
+                e.Cancel = true;
+                AskToSaveChanges(windowInformation);
             }
         }
 
@@ -454,5 +502,28 @@ namespace Matisco.Wpf.Services
 
             return null;
         }
+        
+        private void AskToSaveChanges(WindowInformation windowInformation)
+        {
+            var navigationParameters = new NavigationParameters
+            {
+                {nameof(ModalViewModel.Title), "Save"},
+                {nameof(ModalViewModel.Message), "There are unsaved changes. Do you want to close this window?"},
+                {nameof(ModalButtonEnum), new ModalButtonEnum[] { ModalButtonEnum.Yes, ModalButtonEnum.No }},
+                {nameof(ModalIconEnum), ModalIconEnum.Warning}
+            };
+
+            OpenDialog(windowInformation.Window, nameof(ModalView), navigationParameters, args =>
+            {
+                var result = (ModalButtonEnum)args.GetResults().First().Results[0];
+
+                if (result == ModalButtonEnum.Yes)
+                {
+                    windowInformation.IsClosingByForce = true;
+                    windowInformation.Window.Close();
+                }
+            });
+        }
+
     }
 }

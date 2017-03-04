@@ -94,10 +94,8 @@ namespace Matisco.Wpf.Services
         /// Get all the open windows.
         /// </summary>
         /// <returns></returns>
-        IEnumerable<Window> GetWindows();
+        IEnumerable<WindowInformation> GetWindows();
 
         IRegionManager GetCurrentRegionManager();
-
-        IEnumerable<WindowKey> GetWindowKeys();
     }
 }

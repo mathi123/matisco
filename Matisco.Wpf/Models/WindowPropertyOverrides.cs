@@ -19,5 +19,7 @@ namespace Matisco.Wpf.Models
         public bool? ShowInTaskbar { get; set; }
 
         public WindowState? WindowState { get; set; }
+
+        public bool ExitApplicationOnClose { get; set; }
     }
 }

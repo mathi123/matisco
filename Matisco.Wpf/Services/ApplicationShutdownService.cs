@@ -27,25 +27,34 @@ namespace Matisco.Wpf.Services
             return _unsavedWindows;
         }
 
-        public void ExitApplication(bool forceExit)
+        public bool ExitApplication(bool forceExit)
         {
             _isTerminating = true;
             _unsavedWindows.Clear();
 
-            if (!forceExit && ApplicationHasUnsavedChanges())
+            if (forceExit)
+            {
+                foreach (var window in _windowService.GetWindows())
+                {
+                    window.IsClosingByForce = true;
+                }
+            }
+            else if (ApplicationHasUnsavedChanges())
             {
                 Debug.WriteLine("Could not close application because there are unsaved changes.");
                 _isTerminating = false;
 
                 _windowService.Open(nameof(Views.UnsavedChangesView), 1);
 
-                return;
+                return false;
             }
 
-            foreach (var key in _windowService.GetWindowKeys())
+            foreach (var window in _windowService.GetWindows())
             {
-                _windowService.CloseWindow(key);
+                _windowService.CloseWindow(window.Key);
             }
+
+            return true;
         }
 
         private bool ApplicationHasUnsavedChanges()
@@ -54,26 +63,11 @@ namespace Matisco.Wpf.Services
 
             foreach (var window in _windowService.GetWindows())
             {
-                bool windowHasUnsavedChanges = false;
-
-                var windowAsEditor = window as IEditor;
-                if (windowAsEditor != null)
-                {
-                    windowHasUnsavedChanges = windowAsEditor.HasUnsavedChanges();
-                }
-
-                var frameworkElement = window as FrameworkElement;
-                var dataContext = frameworkElement?.DataContext as IEditor;
-                if (dataContext != null)
-                {
-                    windowHasUnsavedChanges = windowHasUnsavedChanges || dataContext.HasUnsavedChanges();
-                }
-
-                windowHasUnsavedChanges = windowHasUnsavedChanges || ChildRegionsHaveUnsavedChanges(window);
+                var windowHasUnsavedChanges = window.HasUnsavedChanges();
 
                 if (windowHasUnsavedChanges)
                 {
-                    _unsavedWindows.Add(window.Title);
+                    _unsavedWindows.Add(window.Window.Title);
                 }
 
                 hasUnsavedChanges = hasUnsavedChanges || windowHasUnsavedChanges;
@@ -81,40 +75,7 @@ namespace Matisco.Wpf.Services
 
             return hasUnsavedChanges;
         }
-
-        private bool ChildRegionsHaveUnsavedChanges(Window window)
-        {
-            var manager = RegionManager.GetRegionManager(window);
-
-            if (manager != null)
-            {
-                foreach (var region in manager.Regions)
-                {
-                    foreach (var view in region.ActiveViews)
-                    {
-                        var viewEditor = view as IEditor;
-
-                        if (viewEditor != null)
-                        {
-                            if (viewEditor.HasUnsavedChanges())
-                                return true;
-                        }
-
-                        var frameworkElement = view as FrameworkElement;
-                        var dataContext = frameworkElement?.DataContext as IEditor;
-
-                        if (dataContext != null)
-                        {
-                            if (dataContext.HasUnsavedChanges())
-                                return true;
-                        }
-                    }
-                }    
-            }
-
-            return false;
-        }
-
+        
         private void AfterAllWindowsClosed()
         {
             if (_isTerminating)

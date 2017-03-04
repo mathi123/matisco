@@ -6,6 +6,6 @@ namespace Matisco.Wpf.Services
     {
         List<string> GetBlockingWindows();
 
-        void ExitApplication(bool forceExit);
+        bool ExitApplication(bool forceExit);
     }
 }

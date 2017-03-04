@@ -14,9 +14,9 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <mae:TextEditor Grid.Row="0"  Label="Name" EditValue="{Binding Name, UpdateSourceTrigger=PropertyChanged}" ShowRequiredIndicator="True"/>
+        <mae:TextEditor Grid.Row="0"  Label="Name" EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ShowRequiredIndicator="True"/>
 
-        <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large" EditValue="{Binding Email, UpdateSourceTrigger=PropertyChanged}"
+        <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large" EditValue="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ShowRequiredIndicator="True"/>
 
         <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}"/>

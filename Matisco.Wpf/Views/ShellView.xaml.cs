@@ -1,4 +1,6 @@
-﻿namespace Matisco.Wpf.Views
+﻿using System.Windows.Input;
+
+namespace Matisco.Wpf.Views
 {
     public partial class ShellView
     {

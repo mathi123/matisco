@@ -1,9 +1,11 @@
 ﻿using System.Collections.Specialized;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Models;
 using Matisco.Wpf.Services;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 
@@ -11,6 +13,8 @@ namespace Matisco.Wpf.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
+        private readonly IWindowService _windowService;
+
         private readonly WindowPropertyOverrides _originalWindowState = new WindowPropertyOverrides()
         {
             SizeToContent = SizeToContent.WidthAndHeight,
@@ -18,7 +22,8 @@ namespace Matisco.Wpf.ViewModels
             ShowInTaskbar = true,
             WindowStyle = WindowStyle.SingleBorderWindow,
             WindowState = WindowState.Normal,
-            CloseOnDeactivate = false
+            CloseOnDeactivate = false,
+            ExitApplicationOnClose = false
         };
 
         private string _title;
@@ -101,8 +106,13 @@ namespace Matisco.Wpf.ViewModels
 
         public bool CloseOnDeactivate { get; set; }
 
-        public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager)
+        public bool ExitApplicationOnClose { get; set; }
+
+        public ICommand CloseShellCommand => new DelegateCommand(CloseShell);
+
+        public ShellViewModel(IShellInformationService shellInformationService, IRegionManager regionManager, IWindowService windowService)
         {
+            _windowService = windowService;
             _originalWindowState.Title = shellInformationService.GetDefaultTitle();
             _originalWindowState.IconPath = shellInformationService.GetDefaultIconPath();
 
@@ -216,6 +226,13 @@ namespace Matisco.Wpf.ViewModels
                     SizeToContent = SizeToContent.Manual;
                 }
             }
+
+            ExitApplicationOnClose = windowProps.ExitApplicationOnClose;
+        }
+
+        private void CloseShell()
+        {
+            _windowService.CloseContainingWindow(this);   
         }
     }
 }

@@ -5,12 +5,12 @@
              xmlns:models="clr-namespace:Matisco.Wpf.Models"
              xmlns:converters="clr-namespace:Matisco.Wpf.Converters"
              mvvm:ViewModelLocator.AutoWireViewModel="True"
-             Width="450">
+             Width="450" Focusable="False">
     <UserControl.Resources>
         <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
         <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
     </UserControl.Resources>
-    <Grid Margin="10">
+    <Grid Margin="10" Focusable="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="35"/>

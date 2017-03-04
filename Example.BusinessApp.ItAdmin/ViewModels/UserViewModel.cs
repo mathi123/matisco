@@ -8,7 +8,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Example.BusinessApp.Infrastructure.Models;
 using Example.BusinessApp.Infrastructure.Services;
+using Matisco.Wpf.Interfaces;
 using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -16,16 +18,16 @@ using Prism.Regions;
 
 namespace Example.BusinessApp.ItAdmin.ViewModels
 {
-    public class UserViewModel : BindableBase, INavigationAware, IDataErrorInfo, INotifyDataErrorInfo
+    public class UserViewModel : BindableBase, IEditor, INavigationAware
     {
         private readonly IExceptionHandler _handler;
         private readonly IWindowService _windowService;
         private readonly IUserService _userService;
         private string _email;
         private string _name;
-        private bool _hasErrors;
         private bool _isCool;
         private bool? _isCoolNullable;
+        private User _user;
 
         public string Email
         {
@@ -89,10 +91,10 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             try
             {
                 await Task.Run(() => Thread.Sleep(1000));
-                var user = _userService.GetById(id);
+                _user = _userService.GetById(id);
 
-                Email = user.Email;
-                Name = user.Name;
+                Email = _user.Email;
+                Name = _user.Name;
             }
             catch (Exception ex)
             {
@@ -119,41 +121,9 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             
         }
 
-        public string this[string columnName]
+        public bool HasUnsavedChanges()
         {
-            get
-            {
-                string errorMessage = string.Empty;
-
-                switch (columnName)
-                {
-                    case "Email":
-                        if (string.IsNullOrEmpty(Email))
-                            errorMessage = "Enter Email";
-                        else if (Name.Trim() == string.Empty)
-                            errorMessage = "Enter valid Email";
-                        break;
-                }
-                return errorMessage;
-            }
+            return _user?.Email != Email || _user?.Name != Name;
         }
-
-        public string Error { get { throw new NotImplementedException(); } }
-        public IEnumerable GetErrors(string propertyName)
-        {
-            yield break;
-        }
-
-        public bool HasErrors
-        {
-            private set
-            {
-                _hasErrors = value; 
-                OnPropertyChanged();
-            }
-            get { return _hasErrors; }
-        }
-
-        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
     }
 }

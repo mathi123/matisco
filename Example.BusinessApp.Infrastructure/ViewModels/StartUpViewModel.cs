@@ -61,7 +61,8 @@ namespace Example.BusinessApp.Infrastructure.ViewModels
         {
             return new WindowPropertyOverrides()
             {
-                WindowState =WindowState.Maximized 
+                WindowState = WindowState.Maximized,
+                ExitApplicationOnClose = true
             };
         }
 

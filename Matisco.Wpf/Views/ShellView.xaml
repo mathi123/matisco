@@ -3,12 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:prism="http://prismlibrary.com/" 
+        xmlns:prism="http://prismlibrary.com/"
         mc:Ignorable="d" prism:ViewModelLocator.AutoWireViewModel="True"
         ResizeMode="{Binding ResizeMode}" SizeToContent="{Binding SizeToContent}"
         Icon="{Binding Icon}" Title="{Binding Title}" ShowInTaskbar="{Binding ShowInTaskbar}"
         WindowStyle="{Binding WindowStyle}" WindowState="{Binding WindowState}">
+    <Window.InputBindings>
+        <KeyBinding Key="W" Modifiers="Control" Command="{Binding CloseShellCommand}"/>
+    </Window.InputBindings>
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="MainRegion" />
+        <ContentControl prism:RegionManager.RegionName="MainRegion"  Focusable="False"/>
     </Grid>
 </Window>
