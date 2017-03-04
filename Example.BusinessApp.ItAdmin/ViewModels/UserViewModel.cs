@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -28,6 +29,26 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private bool _isCool;
         private bool? _isCoolNullable;
         private User _user;
+        private ObservableCollection<Language> _languages = new ObservableCollection<Language>(new Language[]
+        {
+            new Language()
+            {
+                Code = "nl",
+                Description = "Nederlands"
+            },
+            new Language()
+            {
+                Code = "de",
+                Description = "Duits"
+            },
+            new Language()
+            {
+                Code = "fr",
+                Description = "Frans"
+            }
+        });
+
+        private Language _language;
 
         public string Email
         {
@@ -70,7 +91,27 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             }
         }
 
+        public Language Language
+        {
+            get { return _language; }
+            set
+            {
+                _language = value; 
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand OkCommand => new DelegateCommand(OkClicked);
+
+        public ObservableCollection<Language> Languages
+        {
+            get { return _languages; }
+            set
+            {
+                _languages = value; 
+                OnPropertyChanged();
+            }
+        }
 
         public UserViewModel(IExceptionHandler handler, IWindowService windowService, IUserService userService)
         {

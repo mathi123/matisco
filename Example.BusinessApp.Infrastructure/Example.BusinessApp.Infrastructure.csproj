@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="InfrastructurePrismModule.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Language.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

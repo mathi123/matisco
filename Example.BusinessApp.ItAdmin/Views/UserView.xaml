@@ -12,6 +12,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <mae:TextEditor Grid.Row="0"  Label="Name" EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ShowRequiredIndicator="True"/>
@@ -22,8 +23,11 @@
         <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}"/>
 
         <mae:CheckboxEditor Grid.Row="3" Label="Is cool 2" EditValue="{Binding IsCoolNullable}"/>
+        
+        <mae:ComboboxEditor Grid.Row="4" Label="Language" ShowRequiredIndicator="True"
+                            ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
-        <mab:Button Grid.Row="4" Image="Check" Text="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>    
+        <mab:Button Grid.Row="5" Image="Check" Text="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>    
         
     </Grid>
 </UserControl>
