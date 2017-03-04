@@ -60,6 +60,11 @@
     <Compile Include="Coverters\ButtonImageEnumToImageSourceConverter.cs" />
     <Compile Include="Buttons\Button.cs" />
     <Compile Include="Buttons\ButtonImageEnum.cs" />
+    <Compile Include="Coverters\EditorSizeToWidthConverter.cs" />
+    <Compile Include="Coverters\NotEmptyToVisibleConverter.cs" />
+    <Compile Include="Coverters\TrueToVisibleConverter.cs" />
+    <Compile Include="Editors\EditorSize.cs" />
+    <Compile Include="Editors\TextEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -90,16 +95,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\16\Descending.png" />
-    <Resource Include="Images\16\First.png" />
-    <Resource Include="Images\16\Last.png" />
-    <Resource Include="Images\16\NavigateBeginning.png" />
-    <Resource Include="Images\16\NavigateEnd.png" />
-    <Resource Include="Images\16\NavigateGoTo.png" />
-    <Resource Include="Images\16\NavigateLeft.png" />
-    <Resource Include="Images\16\NavigateRight.png" />
-    <Resource Include="Images\16\Next.png" />
-    <Resource Include="Images\16\Previous.png" />
     <Resource Include="Images\48\Add.png" />
     <Resource Include="Images\48\ApplicationExit.png" />
     <Resource Include="Images\48\Binocular.png" />
@@ -115,6 +110,7 @@
     <Resource Include="Images\48\Filter.png" />
     <Resource Include="Images\48\Home.png" />
     <Resource Include="Images\48\Info.png" />
+    <Resource Include="Images\48\NewDocument.png" />
     <Resource Include="Images\48\Next.png" />
     <Resource Include="Images\48\Paste.png" />
     <Resource Include="Images\48\Previous.png" />
@@ -129,9 +125,60 @@
     <Resource Include="Images\48\WindowClose.png" />
     <Resource Include="Images\48\ZoomIn.png" />
     <Resource Include="Images\48\ZoomOut.png" />
+    <Resource Include="Images\Pager\Descending.png" />
+    <Resource Include="Images\Pager\First.png" />
+    <Resource Include="Images\Pager\Last.png" />
+    <Resource Include="Images\Pager\NavigateBeginning.png" />
+    <Resource Include="Images\Pager\NavigateEnd.png" />
+    <Resource Include="Images\Pager\NavigateGoTo.png" />
+    <Resource Include="Images\Pager\NavigateLeft.png" />
+    <Resource Include="Images\Pager\NavigateRight.png" />
+    <Resource Include="Images\Pager\Next.png" />
+    <Resource Include="Images\Pager\Previous.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\48\NewDocument.png" />
+    <Resource Include="Images\16\Add.png" />
+    <Resource Include="Images\16\ApplicationExit.png" />
+    <Resource Include="Images\16\Binocular.png" />
+    <Resource Include="Images\16\Check.png" />
+    <Resource Include="Images\16\Clear.png" />
+    <Resource Include="Images\16\Contacts.png" />
+    <Resource Include="Images\16\Copy.png" />
+    <Resource Include="Images\16\Database.png" />
+    <Resource Include="Images\16\Delete.png" />
+    <Resource Include="Images\16\Edit.png" />
+    <Resource Include="Images\16\EditClear.png" />
+    <Resource Include="Images\16\Error.png" />
+    <Resource Include="Images\16\Filter.png" />
+    <Resource Include="Images\16\Home.png" />
+    <Resource Include="Images\16\Info.png" />
+    <Resource Include="Images\16\List.png" />
+    <Resource Include="Images\16\Lock.png" />
+    <Resource Include="Images\16\NewDocument.png" />
+    <Resource Include="Images\16\NewMail.png" />
+    <Resource Include="Images\16\Next.png" />
+    <Resource Include="Images\16\OfficeDocument.png" />
+    <Resource Include="Images\16\Paste.png" />
+    <Resource Include="Images\16\Person.png" />
+    <Resource Include="Images\16\Previous.png" />
+    <Resource Include="Images\16\Print.png" />
+    <Resource Include="Images\16\ProcessStop.png" />
+    <Resource Include="Images\16\Question.png" />
+    <Resource Include="Images\16\QuestionBlue.png" />
+    <Resource Include="Images\16\Refresh.png" />
+    <Resource Include="Images\16\Search.png" />
+    <Resource Include="Images\16\Star.png" />
+    <Resource Include="Images\16\Trash.png" />
+    <Resource Include="Images\16\Warning.png" />
+    <Resource Include="Images\16\WindowClose.png" />
+    <Resource Include="Images\16\ZoomIn.png" />
+    <Resource Include="Images\16\ZoomOut.png" />
+    <Resource Include="Images\48\List.png" />
+    <Resource Include="Images\48\Lock.png" />
+    <Resource Include="Images\48\NewMail.png" />
+    <Resource Include="Images\48\OfficeDocument.png" />
+    <Resource Include="Images\48\Person.png" />
+    <Resource Include="Images\48\Star.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -47,9 +47,23 @@ namespace Matisco.Wpf.Controls.Buttons
 
             var border = GetTemplateChild(PartBorder) as Border;
             border.MouseLeftButtonUp += BorderOnMouseLeftButtonUp;
+            border.KeyUp += BorderOnKeyUp;
+        }
+
+        private void BorderOnKeyUp(object sender, KeyEventArgs keyEventArgs)
+        {
+            if (keyEventArgs?.Key == Key.Enter || keyEventArgs?.Key == Key.Space)
+            {
+                FireClickCommand();
+            }
         }
 
         private void BorderOnMouseLeftButtonUp(object sender, MouseButtonEventArgs mouseButtonEventArgs)
+        {
+            FireClickCommand();
+        }
+
+        private void FireClickCommand()
         {
             if (ReferenceEquals(Command, null))
                 return;

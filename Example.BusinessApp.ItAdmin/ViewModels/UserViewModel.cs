@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Example.BusinessApp.Infrastructure.Services;
 using Matisco.Wpf.Services;
@@ -13,13 +16,14 @@ using Prism.Regions;
 
 namespace Example.BusinessApp.ItAdmin.ViewModels
 {
-    public class UserViewModel : BindableBase, INavigationAware
+    public class UserViewModel : BindableBase, INavigationAware, IDataErrorInfo, INotifyDataErrorInfo
     {
         private readonly IExceptionHandler _handler;
         private readonly IWindowService _windowService;
         private readonly IUserService _userService;
         private string _email;
         private string _name;
+        private bool _hasErrors;
 
         public string Email
         {
@@ -28,6 +32,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             {
                 _email = value; 
                 OnPropertyChanged();
+                Validate();
             }
         }
 
@@ -87,5 +92,46 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             _windowService.CloseContainingWindow(this);
         }
 
+        private void Validate()
+        {
+            
+        }
+
+        public string this[string columnName]
+        {
+            get
+            {
+                string errorMessage = string.Empty;
+
+                switch (columnName)
+                {
+                    case "Email":
+                        if (string.IsNullOrEmpty(Email))
+                            errorMessage = "Enter Email";
+                        else if (Name.Trim() == string.Empty)
+                            errorMessage = "Enter valid Email";
+                        break;
+                }
+                return errorMessage;
+            }
+        }
+
+        public string Error { get { throw new NotImplementedException(); } }
+        public IEnumerable GetErrors(string propertyName)
+        {
+            yield break;
+        }
+
+        public bool HasErrors
+        {
+            private set
+            {
+                _hasErrors = value; 
+                OnPropertyChanged();
+            }
+            get { return _hasErrors; }
+        }
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
     }
 }

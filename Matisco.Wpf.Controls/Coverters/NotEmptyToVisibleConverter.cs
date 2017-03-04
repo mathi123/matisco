@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
-using System.Windows.Media.Imaging;
-using Matisco.Wpf.Controls.Buttons;
 
 namespace Matisco.Wpf.Controls.Coverters
 {
-    public class ButtonImageEnumToImageSourceConverter : IValueConverter
+    public class NotEmptyToVisibleConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var image = (ButtonImageEnum) value;
+            if (ReferenceEquals(value, null))
+                return Visibility.Collapsed;
 
-            if (image == ButtonImageEnum.None)
-                return null;
-
-            return new BitmapImage(new Uri($"/Matisco.Wpf.Controls;component/Images/16/{image}.png", UriKind.Relative));
+            return string.IsNullOrEmpty(value as string) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
