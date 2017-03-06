@@ -1,33 +1,38 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
-using Matisco.Wpf.Controls.Buttons;
 
 namespace Matisco.Wpf.Controls.Coverters
 {
-    public class DisplayMemberPathConverter : IValueConverter
+    public class DisplayMemberPathConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (ReferenceEquals(value, null))
+            if (ReferenceEquals(values, null))
                 return null;
 
-            var path = parameter as string;
+            if (values.Length == 1)
+                return values[0]?.ToString();
 
-            if (string.IsNullOrEmpty(path))
+            var displayMemberPath = values[1].ToString();
+            var value = values[0];
+
+            if (ReferenceEquals(value, null))
+                return "";
+
+            if (string.IsNullOrEmpty(displayMemberPath))
             {
                 return value.ToString();
             }
 
-            var property = value.GetType().GetProperty(path);
+            var property = value.GetType().GetProperty(displayMemberPath);
 
             return property.GetValue(value).ToString();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            return null;
+            return new object[] {};
         }
     }
 }

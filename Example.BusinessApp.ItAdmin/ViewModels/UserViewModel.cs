@@ -48,7 +48,11 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             }
         });
 
-        private Language _language;
+        private Language _language = new Language()
+        {
+            Code = "nl",
+            Description = "Nederlands"
+        };
 
         public string Email
         {

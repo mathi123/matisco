@@ -13,9 +13,9 @@
 
     <converters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter"/>
     
-    <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
-    
     <converters:DisplayMemberPathConverter x:Key="DisplayMemberPathConverter"/>
+
+    <converters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
     
     <SolidColorBrush x:Key="FocussedControlColor" Color="DarkGoldenrod"/>
 
@@ -276,16 +276,39 @@
                                     </Polygon.Style>
                                 </Polygon>
 
-                                <TextBox Grid.Column="0" x:Name="PART_TextBox"
-                                         BorderThickness="0" BorderBrush="Transparent" Background="Transparent" FocusVisualStyle="{x:Null}"
-                                         VerticalContentAlignment="Center"
-                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EditValue, Converter={StaticResource DisplayMemberPathConverter}, ConverterParameter={TemplateBinding DisplayMemberPath}}" />
-
-                                <Button x:Name="PART_ButtonClear" Grid.Column="1" Focusable="False">
-                                    <Image Source="../Images/16/Clear.png" Width="10"/>
+                                <Border Grid.Column="0" x:Name="PART_EditValueBorder" Background="White" Focusable="False">
+                                    <TextBox x:Name="PART_TextBox"
+                                             BorderThickness="0" BorderBrush="Transparent" FocusVisualStyle="{x:Null}"
+                                             VerticalContentAlignment="Center" IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <MultiBinding Converter="{StaticResource DisplayMemberPathConverter}">
+                                                <Binding Path="EditValue"  RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="DisplayMemberPath"  RelativeSource="{RelativeSource TemplatedParent}"/>
+                                            </MultiBinding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Border>
+                                
+                                <Button x:Name="PART_ButtonClear" Grid.Column="1" Focusable="False"
+                                        Background="White" BorderThickness="1 0">
+                                    <Image Source="pack://application:,,,/Matisco.Wpf.Controls;component/Images/16/Clear.png" Width="16"/>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="BorderBrush" Value="{Binding ElementName=PART_Border, Path=BorderBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=PART_TextBox, Path=IsFocused}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=PART_Border, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
 
-                                <Button x:Name="PART_ButtonDown" Grid.Column="2" Focusable="False">
+                                <Button x:Name="PART_ButtonDown" Grid.Column="2" Focusable="False" Background="White"
+                                        BorderThickness="0" BorderBrush="Transparent">
                                     <Path Fill="Black" Data="M 0 0 L 6 6 L 12 0 Z"/>
                                 </Button>
                             </Grid>
@@ -303,6 +326,7 @@
                 <ControlTemplate TargetType="{x:Type editors:GridPopUp}">
                     <Grid Focusable="False">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                             <RowDefinition Height="Auto"/>
@@ -354,23 +378,76 @@
                                         </Style>
                                     </Polygon.Style>
                                 </Polygon>
+                                
+                                <Border Grid.Column="0" x:Name="PART_EditValueBorder" Background="White" Focusable="False">
+                                    <TextBox x:Name="PART_TextBox"
+                                         BorderThickness="0" BorderBrush="Transparent" FocusVisualStyle="{x:Null}"
+                                         VerticalContentAlignment="Center" IsReadOnly="True">
+                                        <TextBox.Text>
+                                            <MultiBinding Converter="{StaticResource DisplayMemberPathConverter}">
+                                                <Binding Path="SelectedItem"  RelativeSource="{RelativeSource TemplatedParent}"/>
+                                                <Binding Path="DisplayMemberPath"  RelativeSource="{RelativeSource TemplatedParent}"/>
+                                            </MultiBinding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </Border>
 
-                                <TextBox Grid.Column="0" x:Name="PART_TextBox"
-                                             BorderThickness="0" BorderBrush="Transparent" Background="Transparent" FocusVisualStyle="{x:Null}"
-                                             VerticalContentAlignment="Center"
-                                            Text="{TemplateBinding Query}" />
-
-                                <Button x:Name="PART_ButtonClear" Grid.Column="1" Focusable="False">
-                                    <Image Source="../Images/16/Clear.png" Width="10"/>
+                                <Button x:Name="PART_ButtonClear" Grid.Column="1" Focusable="False"
+                                        Background="White" BorderThickness="1 0">
+                                    <Image Source="pack://application:,,,/Matisco.Wpf.Controls;component/Images/16/Clear.png" Width="16"/>
+                                    <Button.Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="BorderBrush" Value="{Binding ElementName=PART_Border, Path=BorderBrush}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=PART_TextBox, Path=IsFocused}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding ElementName=PART_Border, Path=IsMouseOver}" Value="True">
+                                                    <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
                                 </Button>
 
-                                <Button x:Name="PART_ButtonUp" Grid.Column="2" Focusable="False">
+                                <Button x:Name="PART_ButtonUp" Grid.Column="2" Focusable="False" Background="White"
+                                        BorderThickness="0" BorderBrush="Transparent">
                                     <Path Fill="Black" Data="M 0 6 L 12 6 L 6 0 Z"/>
                                 </Button>
                             </Grid>
                         </Border>
-                        <DataGrid Grid.Row="1" MinWidth="350" MinHeight="150" CanUserDeleteRows="False" IsReadOnly="True" IsTabStop="False"
-                            x:Name="PART_DataGrid" SelectionUnit="FullRow" SelectionMode="Extended" CanUserAddRows="False"
+
+                        <Grid Grid.Row="1" Visibility="{TemplateBinding ShowSearch, Converter={StaticResource TrueToVisibleConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <Button x:Name="PART_ButtonSearch" Grid.Column="0" Focusable="False"
+                                        Background="White" BorderThickness="1 0">
+                                <Image Source="pack://application:,,,/Matisco.Wpf.Controls;component/Images/16/Search.png" Width="16"/>
+                                <!--<Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="BorderBrush" Value="{Binding ElementName=PART_Border, Path=BorderBrush}"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=PART_TextBox, Path=IsFocused}" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource FocussedControlColor}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=PART_Border, Path=IsMouseOver}" Value="True">
+                                                <Setter Property="BorderBrush" Value="{StaticResource HoveredControlBorderColor}"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>-->
+                            </Button>
+
+                            <TextBox Grid.Column="1" x:Name="PART_TextBoxQuery" FocusVisualStyle="{x:Null}"
+                                             VerticalContentAlignment="Center" Height="28"
+                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Query, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+
+                        <DataGrid Grid.Row="2" MinHeight="100" CanUserDeleteRows="False" IsReadOnly="True" IsTabStop="False"
+                            x:Name="PART_DataGrid" SelectionUnit="FullRow" SelectionMode="Single" CanUserAddRows="False"
                             VerticalGridLinesBrush="Transparent" HorizontalGridLinesBrush="LightGray"
                             ItemsSource="{TemplateBinding Items}" 
                             SelectedItem="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=HightlightedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -379,14 +456,19 @@
                                 <Style TargetType="DataGridCell">
                                     <Setter Property="BorderBrush" Value="Transparent"/>
                                     <Setter Property="BorderThickness" Value="0"/>
+                                    <!--<Setter Property="IsTabStop" Value="False"/>-->
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
                                 </Style>
                             </DataGrid.CellStyle>
                         </DataGrid>
-                        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="White" HorizontalAlignment="Stretch">
-                            <TextBlock Text="{TemplateBinding RecordsCount}"
-                                   VerticalAlignment="Center"/>
-                            <TextBlock Text="records" Margin="5" VerticalAlignment="Center"/>
-                        </StackPanel>
+                        
+                        <Border Grid.Row="3" Background="White" HorizontalAlignment="Stretch"
+                                    Visibility="{TemplateBinding ShowTotalCount, Converter={StaticResource TrueToVisibleConverter}}">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <TextBlock Text="{TemplateBinding RecordsCount}" VerticalAlignment="Center"/>
+                                <TextBlock Text="records" Margin="5" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
