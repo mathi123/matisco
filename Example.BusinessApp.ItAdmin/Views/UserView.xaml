@@ -17,6 +17,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <mae:TextEditor Grid.Row="0"  Label="Name" 
@@ -39,7 +40,11 @@
                             IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
-        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+        <mae:DecimalEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
+                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           EditValue="{Binding Length}"/>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
             <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>
             <mab:Button Text="{Binding CancelCloseMessage}" Command="{Binding CancelCommand}" />
         </StackPanel>

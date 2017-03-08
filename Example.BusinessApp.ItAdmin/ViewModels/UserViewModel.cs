@@ -58,6 +58,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private string _editSaveMessage;
         private string _cancelCloseMessage;
         private int _id;
+        private decimal _length;
 
         public string Email
         {
@@ -106,6 +107,19 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _language = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public decimal Length
+        {
+            get
+            {
+                return _length;
+            }
+            set
+            {
+                _length = value;
                 OnPropertyChanged();
             }
         }
@@ -179,6 +193,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
                 Email = _user.Email;
                 Name = _user.Name;
+                Length = (decimal) 1.84;
             }
             catch (Exception ex)
             {

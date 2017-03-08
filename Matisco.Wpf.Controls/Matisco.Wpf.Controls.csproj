@@ -67,6 +67,7 @@
     <Compile Include="Coverters\TrueToVisibleConverter.cs" />
     <Compile Include="Editors\CheckboxEditor.cs" />
     <Compile Include="Editors\ComboboxEditor.cs" />
+    <Compile Include="Editors\DecimalEditor.cs" />
     <Compile Include="Editors\EditorSize.cs" />
     <Compile Include="Editors\GridPopUp.cs" />
     <Compile Include="Editors\PopUpWindow.cs" />
