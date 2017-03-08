@@ -54,6 +54,11 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             Description = "Nederlands"
         };
 
+        private bool _editModus;
+        private string _editSaveMessage;
+        private string _cancelCloseMessage;
+        private int _id;
+
         public string Email
         {
             get { return _email; }
@@ -105,7 +110,39 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             }
         }
 
+        public bool EditModus
+        {
+            get { return _editModus; }
+            set
+            {
+                _editModus = value; 
+                OnPropertyChanged();
+            }
+        }
+
+        public string EditSaveMessage
+        {
+            get { return _editSaveMessage; }
+            set
+            {
+                _editSaveMessage = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string CancelCloseMessage
+        {
+            get { return _cancelCloseMessage; }
+            set
+            {
+                _cancelCloseMessage = value; 
+                OnPropertyChanged();
+            }
+        }
+
         public ICommand OkCommand => new DelegateCommand(OkClicked);
+
+        public ICommand CancelCommand => new DelegateCommand(Cancel);
 
         public ObservableCollection<Language> Languages
         {
@@ -126,17 +163,19 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            var id = (int) navigationContext.Parameters["Id"];
+            UpdateButtons();
 
-            Task.Factory.StartNew(() => LoadUserAsync(id));
+            _id = (int) navigationContext.Parameters["Id"];
+
+            Task.Factory.StartNew(LoadUserAsync);
         }
 
-        private async Task LoadUserAsync(int id)
+        private async Task LoadUserAsync()
         {
             try
             {
                 await Task.Run(() => Thread.Sleep(1000));
-                _user = _userService.GetById(id);
+                _user = _userService.GetById(_id);
 
                 Email = _user.Email;
                 Name = _user.Name;
@@ -158,12 +197,67 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
         private void OkClicked()
         {
-            _windowService.CloseContainingWindow(this);
+            if (!EditModus)
+            {
+                ToggleEditMode();
+            }
+            else
+            {
+                Save();
+            }
+        }
+
+        private void Save()
+        {
+            // Save data
+
+            // Go to read only mode
+            ToggleEditMode();
+        }
+
+        private void Cancel()
+        {
+            if (EditModus)
+            {
+                CancelEdit();
+            }
+            else
+            {
+                _windowService.CloseContainingWindow(this);
+            }
+        }
+
+        private async void CancelEdit()
+        {
+            await LoadUserAsync();
+
+            ToggleEditMode();
         }
 
         private void Validate()
         {
             
+        }
+
+        private void ToggleEditMode()
+        {
+            EditModus = !EditModus;
+
+            UpdateButtons();
+        }
+
+        private void UpdateButtons()
+        {
+            if (EditModus)
+            {
+                EditSaveMessage = "Save";
+                CancelCloseMessage = "Cancel";
+            }
+            else
+            {
+                EditSaveMessage = "Edit";
+                CancelCloseMessage = "Close";
+            }
         }
 
         public bool HasUnsavedChanges()

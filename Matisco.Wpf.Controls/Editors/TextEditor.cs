@@ -1,22 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Matisco.Wpf.Controls.Editors
 {
     public class TextEditor : Control
     {
+        private const string PartTextBox = "PART_TextBox";
+
+        private TextBox _textBox;
+
         public static readonly DependencyProperty ShowRequiredIndicatorProperty = DependencyProperty.Register(
             "ShowRequiredIndicator", typeof(bool), typeof(TextEditor), new PropertyMetadata(default(bool)));
 
@@ -60,6 +52,28 @@ namespace Matisco.Wpf.Controls.Editors
         {
             get { return (string) GetValue(EditValueProperty); }
             set { SetValue(EditValueProperty, value); }
+        }
+
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", typeof(bool), typeof(TextEditor), new PropertyMetadata(default(bool)));
+
+        public bool IsReadOnly
+        {
+            get { return (bool) GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _textBox = GetTemplateChild(PartTextBox) as TextBox;
+            _textBox.GotKeyboardFocus += TextBoxGotKeyboardFocus;
+        }
+
+        private void TextBoxGotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _textBox.CaretIndex = int.MaxValue;
         }
 
         static TextEditor()

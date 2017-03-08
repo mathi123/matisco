@@ -140,6 +140,15 @@ namespace Matisco.Wpf.Controls.Editors
             set { SetValue(DataSourceProperty, value); }
         }
 
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", typeof(bool), typeof(ComboboxEditor), new PropertyMetadata(default(bool)));
+
+        public bool IsReadOnly
+        {
+            get { return (bool) GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -226,13 +235,14 @@ namespace Matisco.Wpf.Controls.Editors
             control.ShowSearch = ShowSearch;
             control.ShowTotalCount = ShowTotalCount;
             control.DataSource = DataSource;
+            control.IsReadOnly = IsReadOnly;
         }
 
         private void PopUpClosed(object sender, EventArgs e)
         {
             var control = (sender as PopUpWindow)?.Content as GridPopUp;
 
-            if (control != null)
+            if (control != null && !IsReadOnly)
             {
                 EditValue = control.SelectedItem;
             }

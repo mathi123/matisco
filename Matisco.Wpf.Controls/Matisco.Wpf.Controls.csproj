@@ -62,6 +62,7 @@
     <Compile Include="Buttons\ButtonImageEnum.cs" />
     <Compile Include="Coverters\DisplayMemberPathConverter.cs" />
     <Compile Include="Coverters\EditorSizeToWidthConverter.cs" />
+    <Compile Include="Coverters\InverseBooleanConverter.cs" />
     <Compile Include="Coverters\NotEmptyToVisibleConverter.cs" />
     <Compile Include="Coverters\TrueToVisibleConverter.cs" />
     <Compile Include="Editors\CheckboxEditor.cs" />

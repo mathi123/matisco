@@ -132,6 +132,16 @@ namespace Matisco.Wpf.Controls.Editors
             set { SetValue(IsLoadingProperty, value); }
         }
 
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", typeof(bool), typeof(GridPopUp), new PropertyMetadata(default(bool)));
+
+
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

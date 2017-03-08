@@ -4,7 +4,11 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:mae="clr-namespace:Matisco.Wpf.Controls.Editors;assembly=Matisco.Wpf.Controls"
              xmlns:mab="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
+             xmlns:coverters="clr-namespace:Matisco.Wpf.Controls.Coverters;assembly=Matisco.Wpf.Controls"
              prism:ViewModelLocator.AutoWireViewModel="True" Focusable="False">
+    <UserControl.Resources>
+        <coverters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </UserControl.Resources>
     <Grid Focusable="False">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -15,19 +19,30 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <mae:TextEditor Grid.Row="0"  Label="Name" EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ShowRequiredIndicator="True"/>
-
-        <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large" EditValue="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        <mae:TextEditor Grid.Row="0"  Label="Name" 
+                        EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
                         ShowRequiredIndicator="True"/>
 
-        <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}"/>
+        <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large"
+                        IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                        EditValue="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ShowRequiredIndicator="True"/>
 
-        <mae:CheckboxEditor Grid.Row="3" Label="Is cool 2" EditValue="{Binding IsCoolNullable}"/>
-        
-        <mae:ComboboxEditor Grid.Row="4" Label="Language" ShowRequiredIndicator="True"
+        <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}" 
+                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"/>
+
+        <mae:CheckboxEditor Grid.Row="3" Label="Is cool 2" EditValue="{Binding IsCoolNullable}" 
+                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"/>
+
+        <mae:ComboboxEditor Grid.Row="4" Label="Language" ShowRequiredIndicator="True" 
+                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
-        <mab:Button Grid.Row="5" Image="Check" Text="Ok" Command="{Binding OkCommand}" HorizontalAlignment="Right"/>    
+        <StackPanel Grid.Row="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>
+            <mab:Button Text="{Binding CancelCloseMessage}" Command="{Binding CancelCommand}" />
+        </StackPanel>
         
     </Grid>
 </UserControl>

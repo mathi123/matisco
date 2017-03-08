@@ -41,6 +41,15 @@ namespace Matisco.Wpf.Controls.Editors
             set { SetValue(TextProperty, value); }
         }
 
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
+            "IsReadOnly", typeof(bool), typeof(CheckboxEditor), new PropertyMetadata(default(bool)));
+
+        public bool IsReadOnly
+        {
+            get { return (bool) GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
         static CheckboxEditor()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CheckboxEditor), new FrameworkPropertyMetadata(typeof(CheckboxEditor)));
