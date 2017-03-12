@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:coverters="clr-namespace:Matisco.Wpf.Controls.Coverters">
+    <SolidColorBrush x:Key="FocussedControlColor" Color="#ffa500"/>
+
+    <SolidColorBrush x:Key="ReadOnlyBackgroundColor" Color="#f6f6f6"/>
+
+    <Thickness x:Key="FocussedControlBorderThickness">1</Thickness>
+
+    <SolidColorBrush x:Key="HoveredControlBorderColor" Color="#3C7FB1"/>
+
+    <SolidColorBrush x:Key="HoveredControlColor" Color="#BEE6FD"/>
+
+    <SolidColorBrush x:Key="RequiredFieldIndicatorColor" Color="#3C7FB1"/>
+    
+    <coverters:ButtonImageEnumToImageSourceConverter x:Key="ButtonImageEnumToImageSourceConverter"/>
+
+    <coverters:ButtonImageEnumToVisibilityConverter x:Key="ButtonImageEnumToVisibilityConverter"/>
+
+    <coverters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+
+    <coverters:EditorSizeToWidthConverter x:Key="EditorSizeToWidthConverter"/>
+
+    <coverters:NotEmptyToVisibleConverter x:Key="NotEmptyToVisibleConverter"/>
+
+    <coverters:DisplayMemberPathConverter x:Key="DisplayMemberPathConverter"/>
+
+    <coverters:TrueToVisibleConverter x:Key="TrueToVisibleConverter"/>
+</ResourceDictionary>

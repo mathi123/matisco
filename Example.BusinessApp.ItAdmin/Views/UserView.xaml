@@ -21,7 +21,7 @@
         </Grid.RowDefinitions>
 
         <mae:TextEditor Grid.Row="0"  Label="Name" 
-                        EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
                         IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
                         ShowRequiredIndicator="True"/>
 
@@ -41,8 +41,9 @@
                             ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
         <mae:DecimalEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
+                           Suffix="meter" Round="3" RoundReadOnly="1"
                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
-                           EditValue="{Binding Length}"/>
+                           EditValue="{Binding Length, Mode=TwoWay}"/>
 
         <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
             <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>

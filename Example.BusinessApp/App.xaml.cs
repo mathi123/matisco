@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Autofac;
 using Matisco.Wpf.Services;
+using Prism.Regions;
 
 namespace Example.BusinessApp
 {
@@ -12,7 +13,13 @@ namespace Example.BusinessApp
             bootstrapper.Run();
 
             var windowSerivce = bootstrapper.Container.Resolve<IWindowService>();
-            windowSerivce.Open(nameof(Infrastructure.Views.StartUpView));
+
+            var navigationParameter = new NavigationParameters
+                {
+                    { "Id", 1 }
+                };
+
+            windowSerivce.Open("UserView", navigationParameter);
         }
     }
 }

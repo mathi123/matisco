@@ -49,9 +49,33 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\DecimalEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\ComboboxEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Colors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\CheckboxEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\TextEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -60,10 +84,12 @@
     <Compile Include="Coverters\ButtonImageEnumToImageSourceConverter.cs" />
     <Compile Include="Buttons\Button.cs" />
     <Compile Include="Buttons\ButtonImageEnum.cs" />
+    <Compile Include="Coverters\DecimalToTextMultivalueConverter.cs" />
     <Compile Include="Coverters\DisplayMemberPathConverter.cs" />
     <Compile Include="Coverters\EditorSizeToWidthConverter.cs" />
     <Compile Include="Coverters\InverseBooleanConverter.cs" />
     <Compile Include="Coverters\NotEmptyToVisibleConverter.cs" />
+    <Compile Include="Coverters\TextToDecimalConverter.cs" />
     <Compile Include="Coverters\TrueToVisibleConverter.cs" />
     <Compile Include="Editors\CheckboxEditor.cs" />
     <Compile Include="Editors\ComboboxEditor.cs" />

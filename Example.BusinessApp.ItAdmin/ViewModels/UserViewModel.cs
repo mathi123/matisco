@@ -16,10 +16,11 @@ using Matisco.Wpf.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using System.Diagnostics;
 
 namespace Example.BusinessApp.ItAdmin.ViewModels
 {
-    public class UserViewModel : BindableBase, IEditor, INavigationAware
+    public class UserViewModel : BindableBase, IEditor, INavigationAware, INotifyDataErrorInfo
     {
         private readonly IExceptionHandler _handler;
         private readonly IWindowService _windowService;
@@ -60,12 +61,14 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private int _id;
         private decimal _length;
 
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
         public string Email
         {
             get { return _email; }
             set
             {
-                _email = value; 
+                _email = value;
                 OnPropertyChanged();
                 Validate();
             }
@@ -76,8 +79,9 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _name; }
             set
             {
-                _name = value; 
+                _name = value;
                 OnPropertyChanged();
+                Validate();
             }
         }
 
@@ -86,7 +90,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _isCool; }
             set
             {
-                _isCool = value; 
+                _isCool = value;
                 OnPropertyChanged();
             }
         }
@@ -96,7 +100,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _isCoolNullable; }
             set
             {
-                _isCoolNullable = value; 
+                _isCoolNullable = value;
                 OnPropertyChanged();
             }
         }
@@ -106,7 +110,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _language; }
             set
             {
-                _language = value; 
+                _language = value;
                 OnPropertyChanged();
             }
         }
@@ -120,6 +124,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _length = value;
+                Debug.WriteLine("written back:" + _length);
                 OnPropertyChanged();
             }
         }
@@ -129,7 +134,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _editModus; }
             set
             {
-                _editModus = value; 
+                _editModus = value;
                 OnPropertyChanged();
             }
         }
@@ -149,7 +154,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _cancelCloseMessage; }
             set
             {
-                _cancelCloseMessage = value; 
+                _cancelCloseMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -163,7 +168,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             get { return _languages; }
             set
             {
-                _languages = value; 
+                _languages = value;
                 OnPropertyChanged();
             }
         }
@@ -179,7 +184,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         {
             UpdateButtons();
 
-            _id = (int) navigationContext.Parameters["Id"];
+            _id = (int)navigationContext.Parameters["Id"];
 
             Task.Factory.StartNew(LoadUserAsync);
         }
@@ -193,7 +198,9 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
                 Email = _user.Email;
                 Name = _user.Name;
-                Length = (decimal) 1.84;
+                Length = (decimal)1.84;
+                Language = Languages.FirstOrDefault();
+
             }
             catch (Exception ex)
             {
@@ -251,7 +258,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
         private void Validate()
         {
-            
+            RealValidation();
         }
 
         private void ToggleEditMode()
@@ -278,6 +285,59 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         public bool HasUnsavedChanges()
         {
             return _user?.Email != Email || _user?.Name != Name;
+        }
+
+        public System.Collections.IEnumerable GetErrors(string propertyName)
+        {
+            List<string> errorsForName;
+            _errors.TryGetValue(propertyName, out errorsForName);
+            return errorsForName;
+        }
+
+        public bool HasErrors
+        {
+            get { return _errors.Values.FirstOrDefault(l => l.Count > 0) != null; }
+        }
+
+        private Dictionary<string, List<string>> _errors =
+            new Dictionary<string, List<string>>();
+        private object _lock = new object();
+        private void RealValidation()
+        {
+            lock (_lock)
+            {
+                //Validate Name
+                List<string> errorsForName;
+                if (!_errors.TryGetValue("Name", out errorsForName))
+                    errorsForName = new List<string>();
+                else errorsForName.Clear();
+
+                if (String.IsNullOrEmpty(Name))
+                    errorsForName.Add("The name can't be null or empty.");
+
+                _errors["Name"] = errorsForName;
+                if (errorsForName.Count > 0) RaiseErrorsChanged("Name");
+
+                //Validate Email
+                List<string> errorsForAge;
+                if (!_errors.TryGetValue("Age", out errorsForAge))
+                    errorsForAge = new List<string>();
+                else errorsForAge.Clear();
+
+                if (string.IsNullOrEmpty(Email))
+                    errorsForAge.Add("The name can't be null or empty.");
+
+                _errors["Email"] = errorsForAge;
+                if (errorsForAge.Count > 0) RaiseErrorsChanged("Email");
+            }
+        }
+
+        public void RaiseErrorsChanged(string propertyName)
+        {
+            EventHandler<DataErrorsChangedEventArgs> handler = ErrorsChanged;
+            if (handler == null) return;
+            var arg = new DataErrorsChangedEventArgs(propertyName);
+            handler.Invoke(this, arg);
         }
     }
 }
