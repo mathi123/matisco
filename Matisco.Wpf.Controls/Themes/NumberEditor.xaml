@@ -6,11 +6,9 @@
         <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/Colors.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <converters:DecimalToTextMultivalueConverter x:Key="DecimalToTextMultivalueConverter"/>
+    <converters:NumberToTextMultivalueConverter x:Key="DecimalToTextMultivalueConverter"/>
 
-    <converters:TextToDecimalConverter x:Key="TextToDecimalConverter"/>
-    
-    <Style TargetType="{x:Type editors:DecimalEditor}">
+    <Style TargetType="{x:Type editors:NumberEditor}">
         <Setter Property="Margin" Value="5"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="Width" Value="Auto"/>
@@ -23,7 +21,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type editors:DecimalEditor}">
+                <ControlTemplate TargetType="{x:Type editors:NumberEditor}">
                     <Grid Focusable="False">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -58,6 +56,9 @@
                                 </Style>
                             </Border.Style>
                             <Grid>
+                                <Grid.Resources>
+                                    <converters:TextToNumberConverter x:Key="TextToNumberConverter"/>
+                                </Grid.Resources>
                                 <Polygon Points="0,0 6,0 0,6"
                                          Stroke="{Binding ElementName=PART_Border, Path=BorderBrush}"
                                          StrokeThickness="1"
@@ -79,9 +80,9 @@
                                     </Polygon.Style>
                                 </Polygon>
 
-                                <TextBox x:Name="PART_TextBoxReadOnly"
-                                         BorderThickness="0" BorderBrush="Transparent" FocusVisualStyle="{x:Null}" Background="Transparent"
-                                         VerticalContentAlignment="Center" IsReadOnly="{TemplateBinding IsReadOnly}"
+                                <TextBox x:Name="PART_TextBoxReadOnly" Background="Transparent"
+                                         BorderThickness="0" BorderBrush="Transparent" FocusVisualStyle="{x:Null}"
+                                         VerticalContentAlignment="Center" IsReadOnly="True"
                                          MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource EditorSizeToWidthConverter}}">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource DecimalToTextMultivalueConverter}" Mode="OneWay">
@@ -94,11 +95,12 @@
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
-
-                                <TextBox x:Name="PART_TextBox"
-                                         BorderThickness="0" BorderBrush="Transparent" FocusVisualStyle="{x:Null}" Background="Transparent"
+                                
+                                <TextBox x:Name="PART_TextBox" Background="Transparent"
+                                         BorderThickness="0" BorderBrush="Transparent" 
+                                         FocusVisualStyle="{x:Null}"
                                          VerticalContentAlignment="Center" IsReadOnly="{TemplateBinding IsReadOnly}" Visibility="Hidden"
-                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EditValue, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TextToDecimalConverter}}"
+                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EditValue, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TextToNumberConverter}}"
                                          MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource EditorSizeToWidthConverter}}"/>
                             </Grid>
                         </Border>

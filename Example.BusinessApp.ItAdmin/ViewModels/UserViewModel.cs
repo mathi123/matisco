@@ -59,7 +59,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private string _editSaveMessage;
         private string _cancelCloseMessage;
         private int _id;
-        private decimal _length;
+        private double _length;
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
@@ -115,7 +115,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             }
         }
 
-        public decimal Length
+        public double Length
         {
             get
             {
@@ -125,6 +125,16 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             {
                 _length = value;
                 Debug.WriteLine("written back:" + _length);
+                OnPropertyChanged();
+            }
+        }
+
+        public int BirthYear
+        {
+            get { return _birthYear; }
+            set
+            {
+                _birthYear = value; 
                 OnPropertyChanged();
             }
         }
@@ -198,8 +208,9 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
 
                 Email = _user.Email;
                 Name = _user.Name;
-                Length = (decimal)1.84;
+                Length = 1.84;
                 Language = Languages.FirstOrDefault();
+                BirthYear = 1990;
 
             }
             catch (Exception ex)
@@ -302,6 +313,8 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private Dictionary<string, List<string>> _errors =
             new Dictionary<string, List<string>>();
         private object _lock = new object();
+        private int _birthYear;
+
         private void RealValidation()
         {
             lock (_lock)

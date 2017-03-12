@@ -4,7 +4,7 @@
         <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/Button.xaml"/>
         <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/CheckboxEditor.xaml"/>
         <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/TextEditor.xaml"/>
-        <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/DecimalEditor.xaml"/>
+        <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/NumberEditor.xaml"/>
         <ResourceDictionary Source="/Matisco.Wpf.Controls;component/Themes/ComboboxEditor.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

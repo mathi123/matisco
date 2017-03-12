@@ -5,12 +5,14 @@
              xmlns:mae="clr-namespace:Matisco.Wpf.Controls.Editors;assembly=Matisco.Wpf.Controls"
              xmlns:mab="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
              xmlns:coverters="clr-namespace:Matisco.Wpf.Controls.Coverters;assembly=Matisco.Wpf.Controls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              prism:ViewModelLocator.AutoWireViewModel="True" Focusable="False">
     <UserControl.Resources>
         <coverters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
     </UserControl.Resources>
     <Grid Focusable="False">
         <Grid.RowDefinitions>
+            <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
@@ -40,12 +42,16 @@
                             IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
-        <mae:DecimalEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
+        <mae:NumberEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
                            Suffix="meter" Round="3" RoundReadOnly="1"
                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
-                           EditValue="{Binding Length, Mode=TwoWay}"/>
+                           EditValue="{Binding Length, Mode=TwoWay}" EditValueType="{x:Type sys:Double}"/>
 
-        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+        <mae:NumberEditor Grid.Row="6" Label="Birthyear" ShowRequiredIndicator="True"
+                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           EditValue="{Binding BirthYear, Mode=TwoWay}" EditValueType="{x:Type sys:Int32}"/>
+
+        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
             <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>
             <mab:Button Text="{Binding CancelCloseMessage}" Command="{Binding CancelCommand}" />
         </StackPanel>

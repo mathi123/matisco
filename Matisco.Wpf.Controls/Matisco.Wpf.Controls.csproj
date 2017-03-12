@@ -53,7 +53,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\DecimalEditor.xaml">
+    <Page Include="Themes\NumberEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -84,16 +84,16 @@
     <Compile Include="Coverters\ButtonImageEnumToImageSourceConverter.cs" />
     <Compile Include="Buttons\Button.cs" />
     <Compile Include="Buttons\ButtonImageEnum.cs" />
-    <Compile Include="Coverters\DecimalToTextMultivalueConverter.cs" />
+    <Compile Include="Coverters\NumberToTextMultivalueConverter.cs" />
     <Compile Include="Coverters\DisplayMemberPathConverter.cs" />
     <Compile Include="Coverters\EditorSizeToWidthConverter.cs" />
     <Compile Include="Coverters\InverseBooleanConverter.cs" />
     <Compile Include="Coverters\NotEmptyToVisibleConverter.cs" />
-    <Compile Include="Coverters\TextToDecimalConverter.cs" />
+    <Compile Include="Coverters\TextToNumberConverter.cs" />
     <Compile Include="Coverters\TrueToVisibleConverter.cs" />
     <Compile Include="Editors\CheckboxEditor.cs" />
     <Compile Include="Editors\ComboboxEditor.cs" />
-    <Compile Include="Editors\DecimalEditor.cs" />
+    <Compile Include="Editors\NumberEditor.cs" />
     <Compile Include="Editors\EditorSize.cs" />
     <Compile Include="Editors\GridPopUp.cs" />
     <Compile Include="Editors\PopUpWindow.cs" />

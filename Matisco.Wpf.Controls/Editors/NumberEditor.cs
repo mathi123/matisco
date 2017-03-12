@@ -14,16 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Matisco.Wpf.Controls.Coverters;
 
 namespace Matisco.Wpf.Controls.Editors
 {
-    public class DecimalEditor : Control
+    public class NumberEditor : Control
     {
         public const string PartReadOnlyTextBox = "PART_TextBoxReadOnly";
         public const string PartEditValueTextBox = "PART_TextBox";
 
+        private TextBox _readOnlyTextBox;
+        private TextBox _textBox;
+
         public static readonly DependencyProperty ShowRequiredIndicatorProperty = DependencyProperty.Register(
-            "ShowRequiredIndicator", typeof(bool), typeof(DecimalEditor), new PropertyMetadata(default(bool)));
+            "ShowRequiredIndicator", typeof(bool), typeof(NumberEditor), new PropertyMetadata(default(bool)));
 
         public bool ShowRequiredIndicator
         {
@@ -32,7 +36,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty LabelProperty = DependencyProperty.Register(
-            "Label", typeof(string), typeof(DecimalEditor), new PropertyMetadata(default(string)));
+            "Label", typeof(string), typeof(NumberEditor), new PropertyMetadata(default(string)));
 
         public string Label
         {
@@ -41,7 +45,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty LabelSizeProperty = DependencyProperty.Register(
-            "LabelSize", typeof(EditorSize), typeof(DecimalEditor), new PropertyMetadata(EditorSize.Small));
+            "LabelSize", typeof(EditorSize), typeof(NumberEditor), new PropertyMetadata(EditorSize.Small));
 
         public EditorSize LabelSize
         {
@@ -50,7 +54,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
-            "Size", typeof(EditorSize), typeof(DecimalEditor), new PropertyMetadata(EditorSize.Medium));
+            "Size", typeof(EditorSize), typeof(NumberEditor), new PropertyMetadata(EditorSize.Medium));
 
         public EditorSize Size
         {
@@ -58,17 +62,17 @@ namespace Matisco.Wpf.Controls.Editors
             set { SetValue(SizeProperty, value); }
         }
 
-        public static readonly DependencyProperty EditValueProperty = DependencyProperty.Register(
-            "EditValue", typeof(decimal), typeof(DecimalEditor), new PropertyMetadata(default(decimal)));
-
-        public decimal EditValue
+        public object EditValue
         {
-            get { return (decimal)GetValue(EditValueProperty); }
+            get { return (object)GetValue(EditValueProperty); }
             set { SetValue(EditValueProperty, value); }
         }
 
+        public static readonly DependencyProperty EditValueProperty =
+            DependencyProperty.Register("EditValue", typeof(object), typeof(NumberEditor), new PropertyMetadata(0));
+
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
-            "IsReadOnly", typeof(bool), typeof(DecimalEditor), new PropertyMetadata(default(bool)));
+            "IsReadOnly", typeof(bool), typeof(NumberEditor), new PropertyMetadata(default(bool), readOnlyChanged));
 
         public bool IsReadOnly
         {
@@ -77,7 +81,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty PrefixProperty =
-            DependencyProperty.Register("Prefix", typeof(string), typeof(DecimalEditor), new PropertyMetadata(""));
+            DependencyProperty.Register("Prefix", typeof(string), typeof(NumberEditor), new PropertyMetadata(""));
         
         public string Prefix
         {
@@ -86,7 +90,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty SuffixProperty =
-            DependencyProperty.Register("Suffix", typeof(string), typeof(DecimalEditor), new PropertyMetadata(""));
+            DependencyProperty.Register("Suffix", typeof(string), typeof(NumberEditor), new PropertyMetadata(""));
         
         public string Suffix
         {
@@ -95,7 +99,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty NumberGroupSeparatorProperty =
-            DependencyProperty.Register("NumberGroupSeparator", typeof(string), typeof(DecimalEditor), new PropertyMetadata("."));
+            DependencyProperty.Register("NumberGroupSeparator", typeof(string), typeof(NumberEditor), new PropertyMetadata("."));
 
         public string NumberGroupSeparator
         {
@@ -104,7 +108,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty NumberDecimalSeparatorProperty =
-         DependencyProperty.Register("NumberDecimalSeparator", typeof(string), typeof(DecimalEditor), new PropertyMetadata(","));
+         DependencyProperty.Register("NumberDecimalSeparator", typeof(string), typeof(NumberEditor), new PropertyMetadata(","));
 
 
         public string NumberDecimalSeparator
@@ -120,7 +124,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty RoundProperty =
-            DependencyProperty.Register("Round", typeof(int), typeof(DecimalEditor), new PropertyMetadata(Int32.MaxValue));
+            DependencyProperty.Register("Round", typeof(int), typeof(NumberEditor), new PropertyMetadata(Int32.MaxValue));
 
         public int RoundReadOnly
         {
@@ -129,28 +133,72 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty RoundReadOnlyProperty =
-            DependencyProperty.Register("RoundReadOnly", typeof(int), typeof(DecimalEditor), new PropertyMetadata(Int32.MaxValue));
+            DependencyProperty.Register("RoundReadOnly", typeof(int), typeof(NumberEditor), new PropertyMetadata(Int32.MaxValue));
 
-        private TextBox _readOnlyTextBox;
-        private TextBox _textBox;
+        public Type EditValueType
+        {
+            get { return (Type)GetValue(EditValueTypeProperty); }
+            set { SetValue(EditValueTypeProperty, value); }
+        }
+
+        public static readonly DependencyProperty EditValueTypeProperty =
+            DependencyProperty.Register("EditValueType", typeof(Type), typeof(NumberEditor), new PropertyMetadata(typeof(decimal)));
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
+            _textBox = GetTemplateChild(PartEditValueTextBox) as TextBox;
+            var converter = _textBox.GetBindingExpression(TextBox.TextProperty)?.ParentBinding.Converter as TextToNumberConverter;
+            if (converter != null)
+            {
+                converter.TargetType = EditValueType;
+            }
+
 
             _readOnlyTextBox = GetTemplateChild(PartReadOnlyTextBox) as TextBox;
-            _textBox = GetTemplateChild(PartEditValueTextBox) as TextBox;
 
             _readOnlyTextBox.GotFocus += ReadOnlyTextBoxGotFocus;
             _textBox.LostKeyboardFocus += TextBoxLostKeyboardFocus;
             _textBox.PreviewTextInput += TextBoxPreviewTextInput;
+
+            base.OnApplyTemplate();
+        }
+
+        private static void readOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var editor = d as NumberEditor;
+            editor?.CheckEditMode();
+        }
+
+        public void CheckEditMode()
+        {
+            if (IsReadOnly)
+            {
+                if (_textBox != null && _textBox.IsKeyboardFocused)
+                {
+                    GoToEditModus(false);
+                }
+            }
+            else
+            {
+                if (_readOnlyTextBox != null && _readOnlyTextBox.IsKeyboardFocused)
+                {
+                    GoToEditModus(true);
+                }
+            }
         }
 
         private void TextBoxPreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             foreach(var character in e.Text)
             {
-                if(!char.IsNumber(character) && (character != '.' || e.Text.Contains(".") || Round == 0))
+                if (EditValueType == typeof(short) || EditValueType == typeof(int) || EditValueType == typeof(long))
+                {
+                    if (!char.IsNumber(character))
+                    {
+                        e.Handled = true;
+                    }
+                }
+                else if(!char.IsNumber(character) && (character != '.' || _textBox.Text.Contains(".") || Round == 0))
                 {
                     e.Handled = true;
                 }
@@ -160,7 +208,7 @@ namespace Matisco.Wpf.Controls.Editors
 
                     if (possibleNewText.Contains('.'))
                     {
-                        if(possibleNewText.Length - possibleNewText.IndexOf('.') > Round + 1)
+                        if (possibleNewText.Length - possibleNewText.IndexOf('.') > Round + 1)
                         {
                             e.Handled = true;
                         }
@@ -186,26 +234,39 @@ namespace Matisco.Wpf.Controls.Editors
         {
             _readOnlyTextBox.Visibility = editModus ? Visibility.Hidden : Visibility.Visible;
             _textBox.Visibility = editModus ? Visibility.Visible : Visibility.Hidden;
-            _textBox.Text = ConvertDecimalToEditValueText(EditValue);
+            _textBox.Text = ConvertNumberToEditValueText(EditValue);
             _textBox.CaretIndex = int.MaxValue;
             _textBox.Focus();
             Keyboard.Focus(_textBox);
         }
 
-        private string ConvertDecimalToEditValueText(decimal editValue)
+        private string ConvertNumberToEditValueText(object editValue)
+        {
+            if (editValue is decimal)
+                return ((decimal)editValue).ToString("n", GetFormatter());
+            if (editValue is double)
+                return ((double)editValue).ToString("n", GetFormatter());
+            if (editValue is int)
+                return ((int) editValue).ToString("n", GetFormatter());
+            if (editValue is short)
+                return ((short)editValue).ToString("n", GetFormatter());
+            if (editValue is long)
+                return ((long)editValue).ToString("n", GetFormatter());
+
+            throw new InvalidOperationException();
+        }
+        
+        private NumberFormatInfo GetFormatter()
         {
             var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
             nfi.NumberGroupSeparator = "";
             nfi.NumberDecimalSeparator = ".";
-
-            var decimalText = editValue.ToString("n", nfi);
-
-            return decimalText;
+            return nfi;
         }
 
-        static DecimalEditor()
+        static NumberEditor()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DecimalEditor), new FrameworkPropertyMetadata(typeof(DecimalEditor)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(NumberEditor), new FrameworkPropertyMetadata(typeof(NumberEditor)));
         }
     }
 }
