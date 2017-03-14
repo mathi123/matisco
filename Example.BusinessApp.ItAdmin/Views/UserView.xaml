@@ -20,6 +20,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
 
         <mae:TextEditor Grid.Row="0"  Label="Name" 
@@ -45,13 +46,17 @@
         <mae:NumberEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
                            Suffix="meter" Round="3" RoundReadOnly="1"
                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
-                           EditValue="{Binding Length, Mode=TwoWay}" EditValueType="{x:Type sys:Double}"/>
+                           EditValue="{Binding Length, Mode=TwoWay}" />
 
         <mae:NumberEditor Grid.Row="6" Label="Birthyear" ShowRequiredIndicator="True"
                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
-                           EditValue="{Binding BirthYear, Mode=TwoWay}" EditValueType="{x:Type sys:Int32}"/>
-
-        <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right">
+                           EditValue="{Binding BirthYear, Mode=TwoWay}"/>
+        
+        <mae:NumberEditor Grid.Row="7" Label="Net value" ShowRequiredIndicator="True"
+                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           EditValue="{Binding NetValue, Mode=TwoWay}" NumberGroupSeparator="." Prefix="+-" Suffix="€"/>
+        
+        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
             <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>
             <mab:Button Text="{Binding CancelCloseMessage}" Command="{Binding CancelCommand}" />
         </StackPanel>

@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace Matisco.Wpf.Controls.Coverters
 {
-    internal class TextToNumberConverter : IValueConverter
+    internal class TextToNumberConverter : IMultiValueConverter
     {
         public Type TargetType { get; set; }
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object value)
         {
-            throw new InvalidOperationException();
-        }
+            if (ReferenceEquals(TargetType, null))
+                return null;
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
             var target = TargetType;
 
             if (target == typeof(decimal))
@@ -38,7 +37,7 @@ namespace Matisco.Wpf.Controls.Coverters
                 return ParseShort(value as string);
             }
 
-            return 0;
+            throw new InvalidOperationException();
         }
 
         private decimal ParseDecimal(string text)
@@ -95,5 +94,42 @@ namespace Matisco.Wpf.Controls.Coverters
 
             return 0;
         }
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            TargetType = values[1] as Type;
+
+            return ConvertNumberToEditValueText(values[0]);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            return new object[] {ConvertBack(value)};
+        }
+
+        private string ConvertNumberToEditValueText(object editValue)
+        {
+            if (editValue is decimal)
+                return ((decimal)editValue).ToString("n", GetFormatter());
+            if (editValue is double)
+                return ((double)editValue).ToString("n", GetFormatter());
+            if (editValue is int)
+                return ((int)editValue).ToString();
+            if (editValue is short)
+                return ((short)editValue).ToString();
+            if (editValue is long)
+                return ((long)editValue).ToString();
+
+            throw new InvalidOperationException();
+        }
+
+        private NumberFormatInfo GetFormatter()
+        {
+            var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
+            nfi.NumberGroupSeparator = "";
+            nfi.NumberDecimalSeparator = ".";
+            return nfi;
+        }
+
     }
 }

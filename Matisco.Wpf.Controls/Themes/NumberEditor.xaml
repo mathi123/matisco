@@ -57,7 +57,7 @@
                             </Border.Style>
                             <Grid>
                                 <Grid.Resources>
-                                    <converters:TextToNumberConverter x:Key="TextToNumberConverter"/>
+                                    <converters:TextToNumberConverter x:Key="TextToNumberConverter" />
                                 </Grid.Resources>
                                 <Polygon Points="0,0 6,0 0,6"
                                          Stroke="{Binding ElementName=PART_Border, Path=BorderBrush}"
@@ -100,8 +100,14 @@
                                          BorderThickness="0" BorderBrush="Transparent" 
                                          FocusVisualStyle="{x:Null}"
                                          VerticalContentAlignment="Center" IsReadOnly="{TemplateBinding IsReadOnly}" Visibility="Hidden"
-                                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=EditValue, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource TextToNumberConverter}}"
-                                         MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource EditorSizeToWidthConverter}}"/>
+                                         MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Size, Converter={StaticResource EditorSizeToWidthConverter}}">
+                                    <TextBox.Text>
+                                        <MultiBinding Converter="{StaticResource TextToNumberConverter}" Mode="TwoWay">
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="EditValue"/>
+                                            <Binding RelativeSource="{RelativeSource TemplatedParent}" Path="EditValueType" Mode="OneWay"/>
+                                        </MultiBinding>
+                                    </TextBox.Text>
+                                </TextBox>
                             </Grid>
                         </Border>
                     </Grid>

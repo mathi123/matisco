@@ -23,7 +23,7 @@ namespace Matisco.Wpf.Controls.Coverters
             string text = "";
             if(newValue is decimal)
             {
-                text = Math.Round((decimal) newValue, roundReadOnly).ToString("n", nfi);
+                text = Math.Round((decimal) newValue, Math.Min(28,roundReadOnly)).ToString("n", nfi);
             }
             else if(newValue is double)
             {

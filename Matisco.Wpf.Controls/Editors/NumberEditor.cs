@@ -69,10 +69,10 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty EditValueProperty =
-            DependencyProperty.Register("EditValue", typeof(object), typeof(NumberEditor), new PropertyMetadata(0));
-
+            DependencyProperty.Register("EditValue", typeof(object), typeof(NumberEditor), new PropertyMetadata(null, EditValueChanged));
+        
         public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(
-            "IsReadOnly", typeof(bool), typeof(NumberEditor), new PropertyMetadata(default(bool), readOnlyChanged));
+            "IsReadOnly", typeof(bool), typeof(NumberEditor), new PropertyMetadata(default(bool), ReadOnlyChanged));
 
         public bool IsReadOnly
         {
@@ -99,7 +99,7 @@ namespace Matisco.Wpf.Controls.Editors
         }
 
         public static readonly DependencyProperty NumberGroupSeparatorProperty =
-            DependencyProperty.Register("NumberGroupSeparator", typeof(string), typeof(NumberEditor), new PropertyMetadata("."));
+            DependencyProperty.Register("NumberGroupSeparator", typeof(string), typeof(NumberEditor), new PropertyMetadata(""));
 
         public string NumberGroupSeparator
         {
@@ -135,42 +135,43 @@ namespace Matisco.Wpf.Controls.Editors
         public static readonly DependencyProperty RoundReadOnlyProperty =
             DependencyProperty.Register("RoundReadOnly", typeof(int), typeof(NumberEditor), new PropertyMetadata(Int32.MaxValue));
 
-        public Type EditValueType
+        public Type EditValueType { get; set; }
+
+        private static void ReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            get { return (Type)GetValue(EditValueTypeProperty); }
-            set { SetValue(EditValueTypeProperty, value); }
+            var editor = d as NumberEditor;
+            editor?.CheckEditMode();
         }
 
-        public static readonly DependencyProperty EditValueTypeProperty =
-            DependencyProperty.Register("EditValueType", typeof(Type), typeof(NumberEditor), new PropertyMetadata(typeof(decimal)));
+        private static void EditValueChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+        {
+            var editor = dependencyObject as NumberEditor;
+            editor?.SetEditorType(dependencyPropertyChangedEventArgs.NewValue.GetType());
+        }
+
+        private void SetEditorType(Type editorType)
+        {
+            EditValueType = editorType;
+        }
 
         public override void OnApplyTemplate()
         {
+            base.OnApplyTemplate();
+
             _textBox = GetTemplateChild(PartEditValueTextBox) as TextBox;
-            var converter = _textBox.GetBindingExpression(TextBox.TextProperty)?.ParentBinding.Converter as TextToNumberConverter;
-            if (converter != null)
-            {
-                converter.TargetType = EditValueType;
-            }
-
-
             _readOnlyTextBox = GetTemplateChild(PartReadOnlyTextBox) as TextBox;
 
             _readOnlyTextBox.GotFocus += ReadOnlyTextBoxGotFocus;
             _textBox.LostKeyboardFocus += TextBoxLostKeyboardFocus;
             _textBox.PreviewTextInput += TextBoxPreviewTextInput;
 
-            base.OnApplyTemplate();
-        }
-
-        private static void readOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var editor = d as NumberEditor;
-            editor?.CheckEditMode();
         }
 
         public void CheckEditMode()
         {
+            if (!IsInitialized)
+                return;
+
             if (IsReadOnly)
             {
                 if (_textBox != null && _textBox.IsKeyboardFocused)
@@ -234,34 +235,9 @@ namespace Matisco.Wpf.Controls.Editors
         {
             _readOnlyTextBox.Visibility = editModus ? Visibility.Hidden : Visibility.Visible;
             _textBox.Visibility = editModus ? Visibility.Visible : Visibility.Hidden;
-            _textBox.Text = ConvertNumberToEditValueText(EditValue);
             _textBox.CaretIndex = int.MaxValue;
             _textBox.Focus();
             Keyboard.Focus(_textBox);
-        }
-
-        private string ConvertNumberToEditValueText(object editValue)
-        {
-            if (editValue is decimal)
-                return ((decimal)editValue).ToString("n", GetFormatter());
-            if (editValue is double)
-                return ((double)editValue).ToString("n", GetFormatter());
-            if (editValue is int)
-                return ((int) editValue).ToString("n", GetFormatter());
-            if (editValue is short)
-                return ((short)editValue).ToString("n", GetFormatter());
-            if (editValue is long)
-                return ((long)editValue).ToString("n", GetFormatter());
-
-            throw new InvalidOperationException();
-        }
-        
-        private NumberFormatInfo GetFormatter()
-        {
-            var nfi = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
-            nfi.NumberGroupSeparator = "";
-            nfi.NumberDecimalSeparator = ".";
-            return nfi;
         }
 
         static NumberEditor()

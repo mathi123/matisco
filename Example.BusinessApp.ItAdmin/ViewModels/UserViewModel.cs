@@ -139,6 +139,16 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             }
         }
 
+        public decimal NetValue
+        {
+            get { return _netValue; }
+            set
+            {
+                _netValue = value; 
+                OnPropertyChanged();
+            }
+        }
+
         public bool EditModus
         {
             get { return _editModus; }
@@ -211,6 +221,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
                 Length = 1.84;
                 Language = Languages.FirstOrDefault();
                 BirthYear = 1990;
+                NetValue = (decimal) 123234324.234;
 
             }
             catch (Exception ex)
@@ -314,6 +325,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             new Dictionary<string, List<string>>();
         private object _lock = new object();
         private int _birthYear;
+        private decimal _netValue;
 
         private void RealValidation()
         {
