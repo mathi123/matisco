@@ -24,6 +24,7 @@
         ZoomOut,
         Error,
         Info,
-        NewDocument
+        NewDocument,
+        WindowClose
     }
 }

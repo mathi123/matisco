@@ -10,6 +10,7 @@ namespace Example.BusinessApp.Infrastructure
         {
             builder.RegisterType<UserService>().As<IUserService>().SingleInstance();
             builder.RegisterType<CustomerService>().As<ICustomerService>().SingleInstance();
+            builder.RegisterType<RoleService>().As<IRoleService>().SingleInstance();
         }
     }
 }

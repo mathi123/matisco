@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="Example.BusinessApp.ItAdmin.Views.RoleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Example.BusinessApp.ItAdmin.Views"
+             xmlns:coverters="clr-namespace:Matisco.Wpf.Controls.Coverters;assembly=Matisco.Wpf.Controls"
+             xmlns:editors="clr-namespace:Matisco.Wpf.Controls.Editors;assembly=Matisco.Wpf.Controls"
+             xmlns:buttons="clr-namespace:Matisco.Wpf.Controls.Buttons;assembly=Matisco.Wpf.Controls"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
+             mc:Ignorable="d" 
+             MinHeight="300" MinWidth="300">
+    <UserControl.Resources>
+        <coverters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    </UserControl.Resources>
+    <Grid Focusable="False">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <editors:TextEditor Grid.Row="0"  Label="Omschrijving" 
+                        EditValue="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                        IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
+                        ShowRequiredIndicator="True"/>
+
+        <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
+            <buttons:Button Image="{Binding EditSaveButtonImage}" Text="{Binding EditSaveMessage}" Command="{Binding EditSaveCommand}"/>
+            <buttons:Button Image="{Binding CancelCloseButtonImage}" Text="{Binding CancelCloseMessage}" Command="{Binding CancelCloseCommand}" />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

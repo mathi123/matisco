@@ -25,40 +25,40 @@
 
         <mae:TextEditor Grid.Row="0"  Label="Name" 
                         EditValue="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" 
-                        IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                        IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                         ShowRequiredIndicator="True"/>
 
         <mae:TextEditor Grid.Row="1"  Label="Email" Size="Large"
-                        IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                        IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                         EditValue="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         ShowRequiredIndicator="True"/>
 
         <mae:CheckboxEditor Grid.Row="2" Label="Is cool" EditValue="{Binding IsCool}" 
-                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"/>
+                            IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"/>
 
         <mae:CheckboxEditor Grid.Row="3" Label="Is cool 2" EditValue="{Binding IsCoolNullable}" 
-                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"/>
+                            IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"/>
 
         <mae:ComboboxEditor Grid.Row="4" Label="Language" ShowRequiredIndicator="True" 
-                            IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                            IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding Languages, Mode=TwoWay}" EditValue="{Binding Language}" DisplayMemberPath="Description"/>
 
         <mae:NumberEditor Grid.Row="5" Label="Length" ShowRequiredIndicator="True"
                            Suffix="meter" Round="3" RoundReadOnly="1"
-                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                            EditValue="{Binding Length, Mode=TwoWay}" />
 
         <mae:NumberEditor Grid.Row="6" Label="Birthyear" ShowRequiredIndicator="True"
-                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                            EditValue="{Binding BirthYear, Mode=TwoWay}"/>
         
         <mae:NumberEditor Grid.Row="7" Label="Net value" ShowRequiredIndicator="True"
-                           IsReadOnly="{Binding EditModus, Converter={StaticResource InverseBooleanConverter}}"
+                           IsReadOnly="{Binding EditMode, Converter={StaticResource InverseBooleanConverter}}"
                            EditValue="{Binding NetValue, Mode=TwoWay}" NumberGroupSeparator="." Prefix="+-" Suffix="€"/>
-        
+
         <StackPanel Grid.Row="8" Orientation="Horizontal" HorizontalAlignment="Right">
-            <mab:Button Image="Check" Text="{Binding EditSaveMessage}" Command="{Binding OkCommand}"/>
-            <mab:Button Text="{Binding CancelCloseMessage}" Command="{Binding CancelCommand}" />
+            <mab:Button Image="{Binding EditSaveButtonImage}" Text="{Binding EditSaveMessage}" Command="{Binding EditSaveCommand}"/>
+            <mab:Button Image="{Binding CancelCloseButtonImage}" Text="{Binding CancelCloseMessage}" Command="{Binding CancelCloseCommand}" />
         </StackPanel>
         
     </Grid>

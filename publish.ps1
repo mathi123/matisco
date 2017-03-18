@@ -3,7 +3,7 @@
  $solutionDir = split-path -parent $MyInvocation.MyCommand.Definition
  $nugetExe = "$solutionDir\packages\NuGet.CommandLine.3.5.0\tools\NuGet.exe" 
 
- [string[]] $projects = "Matisco.Wpf","Matisco.WebApi.Client"
+ [string[]] $projects = "Matisco.Wpf","Matisco.WebApi.Client","Matisco.Wpf.Controls"
  [string[]] $nuspecs = @()
  
  foreach($project in $projects){

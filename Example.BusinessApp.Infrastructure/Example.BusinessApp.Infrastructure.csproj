@@ -87,9 +87,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="InfrastructureAutofacModule.cs" />
+    <Compile Include="Screens\EditScreenBase.cs" />
+    <Compile Include="Screens\ScreenBase.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
+    <Compile Include="Services\IRoleService.cs" />
     <Compile Include="Services\IUserService.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\SaveResult.cs" />
     <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\ConfirmViewModel.cs" />
     <Compile Include="ViewModels\StartUpViewModel.cs" />
@@ -122,6 +128,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matisco.Domain\Matisco.Domain.csproj">
+      <Project>{2B8C7E70-4BB7-4959-8E06-78C021379DA2}</Project>
+      <Name>Matisco.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
       <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
       <Name>Matisco.Wpf.Controls</Name>

@@ -41,5 +41,15 @@ namespace Matisco.Wpf.Services
 
             OpenModal(parent, action, title, message, ModalIconEnum.Question, ModalButtonEnum.Yes, ModalButtonEnum.No);
         }
+
+        public void WarningMessage(object parent, string title, string message)
+        {
+            OpenModal(parent, null, title, message, ModalIconEnum.Warning, ModalButtonEnum.Ok);
+        }
+
+        public void ErrorMessage(object parent, string title, string message)
+        {
+            OpenModal(parent, null, title, message, ModalIconEnum.Error, ModalButtonEnum.Ok);
+        }
     }
 }

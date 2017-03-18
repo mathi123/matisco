@@ -20,6 +20,7 @@ namespace Example.BusinessApp.ItAdmin
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(ModalSamplesView));
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UserOverview));
             _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UserView));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(RoleView));
         }
     }
 }

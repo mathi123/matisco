@@ -51,6 +51,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Prism.Wpf.6.2.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -84,10 +85,14 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="ViewModels\ModalSamplesViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="ViewModels\UserOverviewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Views\ModalSamplesView.xaml.cs">
       <DependentUpon>ModalSamplesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RoleView.xaml.cs">
+      <DependentUpon>RoleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserOverview.xaml.cs">
       <DependentUpon>UserOverview.xaml</DependentUpon>
@@ -122,6 +127,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ModalSamplesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RoleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
