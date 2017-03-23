@@ -99,7 +99,21 @@ namespace Matisco.Wpf.Controls.Coverters
         {
             TargetType = values[1] as Type;
 
-            return ConvertNumberToEditValueText(values[0]);
+            var number = ConvertNumberToEditValueText(values[0]);
+
+            if (number.Contains("."))
+            {
+                number = number.TrimEnd('0');
+            }
+
+            number = number.TrimEnd('.');
+
+            if (number == "0")
+            {
+                return "";
+            }
+
+            return number;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

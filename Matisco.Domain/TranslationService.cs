@@ -34,10 +34,15 @@ namespace Matisco.Domain
             if(!string.IsNullOrEmpty(val))
                 return val;
 
-            if (fullId.Contains(".") && fullId.IndexOf(".") != fullId.Length - 1)
+            if (ContainsDotInBody(fullId))
                 return $"[{fullId.Substring(fullId.LastIndexOf(".") + 1)}]";
 
             return fullId;
+        }
+
+        private static bool ContainsDotInBody(string fullId)
+        {
+            return fullId.Contains(".") && fullId.IndexOf(".") != fullId.Length - 1;
         }
 
         private void LoadTranslations()
