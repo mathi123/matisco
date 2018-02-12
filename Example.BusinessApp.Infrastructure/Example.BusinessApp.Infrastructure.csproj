@@ -129,8 +129,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Matisco.Domain\Matisco.Core.csproj">
-      <Project>{2B8C7E70-4BB7-4959-8E06-78C021379DA2}</Project>
+    <ProjectReference Include="..\Matisco.Core\Matisco.Core.csproj">
+      <Project>{8ab54ac7-3f96-4114-9484-7246e4ac2be9}</Project>
       <Name>Matisco.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">

@@ -2,7 +2,7 @@
 
 namespace Matisco.Core
 {
-    public class DomainAutofacModule : Module
+    public class MatiscoCoreAutofacModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {

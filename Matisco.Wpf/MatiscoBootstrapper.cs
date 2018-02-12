@@ -21,18 +21,9 @@ namespace Matisco.Wpf
 
         protected override IContainer CreateContainer(ContainerBuilder builder)
         {
-            foreach (var moduleType in _modulesInfo.GetAutofacModuleTypes())
+            foreach (var module in _modulesInfo.GetAutofacModules())
             {
-                var module = Activator.CreateInstance(moduleType) as Autofac.Core.IModule;
-
-                if (module != null)
-                {
-                    builder.RegisterModule(module);
-                }
-                else
-                {
-                    Trace.TraceWarning($"{moduleType.FullName} is not an Autofac module");
-                }
+                builder.RegisterModule(module);
             }
 
             return base.CreateContainer(builder);

@@ -7,6 +7,7 @@ using Example.BusinessApp.Infrastructure.Services;
 using Matisco.Wpf.Services;
 using Prism.Regions;
 using Example.BusinessApp.Infrastructure.Screens;
+using Matisco.Core;
 
 namespace Example.BusinessApp.ItAdmin.ViewModels
 {
@@ -50,7 +51,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.Email = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -60,7 +61,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.Name = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -70,7 +71,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.IsCool = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -80,7 +81,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.IsCoolNullable = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -90,7 +91,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _language = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -103,7 +104,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.Length = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -113,7 +114,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.BirthYear = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -123,7 +124,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.NetValue = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -133,11 +134,12 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _languages = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        public UserViewModel(IExceptionHandler handler, IWindowService windowService, IUserService userService)
+        public UserViewModel(IExceptionHandler handler, IWindowService windowService, IUserService userService,
+            ITranslationService translationService) : base(translationService)
         {
             _handler = handler;
             _windowService = windowService;
@@ -170,14 +172,14 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         {
             _model = user;
 
-            OnPropertyChanged(nameof(Email));
-            OnPropertyChanged(nameof(Language));
-            OnPropertyChanged(nameof(Name));
-            OnPropertyChanged(nameof(NetValue));
-            OnPropertyChanged(nameof(BirthYear));
-            OnPropertyChanged(nameof(IsCool));
-            OnPropertyChanged(nameof(IsCoolNullable));
-            OnPropertyChanged(nameof(Length));
+            RaisePropertyChanged(nameof(Email));
+            RaisePropertyChanged(nameof(Language));
+            RaisePropertyChanged(nameof(Name));
+            RaisePropertyChanged(nameof(NetValue));
+            RaisePropertyChanged(nameof(BirthYear));
+            RaisePropertyChanged(nameof(IsCool));
+            RaisePropertyChanged(nameof(IsCoolNullable));
+            RaisePropertyChanged(nameof(Length));
         }
 
         public override bool IsNavigationTarget(NavigationContext navigationContext)

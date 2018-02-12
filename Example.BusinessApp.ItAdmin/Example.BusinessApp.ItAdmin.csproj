@@ -117,6 +117,10 @@
       <Project>{1bcee73c-a1a7-4067-989f-f55421e5df72}</Project>
       <Name>Example.BusinessApp.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Matisco.Core\Matisco.Core.csproj">
+      <Project>{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}</Project>
+      <Name>Matisco.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj">
       <Project>{ccd09ed5-5267-4d08-9328-3e86487ca8d8}</Project>
       <Name>Matisco.Wpf.Controls</Name>

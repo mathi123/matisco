@@ -8,6 +8,7 @@ using Example.BusinessApp.Infrastructure.Models;
 using Example.BusinessApp.Infrastructure.Screens;
 using Matisco.Wpf.Controls.Buttons;
 using Matisco.Wpf.Interfaces;
+using Matisco.Core;
 
 namespace Example.BusinessApp.ItAdmin.ViewModels
 {
@@ -27,11 +28,12 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _model.Description = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
-        public RoleViewModel(IRoleService roleService, IWindowService windowService, IModalsService modalsService)
+        public RoleViewModel(IRoleService roleService, IWindowService windowService, IModalsService modalsService,
+            ITranslationService translationService) : base(translationService)
         {
             _roleService = roleService;
             _windowService = windowService;
@@ -53,7 +55,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
         private void SetModel(Role role)
         {
             _model = role;
-            OnPropertyChanged(nameof(Description));
+            RaisePropertyChanged(nameof(Description));
         }
 
         protected override void Close()

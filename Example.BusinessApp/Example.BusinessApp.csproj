@@ -126,8 +126,8 @@
       <Project>{3bdc73d1-b95a-4578-9a91-a11fb0bcc31e}</Project>
       <Name>Example.BusinessApp.Sales</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Matisco.Domain\Matisco.Core.csproj">
-      <Project>{2b8c7e70-4bb7-4959-8e06-78c021379da2}</Project>
+    <ProjectReference Include="..\Matisco.Core\Matisco.Core.csproj">
+      <Project>{8ab54ac7-3f96-4114-9484-7246e4ac2be9}</Project>
       <Name>Matisco.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Matisco.WebApi.Client\Matisco.WebApi.Client.csproj">

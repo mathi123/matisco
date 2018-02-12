@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Matisco.Domain\Matisco.Core.csproj" />
+    <ProjectReference Include="..\Matisco.Core\Matisco.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

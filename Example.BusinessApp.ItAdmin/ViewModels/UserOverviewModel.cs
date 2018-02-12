@@ -28,7 +28,7 @@ namespace Example.BusinessApp.ItAdmin.ViewModels
             set
             {
                 _users = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

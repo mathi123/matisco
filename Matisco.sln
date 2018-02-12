@@ -7,11 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Wpf", "Matisco.Wpf\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Wpf.Controls", "Matisco.Wpf.Controls\Matisco.Wpf.Controls.csproj", "{CCD09ED5-5267-4D08-9328-3E86487CA8D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.WebApi.Client", "Matisco.WebApi.Client\Matisco.WebApi.Client.csproj", "{C925C2ED-1D32-4844-AE19-A2BC23930DA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client", "Matisco.WebApi.Client\Matisco.WebApi.Client.csproj", "{C925C2ED-1D32-4844-AE19-A2BC23930DA1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.WebApi.Client.Specs", "Matisco.WebApi.Client.Specs\Matisco.WebApi.Client.Specs.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client.Specs", "Matisco.WebApi.Client.Specs\Matisco.WebApi.Client.Specs.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99BF369F-A53C-4897-A775-7095C3F85B54}"
 	ProjectSection(SolutionItems) = preProject
@@ -19,10 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		publish.ps1 = publish.ps1
 		README.md = README.md
 	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Core", "Matisco.Domain\Matisco.Core.csproj", "{2B8C7E70-4BB7-4959-8E06-78C021379DA2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Core.Specs", "Matisco.Domain.Specs\Matisco.Core.Specs.csproj", "{6048D9BF-4365-4D75-B897-4A9A214830BA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{9632E878-15C8-4EBA-A01F-31295FD24098}"
 EndProject
@@ -40,6 +36,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin", "Example.BusinessApp.ItAdmin\Example.BusinessApp.ItAdmin.csproj", "{129F586C-DF0F-4C1E-AC17-728985FC83CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin.Specs", "Example.BusinessApp.ItAdmin.Specs\Example.BusinessApp.ItAdmin.Specs.csproj", "{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core", "Matisco.Core\Matisco.Core.csproj", "{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core.Specs", "Matisco.Core.Specs\Matisco.Core.Specs.csproj", "{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Server.Host", "Matisco.Server.Host\Matisco.Server.Host.csproj", "{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,14 +65,6 @@ Global
 		{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2B8C7E70-4BB7-4959-8E06-78C021379DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2B8C7E70-4BB7-4959-8E06-78C021379DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2B8C7E70-4BB7-4959-8E06-78C021379DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2B8C7E70-4BB7-4959-8E06-78C021379DA2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6048D9BF-4365-4D75-B897-4A9A214830BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6048D9BF-4365-4D75-B897-4A9A214830BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6048D9BF-4365-4D75-B897-4A9A214830BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6048D9BF-4365-4D75-B897-4A9A214830BA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5885EBCC-C4E1-461F-B618-3143754B86E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5885EBCC-C4E1-461F-B618-3143754B86E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5885EBCC-C4E1-461F-B618-3143754B86E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -91,18 +85,30 @@ Global
 		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B71EF476-D0C3-47C4-B362-DEDE6D5033D6} = {FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}
-		{6048D9BF-4365-4D75-B897-4A9A214830BA} = {FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}
 		{5885EBCC-C4E1-461F-B618-3143754B86E3} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{3BDC73D1-B95A-4578-9A91-A11FB0BCC31E} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{129F586C-DF0F-4C1E-AC17-728985FC83CA} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB} = {FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A85BB190-BF55-4946-B1C9-5B82F1013BBF}

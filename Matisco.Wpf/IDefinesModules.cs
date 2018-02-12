@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 
 namespace Matisco.Wpf
@@ -7,6 +8,6 @@ namespace Matisco.Wpf
     {
         IEnumerable<Type> GetPrismModuleTypes();
 
-        IEnumerable<Type> GetAutofacModuleTypes();
+        IEnumerable<Module> GetAutofacModules();
     }
 }

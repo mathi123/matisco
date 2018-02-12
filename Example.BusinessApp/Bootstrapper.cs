@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Autofac;
 using Example.BusinessApp.Infrastructure;
 using Example.BusinessApp.ItAdmin;
 using Example.BusinessApp.Sales;
@@ -19,12 +20,12 @@ namespace Example.BusinessApp
             yield return typeof(ItAdminPrismModule);
         }
 
-        public override IEnumerable<Type> GetAutofacModuleTypes()
+        public override IEnumerable<Module> GetAutofacModules()
         {
-            yield return typeof(DomainAutofacModule);
-            yield return typeof(WebApiClientAutofacModule);
-            yield return typeof(MatiscoAutofacModule);
-            yield return typeof(InfrastructureAutofacModule);
+            yield return new MatiscoCoreAutofacModule();
+            yield return new WebApiClientAutofacModule(true);
+            yield return new MatiscoAutofacModule();
+            yield return new InfrastructureAutofacModule();
         }
     }
 }

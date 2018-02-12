@@ -8,19 +8,12 @@ namespace Example.BusinessApp.Infrastructure.Screens
     {
         private ITranslationService _translationService;
 
-        ctor
-
-        protected ITranslationService TranslationService
+        public ScreenBase(ITranslationService translationService)
         {
-            get
-            {
-                if (_translationService == null)
-                {
-                    _translationService = ServiceLocator.Current.GetInstance<ITranslationService>();
-                }
-                return _translationService;
-            }
+            _translationService = translationService;
         }
+
+        protected ITranslationService TranslationService => _translationService;
 
         protected string Translate(string code)
         {

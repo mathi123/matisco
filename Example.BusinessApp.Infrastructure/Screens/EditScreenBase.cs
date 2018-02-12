@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Matisco.Core;
 using Matisco.Wpf.Controls.Buttons;
 using Matisco.Wpf.Interfaces;
 using Prism.Commands;
@@ -15,13 +16,17 @@ namespace Example.BusinessApp.Infrastructure.Screens
         private ButtonImageEnum _editSaveButtonImage;
         private ButtonImageEnum _cancelCloseButtonImage;
 
+        public EditScreenBase(ITranslationService translationService) : base(translationService)
+        {
+        }
+
         public bool EditMode
         {
             get { return _editMode; }
             set
             {
                 _editMode = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -31,7 +36,7 @@ namespace Example.BusinessApp.Infrastructure.Screens
             set
             {
                 _editSaveMessage = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -41,7 +46,7 @@ namespace Example.BusinessApp.Infrastructure.Screens
             set
             {
                 _cancelCloseMessage = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -51,7 +56,7 @@ namespace Example.BusinessApp.Infrastructure.Screens
             set
             {
                 _editSaveButtonImage = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -61,7 +66,7 @@ namespace Example.BusinessApp.Infrastructure.Screens
             set
             {
                 _cancelCloseButtonImage = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
