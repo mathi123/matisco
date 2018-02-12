@@ -102,9 +102,9 @@
       <Project>{129F586C-DF0F-4C1E-AC17-728985FC83CA}</Project>
       <Name>Example.BusinessApp.ItAdmin</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Example.BusinessApp.Sales\Example.BusinessApp.Sales.csproj">
+    <ProjectReference Include="..\Example.BusinessApp.Sales\Example.BusinessApp.Sales.Wpf.csproj">
       <Project>{3bdc73d1-b95a-4578-9a91-a11fb0bcc31e}</Project>
-      <Name>Example.BusinessApp.Sales</Name>
+      <Name>Example.BusinessApp.Sales.Wpf</Name>
     </ProjectReference>
     <ProjectReference Include="..\Matisco.Core\Matisco.Core.csproj">
       <Project>{8ab54ac7-3f96-4114-9484-7246e4ac2be9}</Project>

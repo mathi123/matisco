@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Autofac.Extensions.DependencyInjection;
 
 namespace Matisco.Server.Host
@@ -15,13 +8,18 @@ namespace Matisco.Server.Host
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            BuildWebHost<FrameworkServerStartup>(args).Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
+        public static void Main<T>(string[] args) where T : FrameworkServerStartup
+        {
+            BuildWebHost<T>(args).Run();
+        }
+
+        public static IWebHost BuildWebHost<T>(string[] args) where T : FrameworkServerStartup =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureServices(services => services.AddAutofac())
-                .UseStartup<Startup>()
+                .UseStartup<T>()
                 .Build();
     }
 }

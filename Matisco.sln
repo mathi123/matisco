@@ -11,12 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client", "Ma
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client.Tests", "Matisco.WebApi.Client.Specs\Matisco.WebApi.Client.Tests.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client.Tests", "Matisco.WebApi.Client.Tests\Matisco.WebApi.Client.Tests.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99BF369F-A53C-4897-A775-7095C3F85B54}"
 	ProjectSection(SolutionItems) = preProject
-		increment-minor-version.ps1 = increment-minor-version.ps1
-		publish.ps1 = publish.ps1
+		Changelog.md = Changelog.md
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -24,24 +23,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Example", "Example", "{9632
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp", "Example.BusinessApp\Example.BusinessApp.csproj", "{5885EBCC-C4E1-461F-B618-3143754B86E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales", "Example.BusinessApp.Sales\Example.BusinessApp.Sales.csproj", "{3BDC73D1-B95A-4578-9A91-A11FB0BCC31E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales.Wpf", "Example.BusinessApp.Sales\Example.BusinessApp.Sales.Wpf.csproj", "{3BDC73D1-B95A-4578-9A91-A11FB0BCC31E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Infrastructure", "Example.BusinessApp.Infrastructure\Example.BusinessApp.Infrastructure.csproj", "{1BCEE73C-A1A7-4067-989F-F55421E5DF72}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{9656AE0A-0FC0-4C47-AA09-81FAAA0FF9C0}"
-	ProjectSection(SolutionItems) = preProject
-		Changelog.md = Changelog.md
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin", "Example.BusinessApp.ItAdmin\Example.BusinessApp.ItAdmin.csproj", "{129F586C-DF0F-4C1E-AC17-728985FC83CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin.Tests", "Example.BusinessApp.ItAdmin.Specs\Example.BusinessApp.ItAdmin.Tests.csproj", "{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core", "Matisco.Core\Matisco.Core.csproj", "{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core.Tests", "Matisco.Core.Specs\Matisco.Core.Tests.csproj", "{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core.Tests", "Matisco.Core.Tests\Matisco.Core.Tests.csproj", "{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Server.Host", "Matisco.Server.Host\Matisco.Server.Host.csproj", "{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Server.Host", "Matisco.Server.Host\Matisco.Server.Host.csproj", "{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin.Tests", "Example.BusinessApp.ItAdmin.Tests\Example.BusinessApp.ItAdmin.Tests.csproj", "{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Server", "Example.BusinessApp.Server\Example.BusinessApp.Server.csproj", "{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales.Services", "Example.BusinessApp.Sales.Services\Example.BusinessApp.Sales.Services.csproj", "{37C7E01C-875C-4801-85B7-4A516AB44750}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales.Shared", "Example.BusinessApp.Sales.Shared\Example.BusinessApp.Sales.Shared.csproj", "{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.Sales.Business", "Example.BusinessApp.Sales.Business\Example.BusinessApp.Sales.Business.csproj", "{2BD31B93-FD77-43E9-ABBD-04C5F1404160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,10 +83,6 @@ Global
 		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129F586C-DF0F-4C1E-AC17-728985FC83CA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,6 +95,26 @@ Global
 		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37C7E01C-875C-4801-85B7-4A516AB44750}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37C7E01C-875C-4801-85B7-4A516AB44750}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37C7E01C-875C-4801-85B7-4A516AB44750}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37C7E01C-875C-4801-85B7-4A516AB44750}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BD31B93-FD77-43E9-ABBD-04C5F1404160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BD31B93-FD77-43E9-ABBD-04C5F1404160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BD31B93-FD77-43E9-ABBD-04C5F1404160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BD31B93-FD77-43E9-ABBD-04C5F1404160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -107,8 +125,12 @@ Global
 		{3BDC73D1-B95A-4578-9A91-A11FB0BCC31E} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{1BCEE73C-A1A7-4067-989F-F55421E5DF72} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{129F586C-DF0F-4C1E-AC17-728985FC83CA} = {9632E878-15C8-4EBA-A01F-31295FD24098}
-		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 		{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB} = {FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}
+		{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{2C1CFA8C-B35B-4D66-ABBF-0FCA3DD85AC6} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{37C7E01C-875C-4801-85B7-4A516AB44750} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{3D4D097F-DA86-4E3B-A287-8C80AF51EDF5} = {9632E878-15C8-4EBA-A01F-31295FD24098}
+		{2BD31B93-FD77-43E9-ABBD-04C5F1404160} = {9632E878-15C8-4EBA-A01F-31295FD24098}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A85BB190-BF55-4946-B1C9-5B82F1013BBF}

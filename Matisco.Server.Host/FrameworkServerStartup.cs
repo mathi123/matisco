@@ -13,16 +13,16 @@ using Microsoft.Extensions.Options;
 
 namespace Matisco.Server.Host
 {
-    public class Startup
+    public class FrameworkServerStartup
     {
-        public Startup(IHostingEnvironment env)
+        public FrameworkServerStartup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                 .AddEnvironmentVariables();
-            this.Configuration = builder.Build();
+            Configuration = builder.Build();
         }
 
         public IConfigurationRoot Configuration { get; private set; }
@@ -43,7 +43,7 @@ namespace Matisco.Server.Host
         // Don't build the container; that gets done for you. If you
         // need a reference to the container, you need to use the
         // "Without ConfigureContainer" mechanism shown later.
-        public void ConfigureContainer(ContainerBuilder builder)
+        public virtual void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule(new MatiscoCoreAutofacModule());
             builder.RegisterModule(new MatiscoServerAutofacModule());
