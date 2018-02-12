@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Xml;
 
-namespace Matisco.Domain
+namespace Matisco.Core
 {
     public class TranslationService : ITranslationService
     {

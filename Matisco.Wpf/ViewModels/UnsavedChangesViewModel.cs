@@ -24,7 +24,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _message = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _windowTitles = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

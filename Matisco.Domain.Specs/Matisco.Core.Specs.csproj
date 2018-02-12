@@ -17,7 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Matisco.WebApi.Client\Matisco.WebApi.Client.csproj" />
+    <ProjectReference Include="..\Matisco.Domain\Matisco.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Translations\TranslationSpecs.xliff">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

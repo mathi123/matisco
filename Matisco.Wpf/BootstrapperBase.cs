@@ -4,15 +4,15 @@ using Autofac;
 
 namespace Matisco.Wpf
 {
-    public abstract class BootstrapperBase
+    public abstract class WpfBootstrapper : IDefinesModules
     {
-        private MatiscoBootstrapper _bootstrapper;
+        private PrismAutofacBootstrapper _bootstrapper;
 
         public IContainer Container => _bootstrapper.Container;
         
         public void Run()
         {
-            _bootstrapper = new MatiscoBootstrapper(this);
+            _bootstrapper = new PrismAutofacBootstrapper(this);
             _bootstrapper.Run();
         }
 

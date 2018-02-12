@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Matisco.Domain.Specs
+namespace Matisco.Core.Specs
 {
     public class TranslationSpecs : LocalizedBase
     {

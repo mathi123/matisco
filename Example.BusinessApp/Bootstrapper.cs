@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Example.BusinessApp.Infrastructure;
 using Example.BusinessApp.ItAdmin;
 using Example.BusinessApp.Sales;
-using Matisco.Domain;
+using Matisco.Core;
 using Matisco.WebApi.Client;
 using Matisco.Wpf;
 
 namespace Example.BusinessApp
 {
-    public class Bootstrapper : BootstrapperBase
+    public class Bootstrapper : WpfBootstrapper
     {
         public override IEnumerable<Type> GetPrismModuleTypes()
         {

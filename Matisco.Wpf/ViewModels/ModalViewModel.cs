@@ -36,7 +36,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _iconPath = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -46,7 +46,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _imagePath = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -56,7 +56,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _hasCustomIcon = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -66,7 +66,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _hasYesButton = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -76,7 +76,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _hasNoButton = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -86,7 +86,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _hasOkButton = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -96,7 +96,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _hasCancelButton = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -106,7 +106,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _title = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -116,7 +116,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _message = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

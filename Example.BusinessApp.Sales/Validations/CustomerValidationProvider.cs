@@ -1,6 +1,6 @@
 ﻿using System;
 using Example.BusinessApp.Infrastructure.Models;
-using Matisco.Domain;
+using Matisco.Core;
 
 namespace Example.BusinessApp.Sales.Validations
 {

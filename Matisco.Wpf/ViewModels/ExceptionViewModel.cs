@@ -26,7 +26,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _message = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -36,7 +36,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _stackTrace = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

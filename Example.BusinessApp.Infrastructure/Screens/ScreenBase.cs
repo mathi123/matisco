@@ -1,4 +1,4 @@
-﻿using Matisco.Domain;
+﻿using Matisco.Core;
 using Microsoft.Practices.ServiceLocation;
 using Prism.Mvvm;
 
@@ -7,6 +7,8 @@ namespace Example.BusinessApp.Infrastructure.Screens
     public class ScreenBase : BindableBase
     {
         private ITranslationService _translationService;
+
+        ctor
 
         protected ITranslationService TranslationService
         {

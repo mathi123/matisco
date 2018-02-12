@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Matisco.Domain
+namespace Matisco.Core
 {
     public class RequiredPropertyRule<T> : IValidationRule<T>
     {

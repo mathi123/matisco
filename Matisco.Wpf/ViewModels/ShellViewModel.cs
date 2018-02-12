@@ -40,7 +40,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _title = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -50,7 +50,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _icon = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
         
@@ -60,7 +60,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _sizeToContent = value;
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -70,7 +70,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _resizeMode = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -80,7 +80,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _showInTaskbar = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -90,7 +90,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _windowStyle = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -100,7 +100,7 @@ namespace Matisco.Wpf.ViewModels
             set
             {
                 _windowState = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Matisco.Domain
+namespace Matisco.Core
 {
     public abstract class LocalizedBase : ILocalized
     {

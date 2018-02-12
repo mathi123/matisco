@@ -2,7 +2,7 @@
 
 namespace Matisco.WebApi.Client
 {
-    public interface IJsonWebApi
+    public interface IJsonWebApiClient
     {
         Task<ServiceResult<T>> GetAsync<T>(string route);
         Task<ServiceResult> DeleteAsync(string route);

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Matisco.Domain.Specs
+namespace Matisco.Core.Specs
 {
     [TestClass]
     public class LocalizationSpecs

@@ -8,7 +8,7 @@ namespace Matisco.WebApi.Client
         {
             builder.RegisterType<ConfigurationManager>().As<IConfigurationManager>().SingleInstance();
             builder.RegisterType<HttpClientFactory>().As<IHttpClientFactory>();
-            builder.RegisterType<JsonWebApi>().As<IJsonWebApi>();
+            builder.RegisterType<JsonWebApi>().As<IJsonWebApiClient>();
             builder.RegisterType<WebApiExceptionHandler>().As<IWebApiExceptionHandler>();
         }
     }

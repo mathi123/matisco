@@ -1,6 +1,6 @@
 ﻿using Autofac;
 
-namespace Matisco.Domain
+namespace Matisco.Core
 {
     public class DomainAutofacModule : Module
     {

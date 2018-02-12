@@ -19,7 +19,7 @@ namespace Example.BusinessApp
                     { "Id", 1 }
                 };
 
-            windowSerivce.Open("UserView", navigationParameter);
+            windowSerivce.Open("StartUpView");
         }
     }
 }

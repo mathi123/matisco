@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Matisco.Domain
+namespace Matisco.Core
 {
     public interface IValidationRule<T>
     {

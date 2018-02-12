@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Matisco.Domain.Specs
+namespace Matisco.Core.Specs
 {
     public class TestCustomerValidationProvider : ValidationProviderBase<TestCustomer>
     {

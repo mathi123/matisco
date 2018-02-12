@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Matisco.WebApi.Client
 {
-    public class JsonWebApi : IJsonWebApi
+    public class JsonWebApi : IJsonWebApiClient
     {
         private readonly IWebApiExceptionHandler _webApiExceptionHandler;
         private readonly IHttpClientFactory _clientFactory;
@@ -29,7 +30,7 @@ namespace Matisco.WebApi.Client
                 if (response.IsSuccessStatusCode)
                 {
                     result.Status = ServiceStatusEnum.Success;
-                    result.Data = await response.Content.ReadAsAsync<T>();
+                    result.Data = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
@@ -67,12 +68,13 @@ namespace Matisco.WebApi.Client
 
             try
             {
-                var response = await Client.PostAsJsonAsync(route, argument);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(argument));
+                var response = await Client.PostAsync(route, httpContent);
 
                 if (response.IsSuccessStatusCode)
                 {
                     result.Status = ServiceStatusEnum.Success;
-                    result.Data = await response.Content.ReadAsAsync<T>();
+                    result.Data = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
@@ -110,7 +112,8 @@ namespace Matisco.WebApi.Client
 
             try
             {
-                var response = await Client.PostAsJsonAsync(route, argument);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(argument));
+                var response = await Client.PostAsync(route, httpContent);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -152,12 +155,13 @@ namespace Matisco.WebApi.Client
 
             try
             {
-                var response = await Client.PutAsJsonAsync(route, argument);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(argument));
+                var response = await Client.PutAsync(route, httpContent);
 
                 if (response.IsSuccessStatusCode)
                 {
                     result.Status = ServiceStatusEnum.Success;
-                    result.Data = await response.Content.ReadAsAsync<T>();
+                    result.Data = JsonConvert.DeserializeObject<T>(await response.Content.ReadAsStringAsync());
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
@@ -195,7 +199,8 @@ namespace Matisco.WebApi.Client
 
             try
             {
-                var response = await Client.PutAsJsonAsync(route, argument);
+                var httpContent = new StringContent(JsonConvert.SerializeObject(argument));
+                var response = await Client.PutAsync(route, httpContent);
 
                 if (response.IsSuccessStatusCode)
                 {

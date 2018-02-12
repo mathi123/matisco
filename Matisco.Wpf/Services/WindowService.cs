@@ -25,15 +25,17 @@ namespace Matisco.Wpf.Services
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellInformationService _shellInformationService;
         private readonly IRegionManager _regionManager;
+        private readonly IApplicationShutdownService _applicationShutdownService;
         private readonly ConcurrentWindowCollection _concurrentWindowCollection = new ConcurrentWindowCollection();
 
         public WindowService(IContainer container, IEventAggregator eventAggregator, IShellInformationService shellInformationService,
-            IRegionManager regionManager)
+            IRegionManager regionManager, IApplicationShutdownService applicationShutdownService)
         {
             _container = container;
             _eventAggregator = eventAggregator;
             _shellInformationService = shellInformationService;
             _regionManager = regionManager;
+            this._applicationShutdownService = applicationShutdownService;
         }
 
         public void OpenNewWindow<T>(NavigationParameters parameters = null, Action<IResultDataCollection> onWindowClosedAction = null) where T : Window
@@ -363,9 +365,7 @@ namespace Matisco.Wpf.Services
             {
                 windowInformation.StartedShutdownProcess = true;
 
-                // Exit the application
-                var shutDownService = ServiceLocator.Current.TryResolve<IApplicationShutdownService>();
-                var shutDown = shutDownService.ExitApplication(false);
+                var shutDown = _applicationShutdownService.ExitApplication(false);
 
                 if (!shutDown)
                 {

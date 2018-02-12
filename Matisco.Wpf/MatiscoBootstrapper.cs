@@ -10,18 +10,18 @@ using Prism.Regions;
 
 namespace Matisco.Wpf
 {
-    public class MatiscoBootstrapper : AutofacBootstrapper
+    public class PrismAutofacBootstrapper : AutofacBootstrapper
     {
-        private readonly BootstrapperBase _bootstrapper;
+        private readonly IDefinesModules _modulesInfo;
 
-        public MatiscoBootstrapper(BootstrapperBase bootstrapper)
+        public PrismAutofacBootstrapper(IDefinesModules modulesInfo)
         {
-            _bootstrapper = bootstrapper;
+            _modulesInfo = modulesInfo;
         }
 
         protected override IContainer CreateContainer(ContainerBuilder builder)
         {
-            foreach (var moduleType in _bootstrapper.GetAutofacModuleTypes())
+            foreach (var moduleType in _modulesInfo.GetAutofacModuleTypes())
             {
                 var module = Activator.CreateInstance(moduleType) as Autofac.Core.IModule;
 
@@ -42,7 +42,7 @@ namespace Matisco.Wpf
         {
             base.ConfigureModuleCatalog();
 
-            foreach (var module in _bootstrapper.GetPrismModuleTypes())
+            foreach (var module in _modulesInfo.GetPrismModuleTypes())
             {
                 var catalog = (ModuleCatalog)ModuleCatalog;
                 catalog.AddModule(module);

@@ -1,4 +1,4 @@
-﻿namespace Matisco.Domain
+﻿namespace Matisco.Core
 {
     public class ValidationError
     {
