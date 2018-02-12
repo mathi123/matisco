@@ -25,11 +25,11 @@ namespace Matisco.Wpf.Services
         private readonly IEventAggregator _eventAggregator;
         private readonly IShellInformationService _shellInformationService;
         private readonly IRegionManager _regionManager;
-        private readonly IApplicationShutdownService _applicationShutdownService;
+        private readonly Lazy<IApplicationShutdownService> _applicationShutdownService;
         private readonly ConcurrentWindowCollection _concurrentWindowCollection = new ConcurrentWindowCollection();
 
         public WindowService(IContainer container, IEventAggregator eventAggregator, IShellInformationService shellInformationService,
-            IRegionManager regionManager, IApplicationShutdownService applicationShutdownService)
+            IRegionManager regionManager, Lazy<IApplicationShutdownService> applicationShutdownService)
         {
             _container = container;
             _eventAggregator = eventAggregator;
@@ -365,7 +365,7 @@ namespace Matisco.Wpf.Services
             {
                 windowInformation.StartedShutdownProcess = true;
 
-                var shutDown = _applicationShutdownService.ExitApplication(false);
+                var shutDown = _applicationShutdownService.Value.ExitApplication(false);
 
                 if (!shutDown)
                 {

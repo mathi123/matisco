@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client", "Ma
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FE9BFF2C-B63F-41D6-8FAB-A7B1AA562215}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client.Specs", "Matisco.WebApi.Client.Specs\Matisco.WebApi.Client.Specs.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.WebApi.Client.Tests", "Matisco.WebApi.Client.Specs\Matisco.WebApi.Client.Tests.csproj", "{B71EF476-D0C3-47C4-B362-DEDE6D5033D6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{99BF369F-A53C-4897-A775-7095C3F85B54}"
 	ProjectSection(SolutionItems) = preProject
@@ -35,11 +35,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin", "Example.BusinessApp.ItAdmin\Example.BusinessApp.ItAdmin.csproj", "{129F586C-DF0F-4C1E-AC17-728985FC83CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin.Specs", "Example.BusinessApp.ItAdmin.Specs\Example.BusinessApp.ItAdmin.Specs.csproj", "{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.BusinessApp.ItAdmin.Tests", "Example.BusinessApp.ItAdmin.Specs\Example.BusinessApp.ItAdmin.Tests.csproj", "{8A6CD2E4-29AA-4355-8DC9-77DEF90542B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core", "Matisco.Core\Matisco.Core.csproj", "{8AB54AC7-3F96-4114-9484-7246E4AC2BE9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core.Specs", "Matisco.Core.Specs\Matisco.Core.Specs.csproj", "{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Matisco.Core.Tests", "Matisco.Core.Specs\Matisco.Core.Tests.csproj", "{7677C09F-4A0D-44D6-B8F3-E2977C0E92AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matisco.Server.Host", "Matisco.Server.Host\Matisco.Server.Host.csproj", "{6C9CEC7B-BA61-4791-BE15-8C35671E5FD0}"
 EndProject

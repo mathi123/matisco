@@ -26,7 +26,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             set
             {
                 _current.Name = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -36,7 +36,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             set
             {
                 _current.Email = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -61,8 +61,8 @@ namespace Example.BusinessApp.Sales.ViewModels
             var id = (int) navigationContext.Parameters["id"];
             _original = _customerService.GetById(id);
             _current = _original.Clone();
-            OnPropertyChanged("Name");
-            OnPropertyChanged("Email");
+            RaisePropertyChanged("Name");
+            RaisePropertyChanged("Email");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

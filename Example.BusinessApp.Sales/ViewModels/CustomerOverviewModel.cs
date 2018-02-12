@@ -24,7 +24,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             set
             {
                 _customers = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
@@ -34,7 +34,7 @@ namespace Example.BusinessApp.Sales.ViewModels
             set
             {
                 _selectedCustomer = value; 
-                OnPropertyChanged();
+                RaisePropertyChanged();
             }
         }
 
